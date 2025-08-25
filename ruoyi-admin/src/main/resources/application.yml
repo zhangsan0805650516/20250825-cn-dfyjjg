@@ -52,12 +52,12 @@ spring:
     # 国际化资源文件路径
     basename: i18n/messages
   profiles:
-    # 本地-中国-新测试
-    active: china-new-local
-    # prod-中国-新测试-业务
-#    active: china-new-prod
-    # prod-中国-新测试-会员
-#    active: china-new-member
+    # 本地-中国-东方赢家机构
+    active: china-dfyjjg-local
+    # prod-中国-东方赢家机构-业务
+#    active: china-dfyjjg-prod
+    # prod-中国-东方赢家机构-会员
+#    active: china-dfyjjg-member
   # 文件上传
   servlet:
     multipart:
@@ -117,7 +117,7 @@ token:
   # 令牌自定义标识
   header: Authorization
   # 令牌密钥
-  secret: WthjDPIFw1cVzjOcMLlQfg==
+  secret: AQfv9yZGDWrUEZeft8A7nw==
   # 令牌有效期（默认30分钟）
   expireTime: 14400
 

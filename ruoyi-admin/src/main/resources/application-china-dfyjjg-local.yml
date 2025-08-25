@@ -7,7 +7,7 @@ spring:
             # 主库数据源
             master:
                 # 中国
-                url: jdbc:mysql://localhost:3306/20250507_test_local?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=Asia/Shanghai
+                url: jdbc:mysql://localhost:3306/20250825_dfyjjg_local?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=Asia/Shanghai
                 username: root
                 password: 123456
             # 从库数据源
