@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.biz.tutorVote.mapper.FaTutorVoteMapper">
+    
+    <resultMap type="FaTutorVote" id="FaTutorVoteResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="tutorId"    column="tutor_id"    />
+        <result property="money"    column="money"    />
+        <result property="weigh"    column="weigh"    />
+        <result property="status"    column="status"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="deleteFlag"    column="delete_flag"    />
+        <result property="voteType"    column="vote_type"    />
+
+        <association property="faMember" columnPrefix="m_" resultMap="com.ruoyi.biz.member.mapper.FaMemberMapper.FaMemberResult" />
+        <association property="faTutorList" columnPrefix="t_" resultMap="com.ruoyi.biz.tutorList.mapper.FaTutorListMapper.FaTutorListResult" />
+    </resultMap>
+
+    <sql id="selectFaTutorVoteVo">
+        select
+            v.id,
+            v.user_id,
+            v.tutor_id,
+            v.money,
+            v.weigh,
+            v.status,
+            v.create_time,
+            v.create_by,
+            v.update_time,
+            v.update_by,
+            v.remarks,
+            v.delete_flag,
+            v.vote_type,
+            m.id m_id,
+            m.username m_username,
+            m.nickname m_nickname,
+--             m.password m_password,
+            m.salt m_salt,
+            m.mobile m_mobile,
+--             m.avatar m_avatar,
+            m.successions m_successions,
+            m.max_successions m_max_successions,
+            m.prev_time m_prev_time,
+            m.login_time m_login_time,
+--             m.login_ip m_login_ip,
+--             m.payment_code m_payment_code,
+--             m.join_ip m_join_ip,
+            m.join_time m_join_time,
+            m.create_time m_create_time,
+            m.update_time m_update_time,
+            m.status m_status,
+            m.balance m_balance,
+            m.superior_name m_superior_name,
+            m.superior_code m_superior_code,
+            m.superior_id m_superior_id,
+            m.institution_number m_institution_number,
+            m.daili_id m_daili_id,
+            m.jingzhijiaoyi m_jingzhijiaoyi,
+            m.is_pz m_is_pz,
+            m.is_dz m_is_dz,
+            m.is_ps m_is_ps,
+            m.is_sg m_is_sg,
+            m.is_zs m_is_zs,
+            m.is_qc m_is_qc,
+            m.is_qh m_is_qh,
+            m.is_inform m_is_inform,
+            m.freeze_profit m_freeze_profit,
+            m.weiyima m_weiyima,
+            m.name m_name,
+            m.id_card m_id_card,
+            m.submit_auth_time m_submit_auth_time,
+            m.auth_time m_auth_time,
+            m.is_auth m_is_auth,
+            m.auth_reject_reason m_auth_reject_reason,
+            m.auth_reject_time m_auth_reject_time,
+            m.deposit_bank m_deposit_bank,
+            m.khzhihang m_khzhihang,
+            m.account_name m_account_name,
+            m.account m_account,
+--             m.card_image m_card_image,
+            m.binding_time m_binding_time,
+            m.unbind_time m_unbind_time,
+            m.delete_flag m_delete_flag,
+            m.bank_card_auth m_bank_card_auth,
+            m.withdraw_switch m_withdraw_switch,
+            t.id t_id,
+            t.tutor_image t_tutor_image,
+            t.tutor_name t_tutor_name,
+            t.tutor_id_num t_tutor_id_num,
+            t.tutor_intro t_tutor_intro,
+            t.vote_nums t_vote_nums,
+            t.money t_money,
+            t.weigh t_weigh,
+            t.status t_status,
+            t.create_time t_create_time,
+            t.create_by t_create_by,
+            t.update_time t_update_time,
+            t.update_by t_update_by,
+            t.remarks t_remarks,
+            t.delete_flag t_delete_flag
+        from fa_tutor_vote v
+                 left join fa_member m
+                           on v.user_id = m.id
+                 left join fa_tutor_list t
+                           on v.tutor_id = t.id
+    </sql>
+
+    <select id="selectFaTutorVoteList" parameterType="FaTutorVote" resultMap="FaTutorVoteResult">
+        <include refid="selectFaTutorVoteVo"/>
+        <where>  
+            <if test="id != null "> and v.id = #{id}</if>
+            <if test="userId != null "> and v.user_id = #{userId}</if>
+            <if test="tutorId != null "> and v.tutor_id = #{tutorId}</if>
+            <if test="money != null "> and v.money = #{money}</if>
+            <if test="weigh != null "> and v.weigh = #{weigh}</if>
+            <if test="status != null "> and v.status = #{status}</if>
+            <if test="createTime != null "> and v.create_time = #{createTime}</if>
+            <if test="createBy != null  and createBy != ''"> and v.create_by = #{createBy}</if>
+            <if test="updateTime != null "> and v.update_time = #{updateTime}</if>
+            <if test="updateBy != null  and updateBy != ''"> and v.update_by = #{updateBy}</if>
+            <if test="remarks != null  and remarks != ''"> and v.remarks = #{remarks}</if>
+            <if test="deleteFlag != null "> and v.delete_flag = #{deleteFlag}</if>
+            <if test="voteType != null "> and v.vote_type = #{voteType}</if>
+            <if test="userName != null and userName != '' "> and m.name like concat('%', #{userName}, '%')</if>
+            <if test="userMobile != null and userMobile != '' "> and m.mobile like concat('%', #{userMobile}, '%')</if>
+            <if test="tutorName != null and tutorName != '' "> and t.tutor_name like concat('%', #{tutorName}, '%')</if>
+            <if test="weiyima != null "> and m.weiyima like concat('%', #{weiyima}, '%')</if>
+            <if test="salt != null "> and m.salt like concat('%', #{salt}, '%')</if>
+        </where>
+        order by v.id desc
+    </select>
+    
+    <select id="selectFaTutorVoteById" parameterType="Integer" resultMap="FaTutorVoteResult">
+        <include refid="selectFaTutorVoteVo"/>
+        where v.id = #{id}
+    </select>
+        
+    <insert id="insertFaTutorVote" parameterType="FaTutorVote" useGeneratedKeys="true" keyProperty="id">
+        insert into fa_tutor_vote
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="tutorId != null">tutor_id,</if>
+            <if test="money != null">money,</if>
+            <if test="weigh != null">weigh,</if>
+            <if test="status != null">status,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="deleteFlag != null">delete_flag,</if>
+            <if test="voteType != null">vote_type,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="tutorId != null">#{tutorId},</if>
+            <if test="money != null">#{money},</if>
+            <if test="weigh != null">#{weigh},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="deleteFlag != null">#{deleteFlag},</if>
+            <if test="voteType != null">#{voteType},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFaTutorVote" parameterType="FaTutorVote">
+        update fa_tutor_vote
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="tutorId != null">tutor_id = #{tutorId},</if>
+            <if test="money != null">money = #{money},</if>
+            <if test="weigh != null">weigh = #{weigh},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="deleteFlag != null">delete_flag = #{deleteFlag},</if>
+            <if test="voteType != null">vote_type = #{voteType},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteFaTutorVoteById" parameterType="Integer">
+        update fa_tutor_vote set delete_flag = 1 where id = #{id}
+    </delete>
+
+    <delete id="deleteFaTutorVoteByIds" parameterType="String">
+        update fa_tutor_vote set delete_flag = 1 where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

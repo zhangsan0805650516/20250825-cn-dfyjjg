@@ -1,0 +1,255 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.biz.capitalLog.mapper.FaCapitalLogMapper">
+    
+    <resultMap type="FaCapitalLog" id="FaCapitalLogResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="mobile"    column="mobile"    />
+        <result property="name"    column="name"    />
+        <result property="superiorId"    column="superior_id"    />
+        <result property="superiorCode"    column="superior_code"    />
+        <result property="superiorName"    column="superior_name"    />
+        <result property="content"    column="content"    />
+        <result property="beforeMoney"    column="before_money"    />
+        <result property="laterMoney"    column="later_money"    />
+        <result property="money"    column="money"    />
+        <result property="type"    column="type"    />
+        <result property="direct"    column="direct"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="orderId"    column="order_id"    />
+        <result property="stockId"    column="stock_id"    />
+        <result property="stockName"    column="stock_name"    />
+        <result property="stockSymbol"    column="stock_symbol"    />
+        <result property="deleteFlag"    column="delete_flag"    />
+
+        <association property="faMember" columnPrefix="m_" resultMap="com.ruoyi.biz.member.mapper.FaMemberMapper.FaMemberResult" />
+    </resultMap>
+
+    <sql id="selectFaCapitalLogVo">
+        SELECT
+            cl.id,
+            cl.user_id,
+            CONCAT(SUBSTRING(cl.mobile, 1, 3), '****', SUBSTRING(cl.mobile, 8)) AS mobile,
+            cl.NAME,
+            cl.superior_id,
+            cl.superior_code,
+            cl.superior_name,
+            cl.content,
+            cl.before_money,
+            cl.later_money,
+            cl.money,
+            cl.type,
+            cl.direct,
+            cl.create_time,
+            cl.update_time,
+            cl.order_id,
+            cl.stock_id,
+            cl.stock_name,
+            cl.stock_symbol,
+            cl.delete_flag,
+            m.id m_id,
+            m.username m_username,
+            m.nickname m_nickname,
+--             m.password m_password,
+            m.salt m_salt,
+            m.mobile m_mobile,
+--             m.avatar m_avatar,
+            m.successions m_successions,
+            m.max_successions m_max_successions,
+            m.prev_time m_prev_time,
+            m.login_time m_login_time,
+--             m.login_ip m_login_ip,
+--             m.payment_code m_payment_code,
+--             m.join_ip m_join_ip,
+            m.join_time m_join_time,
+            m.create_time m_create_time,
+            m.update_time m_update_time,
+            m.status m_status,
+            m.balance m_balance,
+            m.superior_name m_superior_name,
+            m.superior_code m_superior_code,
+            m.superior_id m_superior_id,
+            m.institution_number m_institution_number,
+            m.daili_id m_daili_id,
+            m.jingzhijiaoyi m_jingzhijiaoyi,
+            m.is_pz m_is_pz,
+            m.is_dz m_is_dz,
+            m.is_ps m_is_ps,
+            m.is_sg m_is_sg,
+            m.is_zs m_is_zs,
+            m.is_qc m_is_qc,
+            m.is_qh m_is_qh,
+            m.is_inform m_is_inform,
+            m.freeze_profit m_freeze_profit,
+            m.weiyima m_weiyima,
+            m.name m_name,
+            m.id_card m_id_card,
+            m.submit_auth_time m_submit_auth_time,
+            m.auth_time m_auth_time,
+            m.is_auth m_is_auth,
+            m.auth_reject_reason m_auth_reject_reason,
+            m.auth_reject_time m_auth_reject_time,
+            m.deposit_bank m_deposit_bank,
+            m.khzhihang m_khzhihang,
+            m.account_name m_account_name,
+            m.account m_account,
+--             m.card_image m_card_image,
+            m.binding_time m_binding_time,
+            m.unbind_time m_unbind_time,
+            m.delete_flag m_delete_flag,
+            m.bank_card_auth m_bank_card_auth,
+            m.withdraw_switch m_withdraw_switch
+        FROM
+            fa_capital_log cl
+                left join fa_member m
+                          on cl.user_id = m.id
+    </sql>
+
+    <select id="selectFaCapitalLogList" parameterType="FaCapitalLog" resultMap="FaCapitalLogResult">
+        <include refid="selectFaCapitalLogVo"/>
+        <where>  
+            <if test="id != null "> and cl.id = #{id}</if>
+            <if test="userId != null "> and cl.user_id = #{userId}</if>
+            <if test="mobile != null  and mobile != ''"> and cl.mobile = #{mobile}</if>
+            <if test="name != null  and name != ''"> and cl.name like concat('%', #{name}, '%')</if>
+            <if test="superiorId != null "> and cl.superior_id = #{superiorId}</if>
+            <if test="superiorCode != null  and superiorCode != ''"> and cl.superior_code = #{superiorCode}</if>
+            <if test="superiorName != null  and superiorName != ''"> and cl.superior_name like concat('%', #{superiorName}, '%')</if>
+            <if test="content != null  and content != ''"> and cl.content = #{content}</if>
+            <if test="beforeMoney != null "> and cl.before_money = #{beforeMoney}</if>
+            <if test="laterMoney != null "> and cl.later_money = #{laterMoney}</if>
+            <if test="money != null "> and cl.money = #{money}</if>
+            <if test="type != null "> and cl.type = #{type}</if>
+            <if test="direct != null "> and cl.direct = #{direct}</if>
+            <if test="createTime != null "> and cl.create_time = #{createTime}</if>
+            <if test="updateTime != null "> and cl.update_time = #{updateTime}</if>
+            <if test="orderId != null "> and cl.order_id = #{orderId}</if>
+            <if test="stockId != null "> and cl.stock_id = #{stockId}</if>
+            <if test="stockName != null  and stockName != ''"> and cl.stock_name = #{stockName}</if>
+            <if test="stockSymbol != null  and stockSymbol != ''"> and cl.stock_symbol = #{stockSymbol}</if>
+            <if test="deleteFlag != null "> and cl.delete_flag = #{deleteFlag}</if>
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                AND date_format(cl.create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+            </if>
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                AND date_format(cl.create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+            </if>
+            <if test="weiyima != null "> and m.weiyima like concat('%', #{weiyima}, '%')</if>
+            <if test="salt != null "> and m.salt like concat('%', #{salt}, '%')</if>
+        </where>
+        and cl.user_id in (
+            SELECT
+                m.id
+            FROM
+                fa_member m
+            WHERE
+                m.daili_id IN ( SELECT #{parentId} UNION ALL SELECT u.user_id FROM sys_user u WHERE u.path LIKE concat('%,', #{parentId}, ',%') )
+        )
+        order by id desc
+    </select>
+    
+    <select id="selectFaCapitalLogById" parameterType="Integer" resultMap="FaCapitalLogResult">
+        <include refid="selectFaCapitalLogVo"/>
+        where cl.id = #{id}
+    </select>
+        
+    <insert id="insertFaCapitalLog" parameterType="FaCapitalLog" useGeneratedKeys="true" keyProperty="id">
+        insert into fa_capital_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="mobile != null">mobile,</if>
+            <if test="name != null">name,</if>
+            <if test="superiorId != null">superior_id,</if>
+            <if test="superiorCode != null">superior_code,</if>
+            <if test="superiorName != null">superior_name,</if>
+            <if test="content != null">content,</if>
+            <if test="beforeMoney != null">before_money,</if>
+            <if test="laterMoney != null">later_money,</if>
+            <if test="money != null">money,</if>
+            <if test="type != null">type,</if>
+            <if test="direct != null">direct,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="orderId != null">order_id,</if>
+            <if test="stockId != null">stock_id,</if>
+            <if test="stockName != null">stock_name,</if>
+            <if test="stockSymbol != null">stock_symbol,</if>
+            <if test="deleteFlag != null">delete_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="mobile != null">#{mobile},</if>
+            <if test="name != null">#{name},</if>
+            <if test="superiorId != null">#{superiorId},</if>
+            <if test="superiorCode != null">#{superiorCode},</if>
+            <if test="superiorName != null">#{superiorName},</if>
+            <if test="content != null">#{content},</if>
+            <if test="beforeMoney != null">#{beforeMoney},</if>
+            <if test="laterMoney != null">#{laterMoney},</if>
+            <if test="money != null">#{money},</if>
+            <if test="type != null">#{type},</if>
+            <if test="direct != null">#{direct},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="orderId != null">#{orderId},</if>
+            <if test="stockId != null">#{stockId},</if>
+            <if test="stockName != null">#{stockName},</if>
+            <if test="stockSymbol != null">#{stockSymbol},</if>
+            <if test="deleteFlag != null">#{deleteFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFaCapitalLog" parameterType="FaCapitalLog">
+        update fa_capital_log
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="mobile != null">mobile = #{mobile},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="superiorId != null">superior_id = #{superiorId},</if>
+            <if test="superiorCode != null">superior_code = #{superiorCode},</if>
+            <if test="superiorName != null">superior_name = #{superiorName},</if>
+            <if test="content != null">content = #{content},</if>
+            <if test="beforeMoney != null">before_money = #{beforeMoney},</if>
+            <if test="laterMoney != null">later_money = #{laterMoney},</if>
+            <if test="money != null">money = #{money},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="direct != null">direct = #{direct},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="orderId != null">order_id = #{orderId},</if>
+            <if test="stockId != null">stock_id = #{stockId},</if>
+            <if test="stockName != null">stock_name = #{stockName},</if>
+            <if test="stockSymbol != null">stock_symbol = #{stockSymbol},</if>
+            <if test="deleteFlag != null">delete_flag = #{deleteFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteFaCapitalLogById" parameterType="Integer">
+        update fa_capital_log set delete_flag = 1 where id = #{id}
+    </delete>
+
+    <delete id="deleteFaCapitalLogByIds" parameterType="String">
+        update fa_capital_log set delete_flag = 1 where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="getFundPoolTotal" resultType="java.math.BigDecimal">
+        select cl.later_money from fa_capital_log cl where cl.user_id = 1 and cl.delete_flag = 0 ORDER BY cl.id DESC limit 1
+    </select>
+
+    <select id="getFundPoolInTotal" resultType="java.math.BigDecimal">
+        select COALESCE(SUM(cl.money), 0) from fa_capital_log cl where cl.user_id = 1 and cl.delete_flag = 0 and cl.type = 1004
+    </select>
+
+    <select id="getFundPoolOutTotal" resultType="java.math.BigDecimal">
+        select COALESCE(SUM(cl.money), 0) from fa_capital_log cl where cl.user_id = 1 and cl.delete_flag = 0 and cl.type = 1003
+    </select>
+
+</mapper>

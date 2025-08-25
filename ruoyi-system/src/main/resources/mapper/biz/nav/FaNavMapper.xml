@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.biz.nav.mapper.FaNavMapper">
+    
+    <resultMap type="FaNav" id="FaNavResult">
+        <result property="id"    column="id"    />
+        <result property="title"    column="title"    />
+        <result property="image"    column="image"    />
+        <result property="link"    column="link"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="deleteTime"    column="delete_time"    />
+        <result property="type"    column="type"    />
+        <result property="linkType"    column="link_type"    />
+        <result property="status"    column="status"    />
+        <result property="sort"    column="sort"    />
+        <result property="deleteFlag"    column="delete_flag"    />
+    </resultMap>
+
+    <sql id="selectFaNavVo">
+        select n.id, n.title, n.image, n.link, n.create_time, n.update_time, n.delete_time, n.type, n.link_type, n.status, n.sort, n.delete_flag from fa_nav n
+    </sql>
+
+    <select id="selectFaNavList" parameterType="FaNav" resultMap="FaNavResult">
+        <include refid="selectFaNavVo"/>
+        <where>  
+            <if test="id != null "> and n.id = #{id}</if>
+            <if test="title != null  and title != ''"> and n.title = #{title}</if>
+            <if test="image != null  and image != ''"> and n.image = #{image}</if>
+            <if test="link != null  and link != ''"> and n.link = #{link}</if>
+            <if test="createTime != null "> and n.create_time = #{createTime}</if>
+            <if test="updateTime != null "> and n.update_time = #{updateTime}</if>
+            <if test="deleteTime != null "> and n.delete_time = #{deleteTime}</if>
+            <if test="type != null "> and n.type = #{type}</if>
+            <if test="linkType != null "> and n.link_type = #{linkType}</if>
+            <if test="status != null "> and n.status = #{status}</if>
+            <if test="sort != null "> and n.sort = #{sort}</if>
+            <if test="deleteFlag != null "> and n.delete_flag = #{deleteFlag}</if>
+        </where>
+        order by n.type asc , n.sort asc
+    </select>
+    
+    <select id="selectFaNavById" parameterType="Integer" resultMap="FaNavResult">
+        <include refid="selectFaNavVo"/>
+        where n.id = #{id}
+    </select>
+        
+    <insert id="insertFaNav" parameterType="FaNav" useGeneratedKeys="true" keyProperty="id">
+        insert into fa_nav
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="title != null">title,</if>
+            <if test="image != null">image,</if>
+            <if test="link != null">link,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="deleteTime != null">delete_time,</if>
+            <if test="type != null">type,</if>
+            <if test="linkType != null">link_type,</if>
+            <if test="status != null">status,</if>
+            <if test="sort != null">sort,</if>
+            <if test="deleteFlag != null">delete_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="title != null">#{title},</if>
+            <if test="image != null">#{image},</if>
+            <if test="link != null">#{link},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="deleteTime != null">#{deleteTime},</if>
+            <if test="type != null">#{type},</if>
+            <if test="linkType != null">#{linkType},</if>
+            <if test="status != null">#{status},</if>
+            <if test="sort != null">#{sort},</if>
+            <if test="deleteFlag != null">#{deleteFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFaNav" parameterType="FaNav">
+        update fa_nav
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="title != null">title = #{title},</if>
+            <if test="image != null">image = #{image},</if>
+            <if test="link != null">link = #{link},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="deleteTime != null">delete_time = #{deleteTime},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="linkType != null">link_type = #{linkType},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="deleteFlag != null">delete_flag = #{deleteFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteFaNavById" parameterType="Integer">
+        update fa_nav set delete_flag = 1 where id = #{id}
+    </delete>
+
+    <delete id="deleteFaNavByIds" parameterType="String">
+        update fa_nav set delete_flag = 1 where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

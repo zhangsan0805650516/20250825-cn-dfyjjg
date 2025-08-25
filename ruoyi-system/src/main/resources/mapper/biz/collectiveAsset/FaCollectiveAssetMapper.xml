@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.biz.collectiveAsset.mapper.FaCollectiveAssetMapper">
+    
+    <resultMap type="FaCollectiveAsset" id="FaCollectiveAssetResult">
+        <result property="id"    column="id"    />
+        <result property="assetName"    column="asset_name"    />
+        <result property="assetCode"    column="asset_code"    />
+        <result property="assetTotalAmount"    column="asset_total_amount"    />
+        <result property="sellTotalAmount"    column="sell_total_amount"    />
+        <result property="assetRedeemAmount"    column="asset_redeem_amount"    />
+        <result property="redeemTotalAmount"    column="redeem_total_amount"    />
+        <result property="assetSecret"    column="asset_secret"    />
+        <result property="earningRate"    column="earning_rate"    />
+        <result property="status"    column="status"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="deleteFlag"    column="delete_flag"    />
+    </resultMap>
+
+    <sql id="selectFaCollectiveAssetVo">
+        select id, asset_name, asset_code, asset_total_amount, sell_total_amount, asset_redeem_amount, redeem_total_amount, asset_secret, earning_rate, status, create_time, create_by, update_time, update_by, remarks, delete_flag from fa_collective_asset
+    </sql>
+
+    <select id="selectFaCollectiveAssetList" parameterType="FaCollectiveAsset" resultMap="FaCollectiveAssetResult">
+        <include refid="selectFaCollectiveAssetVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+            <if test="assetName != null  and assetName != ''"> and asset_name like concat('%', #{assetName}, '%')</if>
+            <if test="assetCode != null  and assetCode != ''"> and asset_code = #{assetCode}</if>
+            <if test="assetTotalAmount != null "> and asset_total_amount = #{assetTotalAmount}</if>
+            <if test="sellTotalAmount != null "> and sell_total_amount = #{sellTotalAmount}</if>
+            <if test="assetRedeemAmount != null "> and asset_redeem_amount = #{assetRedeemAmount}</if>
+            <if test="redeemTotalAmount != null "> and redeem_total_amount = #{redeemTotalAmount}</if>
+            <if test="assetSecret != null  and assetSecret != ''"> and asset_secret = #{assetSecret}</if>
+            <if test="earningRate != null "> and earning_rate = #{earningRate}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="createTime != null "> and create_time = #{createTime}</if>
+            <if test="createBy != null  and createBy != ''"> and create_by = #{createBy}</if>
+            <if test="updateTime != null "> and update_time = #{updateTime}</if>
+            <if test="updateBy != null  and updateBy != ''"> and update_by = #{updateBy}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="deleteFlag != null "> and delete_flag = #{deleteFlag}</if>
+        </where>
+    </select>
+    
+    <select id="selectFaCollectiveAssetById" parameterType="Integer" resultMap="FaCollectiveAssetResult">
+        <include refid="selectFaCollectiveAssetVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertFaCollectiveAsset" parameterType="FaCollectiveAsset" useGeneratedKeys="true" keyProperty="id">
+        insert into fa_collective_asset
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="assetName != null">asset_name,</if>
+            <if test="assetCode != null">asset_code,</if>
+            <if test="assetTotalAmount != null">asset_total_amount,</if>
+            <if test="sellTotalAmount != null">sell_total_amount,</if>
+            <if test="assetRedeemAmount != null">asset_redeem_amount,</if>
+            <if test="redeemTotalAmount != null">redeem_total_amount,</if>
+            <if test="assetSecret != null">asset_secret,</if>
+            <if test="earningRate != null">earning_rate,</if>
+            <if test="status != null">status,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="deleteFlag != null">delete_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="assetName != null">#{assetName},</if>
+            <if test="assetCode != null">#{assetCode},</if>
+            <if test="assetTotalAmount != null">#{assetTotalAmount},</if>
+            <if test="sellTotalAmount != null">#{sellTotalAmount},</if>
+            <if test="assetRedeemAmount != null">#{assetRedeemAmount},</if>
+            <if test="redeemTotalAmount != null">#{redeemTotalAmount},</if>
+            <if test="assetSecret != null">#{assetSecret},</if>
+            <if test="earningRate != null">#{earningRate},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="deleteFlag != null">#{deleteFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFaCollectiveAsset" parameterType="FaCollectiveAsset">
+        update fa_collective_asset
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="assetName != null">asset_name = #{assetName},</if>
+            <if test="assetCode != null">asset_code = #{assetCode},</if>
+            <if test="assetTotalAmount != null">asset_total_amount = #{assetTotalAmount},</if>
+            <if test="sellTotalAmount != null">sell_total_amount = #{sellTotalAmount},</if>
+            <if test="assetRedeemAmount != null">asset_redeem_amount = #{assetRedeemAmount},</if>
+            <if test="redeemTotalAmount != null">redeem_total_amount = #{redeemTotalAmount},</if>
+            <if test="assetSecret != null">asset_secret = #{assetSecret},</if>
+            <if test="earningRate != null">earning_rate = #{earningRate},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="deleteFlag != null">delete_flag = #{deleteFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteFaCollectiveAssetById" parameterType="Integer">
+        update fa_collective_asset set delete_flag = 1 where id = #{id}
+    </delete>
+
+    <delete id="deleteFaCollectiveAssetByIds" parameterType="String">
+        update fa_collective_asset set delete_flag = 1 where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

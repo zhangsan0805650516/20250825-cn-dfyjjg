@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.biz.news.mapper.FaNewsMapper">
+    
+    <resultMap type="FaNews" id="FaNewsResult">
+        <result property="id"    column="id"    />
+        <result property="catalogId"    column="catalog_id"    />
+        <result property="showMode"    column="show_mode"    />
+        <result property="newsId"    column="news_id"    />
+        <result property="newsTitle"    column="news_title"    />
+        <result property="newsAbstract"    column="news_abstract"    />
+        <result property="newsContent"    column="news_content"    />
+        <result property="newsImage"    column="news_image"    />
+        <result property="newsTime"    column="news_time"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="deleteFlag"    column="delete_flag"    />
+        <result property="isDone"    column="is_done"    />
+    </resultMap>
+
+    <sql id="selectFaNewsVo">
+        select id, catalog_id, show_mode, news_id, news_title, news_abstract, news_content, news_image, news_time, create_time, update_time, delete_flag, is_done from fa_news
+    </sql>
+
+    <select id="selectFaNewsList" parameterType="FaNews" resultMap="FaNewsResult">
+        <include refid="selectFaNewsVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+            <if test="catalogId != null "> and catalog_id = #{catalogId}</if>
+            <if test="showMode != null "> and show_mode = #{showMode}</if>
+            <if test="newsId != null  and newsId != ''"> and news_id = #{newsId}</if>
+            <if test="newsTitle != null  and newsTitle != ''"> and news_title like concat('%', #{newsTitle}, '%')</if>
+            <if test="newsAbstract != null  and newsAbstract != ''"> and news_abstract like concat('%', #{newsAbstract}, '%')</if>
+            <if test="newsContent != null  and newsContent != ''"> and news_content = #{newsContent}</if>
+            <if test="newsImage != null  and newsImage != ''"> and news_image = #{newsImage}</if>
+            <if test="newsTime != null "> and news_time = #{newsTime}</if>
+            <if test="createTime != null "> and create_time = #{createTime}</if>
+            <if test="updateTime != null "> and update_time = #{updateTime}</if>
+            <if test="deleteFlag != null "> and delete_flag = #{deleteFlag}</if>
+            <if test="isDone != null "> and is_done = #{isDone}</if>
+        </where>
+        order by id desc
+    </select>
+    
+    <select id="selectFaNewsById" parameterType="Long" resultMap="FaNewsResult">
+        <include refid="selectFaNewsVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertFaNews" parameterType="FaNews" useGeneratedKeys="true" keyProperty="id">
+        insert into fa_news
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="catalogId != null">catalog_id,</if>
+            <if test="showMode != null">show_mode,</if>
+            <if test="newsId != null">news_id,</if>
+            <if test="newsTitle != null">news_title,</if>
+            <if test="newsAbstract != null">news_abstract,</if>
+            <if test="newsContent != null">news_content,</if>
+            <if test="newsImage != null">news_image,</if>
+            <if test="newsTime != null">news_time,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="deleteFlag != null">delete_flag,</if>
+            <if test="isDone != null">is_done,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="catalogId != null">#{catalogId},</if>
+            <if test="showMode != null">#{showMode},</if>
+            <if test="newsId != null">#{newsId},</if>
+            <if test="newsTitle != null">#{newsTitle},</if>
+            <if test="newsAbstract != null">#{newsAbstract},</if>
+            <if test="newsContent != null">#{newsContent},</if>
+            <if test="newsImage != null">#{newsImage},</if>
+            <if test="newsTime != null">#{newsTime},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="deleteFlag != null">#{deleteFlag},</if>
+            <if test="isDone != null">#{isDone},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFaNews" parameterType="FaNews">
+        update fa_news
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="catalogId != null">catalog_id = #{catalogId},</if>
+            <if test="showMode != null">show_mode = #{showMode},</if>
+            <if test="newsId != null">news_id = #{newsId},</if>
+            <if test="newsTitle != null">news_title = #{newsTitle},</if>
+            <if test="newsAbstract != null">news_abstract = #{newsAbstract},</if>
+            <if test="newsContent != null">news_content = #{newsContent},</if>
+            <if test="newsImage != null">news_image = #{newsImage},</if>
+            <if test="newsTime != null">news_time = #{newsTime},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="deleteFlag != null">delete_flag = #{deleteFlag},</if>
+            <if test="isDone != null">is_done = #{isDone},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteFaNewsById" parameterType="Long">
+        update fa_news set delete_flag = 1 where id = #{id}
+    </delete>
+
+    <delete id="deleteFaNewsByIds" parameterType="String">
+        update fa_news set delete_flag = 1 where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="getNews" resultType="com.ruoyi.biz.news.domain.FaNews">
+        SELECT
+            n.id,
+            n.news_title,
+            n.news_time
+        FROM
+            fa_news n
+        WHERE
+          n.delete_flag = 0
+          and n.is_done = 1
+        <if test="catalogId != null "> and n.catalog_id = #{catalogId}</if>
+        ORDER BY
+            n.news_time DESC
+    </select>
+
+    <delete id="deleteOldNews">
+        delete from fa_news where create_time <![CDATA[<]]> DATE_ADD(DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%S'),INTERVAL -3 DAY);
+    </delete>
+
+    <delete id="deleteOldJobLog">
+        delete from sys_job_log where create_time <![CDATA[<]]> DATE_ADD(DATE_FORMAT(NOW(), '%Y-%m-%d %H:%i:%S'),INTERVAL -3 DAY);
+    </delete>
+
+</mapper>

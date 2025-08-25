@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.biz.stockTrading.mapper.FaStockTradingMapper">
+    
+    <resultMap type="FaStockTrading" id="FaStockTradingResult">
+        <result property="id"    column="id"    />
+        <result property="memberId"    column="member_id"    />
+        <result property="stockId"    column="stock_id"    />
+        <result property="stockName"    column="stock_name"    />
+        <result property="stockSymbol"    column="stock_symbol"    />
+        <result property="allCode"    column="all_code"    />
+        <result property="holdId"    column="hold_id"    />
+        <result property="date"    column="date"    />
+        <result property="time"    column="time"    />
+        <result property="tradingHand"    column="trading_hand"    />
+        <result property="tradingNumber"    column="trading_number"    />
+        <result property="tradingPrice"    column="trading_price"    />
+        <result property="tradingAmount"    column="trading_amount"    />
+        <result property="tradingType"    column="trading_type"    />
+        <result property="tradingPoundage"    column="trading_poundage"    />
+        <result property="stampDuty"    column="stamp_duty"    />
+        <result property="status"    column="status"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="deleteFlag"    column="delete_flag"    />
+        <result property="remark"    column="remark"    />
+        <result property="tradeDirect"    column="trade_direct"    />
+        <result property="leverage"    column="leverage"    />
+        <result property="guaranteeAmount"    column="guarantee_amount"    />
+
+        <association property="faMember" columnPrefix="m_" resultMap="com.ruoyi.biz.member.mapper.FaMemberMapper.FaMemberResult" />
+    </resultMap>
+
+    <sql id="selectFaStockTradingVo">
+        select
+            st.id,
+            st.member_id,
+            st.stock_id,
+            st.stock_name,
+            st.stock_symbol,
+            st.all_code,
+            st.hold_id,
+            st.date,
+            st.time,
+            st.trading_hand,
+            st.trading_number,
+            st.trading_price,
+            st.trading_amount,
+            st.trading_type,
+            st.trading_poundage,
+            st.stamp_duty,
+            st.status,
+            st.create_time,
+            st.update_time,
+            st.delete_flag,
+            st.remark,
+            st.trade_direct,
+            st.leverage,
+            st.guarantee_amount,
+            m.id m_id,
+            m.username m_username,
+            m.nickname m_nickname,
+--             m.password m_password,
+            m.salt m_salt,
+            m.mobile m_mobile,
+--             m.avatar m_avatar,
+            m.successions m_successions,
+            m.max_successions m_max_successions,
+            m.prev_time m_prev_time,
+            m.login_time m_login_time,
+--             m.login_ip m_login_ip,
+--             m.payment_code m_payment_code,
+--             m.join_ip m_join_ip,
+            m.join_time m_join_time,
+            m.create_time m_create_time,
+            m.update_time m_update_time,
+            m.status m_status,
+            m.balance m_balance,
+            m.superior_name m_superior_name,
+            m.superior_code m_superior_code,
+            m.superior_id m_superior_id,
+            m.institution_number m_institution_number,
+            m.daili_id m_daili_id,
+            m.jingzhijiaoyi m_jingzhijiaoyi,
+            m.is_pz m_is_pz,
+            m.is_dz m_is_dz,
+            m.is_ps m_is_ps,
+            m.is_sg m_is_sg,
+            m.is_zs m_is_zs,
+            m.is_qc m_is_qc,
+            m.is_qh m_is_qh,
+            m.is_inform m_is_inform,
+            m.freeze_profit m_freeze_profit,
+            m.weiyima m_weiyima,
+            m.name m_name,
+            m.id_card m_id_card,
+            m.submit_auth_time m_submit_auth_time,
+            m.auth_time m_auth_time,
+            m.is_auth m_is_auth,
+            m.auth_reject_reason m_auth_reject_reason,
+            m.auth_reject_time m_auth_reject_time,
+            m.deposit_bank m_deposit_bank,
+            m.khzhihang m_khzhihang,
+            m.account_name m_account_name,
+            m.account m_account,
+--             m.card_image m_card_image,
+            m.binding_time m_binding_time,
+            m.unbind_time m_unbind_time,
+            m.delete_flag m_delete_flag,
+            m.bank_card_auth m_bank_card_auth,
+            m.withdraw_switch m_withdraw_switch
+        from fa_stock_trading st
+        left join fa_member m
+        on st.member_id = m.id
+    </sql>
+
+    <select id="selectFaStockTradingList" parameterType="FaStockTrading" resultMap="FaStockTradingResult">
+        <include refid="selectFaStockTradingVo"/>
+        <where>  
+            <if test="id != null "> and st.id = #{id}</if>
+            <if test="memberId != null "> and st.member_id = #{memberId}</if>
+            <if test="stockId != null "> and st.stock_id = #{stockId}</if>
+            <if test="stockName != null  and stockName != ''"> and st.stock_name like concat('%', #{stockName}, '%')</if>
+            <if test="stockSymbol != null  and stockSymbol != ''"> and st.stock_symbol = #{stockSymbol}</if>
+            <if test="allCode != null  and allCode != ''"> and st.all_code = #{allCode}</if>
+            <if test="holdId != null "> and st.hold_id = #{holdId}</if>
+            <if test="date != null "> and st.date = #{date}</if>
+            <if test="time != null "> and st.time = #{time}</if>
+            <if test="tradingHand != null "> and st.trading_hand = #{tradingHand}</if>
+            <if test="tradingNumber != null "> and st.trading_number = #{tradingNumber}</if>
+            <if test="tradingPrice != null "> and st.trading_price = #{tradingPrice}</if>
+            <if test="tradingAmount != null "> and st.trading_amount = #{tradingAmount}</if>
+            <if test="tradingType != null "> and st.trading_type = #{tradingType}</if>
+            <if test="tradingPoundage != null "> and st.trading_poundage = #{tradingPoundage}</if>
+            <if test="stampDuty != null "> and st.stamp_duty = #{stampDuty}</if>
+            <if test="status != null "> and st.status = #{status}</if>
+            <if test="createTime != null "> and st.create_time = #{createTime}</if>
+            <if test="updateTime != null "> and st.update_time = #{updateTime}</if>
+            <if test="deleteFlag != null "> and st.delete_flag = #{deleteFlag}</if>
+            <if test="remark != null  and remark != ''"> and st.remark = #{remark}</if>
+            <if test="tradeDirect != null "> and st.trade_direct = #{tradeDirect}</if>
+            <if test="leverage != null "> and st.leverage = #{leverage}</if>
+            <if test="guaranteeAmount != null "> and st.guarantee_amount = #{guaranteeAmount}</if>
+<!--            <if test="dailiId != null "> and m.daili_id = #{dailiId}</if>-->
+            <if test="memberName != null "> and m.name like concat('%', #{memberName}, '%')</if>
+            <if test="mobile != null "> and m.mobile like concat('%', #{mobile}, '%')</if>
+            <if test="weiyima != null "> and m.weiyima like concat('%', #{weiyima}, '%')</if>
+            <if test="salt != null "> and m.salt like concat('%', #{salt}, '%')</if>
+        </where>
+        and st.member_id in (
+        SELECT
+        m.id
+        FROM
+        fa_member m
+        WHERE
+        m.daili_id IN ( SELECT #{parentId} UNION ALL SELECT u.user_id FROM sys_user u WHERE u.path LIKE concat('%,', #{parentId}, ',%') )
+        )
+        order by st.id desc
+    </select>
+    
+    <select id="selectFaStockTradingById" parameterType="Integer" resultMap="FaStockTradingResult">
+        <include refid="selectFaStockTradingVo"/>
+        where st.id = #{id}
+    </select>
+
+    <insert id="insertFaStockTrading" parameterType="FaStockTrading" useGeneratedKeys="true" keyProperty="id">
+        insert into fa_stock_trading
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="memberId != null">member_id,</if>
+            <if test="stockId != null">stock_id,</if>
+            <if test="stockName != null">stock_name,</if>
+            <if test="stockSymbol != null">stock_symbol,</if>
+            <if test="allCode != null">all_code,</if>
+            <if test="holdId != null">hold_id,</if>
+            <if test="date != null">date,</if>
+            <if test="time != null">time,</if>
+            <if test="tradingHand != null">trading_hand,</if>
+            <if test="tradingNumber != null">trading_number,</if>
+            <if test="tradingPrice != null">trading_price,</if>
+            <if test="tradingAmount != null">trading_amount,</if>
+            <if test="tradingType != null">trading_type,</if>
+            <if test="tradingPoundage != null">trading_poundage,</if>
+            <if test="stampDuty != null">stamp_duty,</if>
+            <if test="status != null">status,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="deleteFlag != null">delete_flag,</if>
+            <if test="remark != null">remark,</if>
+            <if test="tradeDirect != null">trade_direct,</if>
+            <if test="leverage != null">leverage,</if>
+            <if test="guaranteeAmount != null">guarantee_amount,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="memberId != null">#{memberId},</if>
+            <if test="stockId != null">#{stockId},</if>
+            <if test="stockName != null">#{stockName},</if>
+            <if test="stockSymbol != null">#{stockSymbol},</if>
+            <if test="allCode != null">#{allCode},</if>
+            <if test="holdId != null">#{holdId},</if>
+            <if test="date != null">#{date},</if>
+            <if test="time != null">#{time},</if>
+            <if test="tradingHand != null">#{tradingHand},</if>
+            <if test="tradingNumber != null">#{tradingNumber},</if>
+            <if test="tradingPrice != null">#{tradingPrice},</if>
+            <if test="tradingAmount != null">#{tradingAmount},</if>
+            <if test="tradingType != null">#{tradingType},</if>
+            <if test="tradingPoundage != null">#{tradingPoundage},</if>
+            <if test="stampDuty != null">#{stampDuty},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="deleteFlag != null">#{deleteFlag},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="tradeDirect != null">#{tradeDirect},</if>
+            <if test="leverage != null">#{leverage},</if>
+            <if test="guaranteeAmount != null">#{guaranteeAmount},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFaStockTrading" parameterType="FaStockTrading">
+        update fa_stock_trading
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="memberId != null">member_id = #{memberId},</if>
+            <if test="stockId != null">stock_id = #{stockId},</if>
+            <if test="stockName != null">stock_name = #{stockName},</if>
+            <if test="stockSymbol != null">stock_symbol = #{stockSymbol},</if>
+            <if test="allCode != null">all_code = #{allCode},</if>
+            <if test="holdId != null">hold_id = #{holdId},</if>
+            <if test="date != null">date = #{date},</if>
+            <if test="time != null">time = #{time},</if>
+            <if test="tradingHand != null">trading_hand = #{tradingHand},</if>
+            <if test="tradingNumber != null">trading_number = #{tradingNumber},</if>
+            <if test="tradingPrice != null">trading_price = #{tradingPrice},</if>
+            <if test="tradingAmount != null">trading_amount = #{tradingAmount},</if>
+            <if test="tradingType != null">trading_type = #{tradingType},</if>
+            <if test="tradingPoundage != null">trading_poundage = #{tradingPoundage},</if>
+            <if test="stampDuty != null">stamp_duty = #{stampDuty},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="deleteFlag != null">delete_flag = #{deleteFlag},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="tradeDirect != null">tradeDirect = #{tradeDirect},</if>
+            <if test="leverage != null">leverage = #{leverage},</if>
+            <if test="guaranteeAmount != null">guarantee_amount = #{guaranteeAmount},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteFaStockTradingById" parameterType="Integer">
+        update fa_stock_trading set delete_flag = 1 where id = #{id}
+    </delete>
+
+    <delete id="deleteFaStockTradingByIds" parameterType="String">
+        update fa_stock_trading set delete_flag = 1 where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="getTradingStatistics" resultType="java.util.Map">
+        select
+            COALESCE(sum( st.trading_poundage ), 0) buyPoundage,
+            COALESCE(sum( st.stamp_duty ), 0) stampDuty
+        from fa_stock_trading st
+            left join fa_member m
+            on st.member_id = m.id
+        <where>
+            <if test="id != null "> and st.id = #{id}</if>
+            <if test="memberId != null "> and st.member_id = #{memberId}</if>
+            <if test="stockId != null "> and st.stock_id = #{stockId}</if>
+            <if test="stockName != null  and stockName != ''"> and st.stock_name like concat('%', #{stockName}, '%')</if>
+            <if test="stockSymbol != null  and stockSymbol != ''"> and st.stock_symbol = #{stockSymbol}</if>
+            <if test="allCode != null  and allCode != ''"> and st.all_code = #{allCode}</if>
+            <if test="holdId != null "> and st.hold_id = #{holdId}</if>
+            <if test="date != null "> and st.date = #{date}</if>
+            <if test="time != null "> and st.time = #{time}</if>
+            <if test="tradingNumber != null "> and st.trading_number = #{tradingNumber}</if>
+            <if test="tradingPrice != null "> and st.trading_price = #{tradingPrice}</if>
+            <if test="tradingAmount != null "> and st.trading_amount = #{tradingAmount}</if>
+            <if test="tradingType != null "> and st.trading_type = #{tradingType}</if>
+            <if test="tradingPoundage != null "> and st.trading_poundage = #{tradingPoundage}</if>
+            <if test="stampDuty != null "> and st.stamp_duty = #{stampDuty}</if>
+            <if test="status != null "> and st.status = #{status}</if>
+            <if test="createTime != null "> and st.create_time = #{createTime}</if>
+            <if test="updateTime != null "> and st.update_time = #{updateTime}</if>
+            <if test="deleteFlag != null "> and st.delete_flag = #{deleteFlag}</if>
+            <if test="remark != null  and remark != ''"> and st.remark = #{remark}</if>
+<!--            <if test="dailiId != null "> and m.daili_id = #{dailiId}</if>-->
+            <if test="memberName != null "> and m.name like concat('%', #{memberName}, '%')</if>
+            <if test="mobile != null "> and m.mobile like concat('%', #{mobile}, '%')</if>
+            <if test="isSimulation != null  and isSimulation != ''"> and m.is_simulation = #{isSimulation}</if>
+            <if test="weiyima != null "> and m.weiyima like concat('%', #{weiyima}, '%')</if>
+        </where>
+    </select>
+
+    <select id="getTotalBuyFee" resultType="java.math.BigDecimal">
+        select
+        COALESCE(sum( st.trading_poundage ), 0) buyPoundage
+        from fa_stock_trading st
+        left join fa_member m
+        on st.member_id = m.id
+        <where>
+            <if test="id != null "> and st.id = #{id}</if>
+            <if test="memberId != null "> and st.member_id = #{memberId}</if>
+            <if test="stockId != null "> and st.stock_id = #{stockId}</if>
+            <if test="stockName != null  and stockName != ''"> and st.stock_name like concat('%', #{stockName}, '%')</if>
+            <if test="stockSymbol != null  and stockSymbol != ''"> and st.stock_symbol = #{stockSymbol}</if>
+            <if test="allCode != null  and allCode != ''"> and st.all_code = #{allCode}</if>
+            <if test="holdId != null "> and st.hold_id = #{holdId}</if>
+            <if test="date != null "> and st.date = #{date}</if>
+            <if test="time != null "> and st.time = #{time}</if>
+            <if test="tradingNumber != null "> and st.trading_number = #{tradingNumber}</if>
+            <if test="tradingPrice != null "> and st.trading_price = #{tradingPrice}</if>
+            <if test="tradingAmount != null "> and st.trading_amount = #{tradingAmount}</if>
+            <if test="tradingType != null "> and st.trading_type = #{tradingType}</if>
+            <if test="tradingPoundage != null "> and st.trading_poundage = #{tradingPoundage}</if>
+            <if test="stampDuty != null "> and st.stamp_duty = #{stampDuty}</if>
+            <if test="status != null "> and st.status = #{status}</if>
+            <if test="createTime != null "> and st.create_time = #{createTime}</if>
+            <if test="updateTime != null "> and st.update_time = #{updateTime}</if>
+            <if test="deleteFlag != null "> and st.delete_flag = #{deleteFlag}</if>
+            <if test="remark != null  and remark != ''"> and st.remark = #{remark}</if>
+<!--            <if test="dailiId != null "> and m.daili_id = #{dailiId}</if>-->
+            <if test="memberName != null "> and m.name like concat('%', #{memberName}, '%')</if>
+            <if test="mobile != null "> and m.mobile like concat('%', #{mobile}, '%')</if>
+            <if test="isSimulation != null  and isSimulation != ''"> and m.is_simulation = #{isSimulation}</if>
+            <if test="weiyima != null "> and m.weiyima like concat('%', #{weiyima}, '%')</if>
+        </where>
+        and st.trading_type = 1
+        and m.daili_id in ( select #{parentId} union all select u.user_id from sys_user u where u.path like concat('%,', #{parentId}, ',%'))
+    </select>
+
+    <select id="getTotalSellFee" resultType="java.math.BigDecimal">
+        select
+        COALESCE(sum( st.trading_poundage ), 0) sellPoundage
+        from fa_stock_trading st
+        left join fa_member m
+        on st.member_id = m.id
+        <where>
+            <if test="id != null "> and st.id = #{id}</if>
+            <if test="memberId != null "> and st.member_id = #{memberId}</if>
+            <if test="stockId != null "> and st.stock_id = #{stockId}</if>
+            <if test="stockName != null  and stockName != ''"> and st.stock_name like concat('%', #{stockName}, '%')</if>
+            <if test="stockSymbol != null  and stockSymbol != ''"> and st.stock_symbol = #{stockSymbol}</if>
+            <if test="allCode != null  and allCode != ''"> and st.all_code = #{allCode}</if>
+            <if test="holdId != null "> and st.hold_id = #{holdId}</if>
+            <if test="date != null "> and st.date = #{date}</if>
+            <if test="time != null "> and st.time = #{time}</if>
+            <if test="tradingNumber != null "> and st.trading_number = #{tradingNumber}</if>
+            <if test="tradingPrice != null "> and st.trading_price = #{tradingPrice}</if>
+            <if test="tradingAmount != null "> and st.trading_amount = #{tradingAmount}</if>
+            <if test="tradingType != null "> and st.trading_type = #{tradingType}</if>
+            <if test="tradingPoundage != null "> and st.trading_poundage = #{tradingPoundage}</if>
+            <if test="stampDuty != null "> and st.stamp_duty = #{stampDuty}</if>
+            <if test="status != null "> and st.status = #{status}</if>
+            <if test="createTime != null "> and st.create_time = #{createTime}</if>
+            <if test="updateTime != null "> and st.update_time = #{updateTime}</if>
+            <if test="deleteFlag != null "> and st.delete_flag = #{deleteFlag}</if>
+            <if test="remark != null  and remark != ''"> and st.remark = #{remark}</if>
+<!--            <if test="dailiId != null "> and m.daili_id = #{dailiId}</if>-->
+            <if test="memberName != null "> and m.name like concat('%', #{memberName}, '%')</if>
+            <if test="mobile != null "> and m.mobile like concat('%', #{mobile}, '%')</if>
+            <if test="isSimulation != null  and isSimulation != ''"> and m.is_simulation = #{isSimulation}</if>
+            <if test="weiyima != null "> and m.weiyima like concat('%', #{weiyima}, '%')</if>
+        </where>
+        and st.trading_type = 2
+        and m.daili_id in ( select #{parentId} union all select u.user_id from sys_user u where u.path like concat('%,', #{parentId}, ',%'))
+    </select>
+
+    <select id="getTotalStampDuty" resultType="java.math.BigDecimal">
+        select
+        COALESCE(sum( st.stamp_duty ), 0) stampDuty
+        from fa_stock_trading st
+        left join fa_member m
+        on st.member_id = m.id
+        <where>
+            <if test="id != null "> and st.id = #{id}</if>
+            <if test="memberId != null "> and st.member_id = #{memberId}</if>
+            <if test="stockId != null "> and st.stock_id = #{stockId}</if>
+            <if test="stockName != null  and stockName != ''"> and st.stock_name like concat('%', #{stockName}, '%')</if>
+            <if test="stockSymbol != null  and stockSymbol != ''"> and st.stock_symbol = #{stockSymbol}</if>
+            <if test="allCode != null  and allCode != ''"> and st.all_code = #{allCode}</if>
+            <if test="holdId != null "> and st.hold_id = #{holdId}</if>
+            <if test="date != null "> and st.date = #{date}</if>
+            <if test="time != null "> and st.time = #{time}</if>
+            <if test="tradingNumber != null "> and st.trading_number = #{tradingNumber}</if>
+            <if test="tradingPrice != null "> and st.trading_price = #{tradingPrice}</if>
+            <if test="tradingAmount != null "> and st.trading_amount = #{tradingAmount}</if>
+            <if test="tradingType != null "> and st.trading_type = #{tradingType}</if>
+            <if test="tradingPoundage != null "> and st.trading_poundage = #{tradingPoundage}</if>
+            <if test="stampDuty != null "> and st.stamp_duty = #{stampDuty}</if>
+            <if test="status != null "> and st.status = #{status}</if>
+            <if test="createTime != null "> and st.create_time = #{createTime}</if>
+            <if test="updateTime != null "> and st.update_time = #{updateTime}</if>
+            <if test="deleteFlag != null "> and st.delete_flag = #{deleteFlag}</if>
+            <if test="remark != null  and remark != ''"> and st.remark = #{remark}</if>
+<!--            <if test="dailiId != null "> and m.daili_id = #{dailiId}</if>-->
+            <if test="memberName != null "> and m.name like concat('%', #{memberName}, '%')</if>
+            <if test="mobile != null "> and m.mobile like concat('%', #{mobile}, '%')</if>
+            <if test="isSimulation != null  and isSimulation != ''"> and m.is_simulation = #{isSimulation}</if>
+            <if test="weiyima != null "> and m.weiyima like concat('%', #{weiyima}, '%')</if>
+        </where>
+        and m.daili_id in ( select #{parentId} union all select u.user_id from sys_user u where u.path like concat('%,', #{parentId}, ',%'))
+    </select>
+
+</mapper>

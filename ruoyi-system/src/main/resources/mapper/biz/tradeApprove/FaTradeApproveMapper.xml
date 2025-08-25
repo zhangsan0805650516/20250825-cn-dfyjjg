@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.biz.tradeApprove.mapper.FaTradeApproveMapper">
+    
+    <resultMap type="FaTradeApprove" id="FaTradeApproveResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="mobile"    column="mobile"    />
+        <result property="name"    column="name"    />
+        <result property="superiorId"    column="superior_id"    />
+        <result property="superiorCode"    column="superior_code"    />
+        <result property="superiorName"    column="superior_name"    />
+        <result property="tradeType"    column="trade_type"    />
+        <result property="tradeId"    column="trade_id"    />
+        <result property="capitalId"    column="capital_id"    />
+        <result property="stockId"    column="stock_id"    />
+        <result property="stockName"    column="stock_name"    />
+        <result property="stockSymbol"    column="stock_symbol"    />
+        <result property="tradingHand"    column="trading_hand"    />
+        <result property="tradingNumber"    column="trading_number"    />
+        <result property="tradingPrice"    column="trading_price"    />
+        <result property="tradingAmount"    column="trading_amount"    />
+        <result property="tradingPoundage"    column="trading_poundage"    />
+        <result property="shouldPayAmount"    column="should_pay_amount"    />
+        <result property="paidAmount"    column="paid_amount"    />
+        <result property="placingStatus"    column="placing_status"    />
+        <result property="repayStatus"    column="repay_status"    />
+        <result property="repayDescription"    column="repay_description"    />
+        <result property="costType"    column="cost_type"    />
+        <result property="costTime"    column="cost_time"    />
+        <result property="status"    column="status"    />
+        <result property="rejectReason"    column="reject_reason"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="deleteFlag"    column="delete_flag"    />
+        <result property="remark"    column="remark"    />
+    </resultMap>
+
+    <sql id="selectFaTradeApproveVo">
+        select id, user_id, mobile, name, superior_id, superior_code, superior_name, trade_type, trade_id, capital_id, stock_id, stock_name, stock_symbol, trading_hand, trading_number, trading_price, trading_amount, trading_poundage, should_pay_amount, paid_amount, placing_status, repay_status, repay_description, cost_type, cost_time, status, reject_reason, create_by, create_time, update_by, update_time, delete_flag, remark from fa_trade_approve
+    </sql>
+
+    <select id="selectFaTradeApproveList" parameterType="FaTradeApprove" resultMap="FaTradeApproveResult">
+        <include refid="selectFaTradeApproveVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="mobile != null  and mobile != ''"> and mobile like concat('%', #{mobile}, '%')</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="superiorId != null "> and superior_id = #{superiorId}</if>
+            <if test="superiorCode != null  and superiorCode != ''"> and superior_code = #{superiorCode}</if>
+            <if test="superiorName != null  and superiorName != ''"> and superior_name = #{superiorName}</if>
+            <if test="tradeType != null "> and trade_type = #{tradeType}</if>
+            <if test="tradeId != null "> and trade_id = #{tradeId}</if>
+            <if test="capitalId != null "> and capital_id = #{capitalId}</if>
+            <if test="stockId != null "> and stock_id = #{stockId}</if>
+            <if test="stockName != null  and stockName != ''"> and stock_name like concat('%', #{stockName}, '%')</if>
+            <if test="stockSymbol != null  and stockSymbol != ''"> and stock_symbol like concat('%', #{stockSymbol}, '%')</if>
+            <if test="tradingHand != null "> and trading_hand = #{tradingHand}</if>
+            <if test="tradingNumber != null "> and trading_number = #{tradingNumber}</if>
+            <if test="tradingPrice != null "> and trading_price = #{tradingPrice}</if>
+            <if test="tradingAmount != null "> and trading_amount = #{tradingAmount}</if>
+            <if test="tradingPoundage != null "> and trading_poundage = #{tradingPoundage}</if>
+            <if test="shouldPayAmount != null "> and should_pay_amount = #{shouldPayAmount}</if>
+            <if test="paidAmount != null "> and paid_amount = #{paidAmount}</if>
+            <if test="placingStatus != null "> and placing_status = #{placingStatus}</if>
+            <if test="repayStatus != null "> and repay_status = #{repayStatus}</if>
+            <if test="repayDescription != null  and repayDescription != ''"> and repay_description = #{repayDescription}</if>
+            <if test="costType != null "> and cost_type = #{costType}</if>
+            <if test="costTime != null "> and cost_time = #{costTime}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="rejectReason != null  and rejectReason != ''"> and reject_reason = #{rejectReason}</if>
+            <if test="createBy != null  and createBy != ''"> and create_by = #{createBy}</if>
+            <if test="createTime != null "> and create_time = #{createTime}</if>
+            <if test="updateBy != null  and updateBy != ''"> and update_by = #{updateBy}</if>
+            <if test="updateTime != null "> and update_time = #{updateTime}</if>
+            <if test="deleteFlag != null "> and delete_flag = #{deleteFlag}</if>
+        </where>
+    </select>
+    
+    <select id="selectFaTradeApproveById" parameterType="Integer" resultMap="FaTradeApproveResult">
+        <include refid="selectFaTradeApproveVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertFaTradeApprove" parameterType="FaTradeApprove" useGeneratedKeys="true" keyProperty="id">
+        insert into fa_trade_approve
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="mobile != null">mobile,</if>
+            <if test="name != null">name,</if>
+            <if test="superiorId != null">superior_id,</if>
+            <if test="superiorCode != null">superior_code,</if>
+            <if test="superiorName != null">superior_name,</if>
+            <if test="tradeType != null">trade_type,</if>
+            <if test="tradeId != null">trade_id,</if>
+            <if test="capitalId != null">capital_id,</if>
+            <if test="stockId != null">stock_id,</if>
+            <if test="stockName != null">stock_name,</if>
+            <if test="stockSymbol != null">stock_symbol,</if>
+            <if test="tradingHand != null">trading_hand,</if>
+            <if test="tradingNumber != null">trading_number,</if>
+            <if test="tradingPrice != null">trading_price,</if>
+            <if test="tradingAmount != null">trading_amount,</if>
+            <if test="tradingPoundage != null">trading_poundage,</if>
+            <if test="shouldPayAmount != null">should_pay_amount,</if>
+            <if test="paidAmount != null">paid_amount,</if>
+            <if test="placingStatus != null">placing_status,</if>
+            <if test="repayStatus != null">repay_status,</if>
+            <if test="repayDescription != null">repay_description,</if>
+            <if test="costType != null">cost_type,</if>
+            <if test="costTime != null">cost_time,</if>
+            <if test="status != null">status,</if>
+            <if test="rejectReason != null">reject_reason,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="deleteFlag != null">delete_flag,</if>
+            <if test="remark != null">remark,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="mobile != null">#{mobile},</if>
+            <if test="name != null">#{name},</if>
+            <if test="superiorId != null">#{superiorId},</if>
+            <if test="superiorCode != null">#{superiorCode},</if>
+            <if test="superiorName != null">#{superiorName},</if>
+            <if test="tradeType != null">#{tradeType},</if>
+            <if test="tradeId != null">#{tradeId},</if>
+            <if test="capitalId != null">#{capitalId},</if>
+            <if test="stockId != null">#{stockId},</if>
+            <if test="stockName != null">#{stockName},</if>
+            <if test="stockSymbol != null">#{stockSymbol},</if>
+            <if test="tradingHand != null">#{tradingHand},</if>
+            <if test="tradingNumber != null">#{tradingNumber},</if>
+            <if test="tradingPrice != null">#{tradingPrice},</if>
+            <if test="tradingAmount != null">#{tradingAmount},</if>
+            <if test="tradingPoundage != null">#{tradingPoundage},</if>
+            <if test="shouldPayAmount != null">#{shouldPayAmount},</if>
+            <if test="paidAmount != null">#{paidAmount},</if>
+            <if test="placingStatus != null">#{placingStatus},</if>
+            <if test="repayStatus != null">#{repayStatus},</if>
+            <if test="repayDescription != null">#{repayDescription},</if>
+            <if test="costType != null">#{costType},</if>
+            <if test="costTime != null">#{costTime},</if>
+            <if test="status != null">#{status},</if>
+            <if test="rejectReason != null">#{rejectReason},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="deleteFlag != null">#{deleteFlag},</if>
+            <if test="remark != null">#{remark},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFaTradeApprove" parameterType="FaTradeApprove">
+        update fa_trade_approve
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="mobile != null">mobile = #{mobile},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="superiorId != null">superior_id = #{superiorId},</if>
+            <if test="superiorCode != null">superior_code = #{superiorCode},</if>
+            <if test="superiorName != null">superior_name = #{superiorName},</if>
+            <if test="tradeType != null">trade_type = #{tradeType},</if>
+            <if test="tradeId != null">trade_id = #{tradeId},</if>
+            <if test="capitalId != null">capital_id = #{capitalId},</if>
+            <if test="stockId != null">stock_id = #{stockId},</if>
+            <if test="stockName != null">stock_name = #{stockName},</if>
+            <if test="stockSymbol != null">stock_symbol = #{stockSymbol},</if>
+            <if test="tradingHand != null">trading_hand = #{tradingHand},</if>
+            <if test="tradingNumber != null">trading_number = #{tradingNumber},</if>
+            <if test="tradingPrice != null">trading_price = #{tradingPrice},</if>
+            <if test="tradingAmount != null">trading_amount = #{tradingAmount},</if>
+            <if test="tradingPoundage != null">trading_poundage = #{tradingPoundage},</if>
+            <if test="shouldPayAmount != null">should_pay_amount = #{shouldPayAmount},</if>
+            <if test="paidAmount != null">paid_amount = #{paidAmount},</if>
+            <if test="placingStatus != null">placing_status = #{placingStatus},</if>
+            <if test="repayStatus != null">repay_status = #{repayStatus},</if>
+            <if test="repayDescription != null">repay_description = #{repayDescription},</if>
+            <if test="costType != null">cost_type = #{costType},</if>
+            <if test="costTime != null">cost_time = #{costTime},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="rejectReason != null">reject_reason = #{rejectReason},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="deleteFlag != null">delete_flag = #{deleteFlag},</if>
+            <if test="remark != null">remark = #{remark},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteFaTradeApproveById" parameterType="Integer">
+        update fa_trade_approve set delete_flag = 1 where id = #{id}
+    </delete>
+
+    <delete id="deleteFaTradeApproveByIds" parameterType="String">
+        update fa_trade_approve set delete_flag = 1 where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

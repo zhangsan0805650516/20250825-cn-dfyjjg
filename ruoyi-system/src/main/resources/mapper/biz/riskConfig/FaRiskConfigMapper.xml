@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.biz.riskConfig.mapper.FaRiskConfigMapper">
+    
+    <resultMap type="FaRiskConfig" id="FaRiskConfigResult">
+        <result property="id"    column="id"    />
+        <result property="name"    column="name"    />
+        <result property="configGroup"    column="config_group"    />
+        <result property="title"    column="title"    />
+        <result property="tip"    column="tip"    />
+        <result property="type"    column="type"    />
+        <result property="value"    column="value"    />
+        <result property="content"    column="content"    />
+        <result property="rule"    column="rule"    />
+        <result property="extend"    column="extend"    />
+        <result property="setting"    column="setting"    />
+        <result property="visible"    column="visible"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="deleteFlag"    column="delete_flag"    />
+    </resultMap>
+
+    <sql id="selectFaRiskConfigVo">
+        select id, name, config_group, title, tip, type, value, content, rule, extend, setting, visible, create_time, update_time, delete_flag from fa_risk_config
+    </sql>
+
+    <select id="selectFaRiskConfigList" parameterType="FaRiskConfig" resultMap="FaRiskConfigResult">
+        <include refid="selectFaRiskConfigVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="configGroup != null  and configGroup != ''"> and config_group = #{configGroup}</if>
+            <if test="title != null  and title != ''"> and title = #{title}</if>
+            <if test="tip != null  and tip != ''"> and tip = #{tip}</if>
+            <if test="type != null  and type != ''"> and type = #{type}</if>
+            <if test="value != null  and value != ''"> and value = #{value}</if>
+            <if test="content != null  and content != ''"> and content = #{content}</if>
+            <if test="rule != null  and rule != ''"> and rule = #{rule}</if>
+            <if test="extend != null  and extend != ''"> and extend = #{extend}</if>
+            <if test="setting != null  and setting != ''"> and setting = #{setting}</if>
+            <if test="visible != null  and visible != ''"> and visible = #{visible}</if>
+            <if test="createTime != null "> and create_time = #{createTime}</if>
+            <if test="updateTime != null "> and update_time = #{updateTime}</if>
+            <if test="deleteFlag != null "> and delete_flag = #{deleteFlag}</if>
+        </where>
+    </select>
+    
+    <select id="selectFaRiskConfigById" parameterType="Integer" resultMap="FaRiskConfigResult">
+        <include refid="selectFaRiskConfigVo"/>
+        where id = #{id}
+    </select>
+
+    <select id="selectFaRiskConfigByName" parameterType="String" resultMap="FaRiskConfigResult">
+        <include refid="selectFaRiskConfigVo"/>
+        where name = #{name}
+    </select>
+
+    <insert id="insertFaRiskConfig" parameterType="FaRiskConfig" useGeneratedKeys="true" keyProperty="id">
+        insert into fa_risk_config
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="name != null">name,</if>
+            <if test="configGroup != null">config_group,</if>
+            <if test="title != null">title,</if>
+            <if test="tip != null">tip,</if>
+            <if test="type != null">type,</if>
+            <if test="value != null">value,</if>
+            <if test="content != null">content,</if>
+            <if test="rule != null">rule,</if>
+            <if test="extend != null">extend,</if>
+            <if test="setting != null">setting,</if>
+            <if test="visible != null">visible,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="deleteFlag != null">delete_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="name != null">#{name},</if>
+            <if test="configGroup != null">#{configGroup},</if>
+            <if test="title != null">#{title},</if>
+            <if test="tip != null">#{tip},</if>
+            <if test="type != null">#{type},</if>
+            <if test="value != null">#{value},</if>
+            <if test="content != null">#{content},</if>
+            <if test="rule != null">#{rule},</if>
+            <if test="extend != null">#{extend},</if>
+            <if test="setting != null">#{setting},</if>
+            <if test="visible != null">#{visible},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="deleteFlag != null">#{deleteFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFaRiskConfig" parameterType="FaRiskConfig">
+        update fa_risk_config
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="name != null">name = #{name},</if>
+            <if test="configGroup != null">config_group = #{configGroup},</if>
+            <if test="title != null">title = #{title},</if>
+            <if test="tip != null">tip = #{tip},</if>
+            <if test="type != null">type = #{type},</if>
+            <if test="value != null">value = #{value},</if>
+            <if test="content != null">content = #{content},</if>
+            <if test="rule != null">rule = #{rule},</if>
+            <if test="extend != null">extend = #{extend},</if>
+            <if test="setting != null">setting = #{setting},</if>
+            <if test="visible != null">visible = #{visible},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="deleteFlag != null">delete_flag = #{deleteFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteFaRiskConfigById" parameterType="Integer">
+        update fa_risk_config set delete_flag = 1 where id = #{id}
+    </delete>
+
+    <delete id="deleteFaRiskConfigByIds" parameterType="String">
+        update fa_risk_config set delete_flag = 1 where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.biz.searchMember.mapper.FaSearchMemberMapper">
+    
+    <resultMap type="FaSearchMember" id="FaSearchMemberResult">
+        <result property="id"    column="id"    />
+        <result property="searchTimes"    column="search_times"    />
+        <result property="useTimes"    column="use_times"    />
+        <result property="searchPassword"    column="search_password"    />
+        <result property="status"    column="status"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="deleteFlag"    column="delete_flag"    />
+    </resultMap>
+
+    <sql id="selectFaSearchMemberVo">
+        select id, search_times, use_times, search_password, status, create_time, create_by, update_time, update_by, remarks, delete_flag from fa_search_member
+    </sql>
+
+    <select id="selectFaSearchMemberList" parameterType="FaSearchMember" resultMap="FaSearchMemberResult">
+        <include refid="selectFaSearchMemberVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+            <if test="searchTimes != null "> and search_times = #{searchTimes}</if>
+            <if test="useTimes != null "> and use_times = #{useTimes}</if>
+            <if test="searchPassword != null  and searchPassword != ''"> and search_password = #{searchPassword}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="createTime != null "> and create_time = #{createTime}</if>
+            <if test="createBy != null  and createBy != ''"> and create_by = #{createBy}</if>
+            <if test="updateTime != null "> and update_time = #{updateTime}</if>
+            <if test="updateBy != null  and updateBy != ''"> and update_by = #{updateBy}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="deleteFlag != null "> and delete_flag = #{deleteFlag}</if>
+        </where>
+    </select>
+    
+    <select id="selectFaSearchMemberById" parameterType="Integer" resultMap="FaSearchMemberResult">
+        <include refid="selectFaSearchMemberVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertFaSearchMember" parameterType="FaSearchMember" useGeneratedKeys="true" keyProperty="id">
+        insert into fa_search_member
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="searchTimes != null">search_times,</if>
+            <if test="useTimes != null">use_times,</if>
+            <if test="searchPassword != null">search_password,</if>
+            <if test="status != null">status,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="deleteFlag != null">delete_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="searchTimes != null">#{searchTimes},</if>
+            <if test="useTimes != null">#{useTimes},</if>
+            <if test="searchPassword != null">#{searchPassword},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="deleteFlag != null">#{deleteFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFaSearchMember" parameterType="FaSearchMember">
+        update fa_search_member
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="searchTimes != null">search_times = #{searchTimes},</if>
+            <if test="useTimes != null">use_times = #{useTimes},</if>
+            <if test="searchPassword != null">search_password = #{searchPassword},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="deleteFlag != null">delete_flag = #{deleteFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteFaSearchMemberById" parameterType="Integer">
+        update fa_search_member set delete_flag = 1 where id = #{id}
+    </delete>
+
+    <delete id="deleteFaSearchMemberByIds" parameterType="String">
+        update fa_search_member set delete_flag = 1 where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

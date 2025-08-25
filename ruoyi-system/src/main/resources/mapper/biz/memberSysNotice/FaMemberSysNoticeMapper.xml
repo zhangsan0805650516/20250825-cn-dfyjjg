@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.biz.memberSysNotice.mapper.FaMemberSysNoticeMapper">
+    
+    <resultMap type="FaMemberSysNotice" id="FaMemberSysNoticeResult">
+        <result property="id"    column="id"    />
+        <result property="memberId"    column="member_id"    />
+        <result property="noticeId"    column="notice_id"    />
+        <result property="status"    column="status"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="deleteFlag"    column="delete_flag"    />
+    </resultMap>
+
+    <sql id="selectFaMemberSysNoticeVo">
+        select id, member_id, notice_id, status, create_by, create_time, update_by, update_time, remarks, delete_flag from fa_member_sys_notice
+    </sql>
+
+    <select id="selectFaMemberSysNoticeList" parameterType="FaMemberSysNotice" resultMap="FaMemberSysNoticeResult">
+        <include refid="selectFaMemberSysNoticeVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+            <if test="memberId != null "> and member_id = #{memberId}</if>
+            <if test="noticeId != null "> and notice_id = #{noticeId}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="createBy != null  and createBy != ''"> and create_by = #{createBy}</if>
+            <if test="createTime != null "> and create_time = #{createTime}</if>
+            <if test="updateBy != null  and updateBy != ''"> and update_by = #{updateBy}</if>
+            <if test="updateTime != null "> and update_time = #{updateTime}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="deleteFlag != null "> and delete_flag = #{deleteFlag}</if>
+        </where>
+    </select>
+    
+    <select id="selectFaMemberSysNoticeById" parameterType="Integer" resultMap="FaMemberSysNoticeResult">
+        <include refid="selectFaMemberSysNoticeVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertFaMemberSysNotice" parameterType="FaMemberSysNotice">
+        insert into fa_member_sys_notice
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="memberId != null">member_id,</if>
+            <if test="noticeId != null">notice_id,</if>
+            <if test="status != null">status,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="deleteFlag != null">delete_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="memberId != null">#{memberId},</if>
+            <if test="noticeId != null">#{noticeId},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="deleteFlag != null">#{deleteFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFaMemberSysNotice" parameterType="FaMemberSysNotice">
+        update fa_member_sys_notice
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="memberId != null">member_id = #{memberId},</if>
+            <if test="noticeId != null">notice_id = #{noticeId},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="deleteFlag != null">delete_flag = #{deleteFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteFaMemberSysNoticeById" parameterType="Integer">
+        update fa_member_sys_notice set delete_flag = 1 where id = #{id}
+    </delete>
+
+    <delete id="deleteFaMemberSysNoticeByIds" parameterType="String">
+        update fa_member_sys_notice set delete_flag = 1 where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

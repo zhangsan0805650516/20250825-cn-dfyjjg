@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.biz.tutorList.mapper.FaTutorListMapper">
+    
+    <resultMap type="FaTutorList" id="FaTutorListResult">
+        <result property="id"    column="id"    />
+        <result property="tutorImage"    column="tutor_image"    />
+        <result property="tutorName"    column="tutor_name"    />
+        <result property="tutorIdNum"    column="tutor_id_num"    />
+        <result property="tutorIntro"    column="tutor_intro"    />
+        <result property="voteNums"    column="vote_nums"    />
+        <result property="money"    column="money"    />
+        <result property="weigh"    column="weigh"    />
+        <result property="status"    column="status"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="deleteFlag"    column="delete_flag"    />
+    </resultMap>
+
+    <sql id="selectFaTutorListVo">
+        select id, tutor_image, tutor_name, tutor_id_num, tutor_intro, vote_nums, money, weigh, status, create_time, create_by, update_time, update_by, remarks, delete_flag from fa_tutor_list
+    </sql>
+
+    <select id="selectFaTutorListList" parameterType="FaTutorList" resultMap="FaTutorListResult">
+        <include refid="selectFaTutorListVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+            <if test="tutorImage != null  and tutorImage != ''"> and tutor_image = #{tutorImage}</if>
+            <if test="tutorName != null  and tutorName != ''"> and tutor_name like concat('%', #{tutorName}, '%')</if>
+            <if test="tutorIdNum != null  and tutorIdNum != ''"> and tutor_id_num = #{tutorIdNum}</if>
+            <if test="tutorIntro != null  and tutorIntro != ''"> and tutor_intro = #{tutorIntro}</if>
+            <if test="voteNums != null "> and vote_nums = #{voteNums}</if>
+            <if test="money != null "> and money = #{money}</if>
+            <if test="weigh != null "> and weigh = #{weigh}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="createTime != null "> and create_time = #{createTime}</if>
+            <if test="createBy != null  and createBy != ''"> and create_by = #{createBy}</if>
+            <if test="updateTime != null "> and update_time = #{updateTime}</if>
+            <if test="updateBy != null  and updateBy != ''"> and update_by = #{updateBy}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="deleteFlag != null "> and delete_flag = #{deleteFlag}</if>
+        </where>
+    </select>
+    
+    <select id="selectFaTutorListById" parameterType="Integer" resultMap="FaTutorListResult">
+        <include refid="selectFaTutorListVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertFaTutorList" parameterType="FaTutorList" useGeneratedKeys="true" keyProperty="id">
+        insert into fa_tutor_list
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="tutorImage != null">tutor_image,</if>
+            <if test="tutorName != null">tutor_name,</if>
+            <if test="tutorIdNum != null">tutor_id_num,</if>
+            <if test="tutorIntro != null">tutor_intro,</if>
+            <if test="voteNums != null">vote_nums,</if>
+            <if test="money != null">money,</if>
+            <if test="weigh != null">weigh,</if>
+            <if test="status != null">status,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="deleteFlag != null">delete_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="tutorImage != null">#{tutorImage},</if>
+            <if test="tutorName != null">#{tutorName},</if>
+            <if test="tutorIdNum != null">#{tutorIdNum},</if>
+            <if test="tutorIntro != null">#{tutorIntro},</if>
+            <if test="voteNums != null">#{voteNums},</if>
+            <if test="money != null">#{money},</if>
+            <if test="weigh != null">#{weigh},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="deleteFlag != null">#{deleteFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFaTutorList" parameterType="FaTutorList">
+        update fa_tutor_list
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="tutorImage != null">tutor_image = #{tutorImage},</if>
+            <if test="tutorName != null">tutor_name = #{tutorName},</if>
+            <if test="tutorIdNum != null">tutor_id_num = #{tutorIdNum},</if>
+            <if test="tutorIntro != null">tutor_intro = #{tutorIntro},</if>
+            <if test="voteNums != null">vote_nums = #{voteNums},</if>
+            <if test="money != null">money = #{money},</if>
+            <if test="weigh != null">weigh = #{weigh},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="deleteFlag != null">delete_flag = #{deleteFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteFaTutorListById" parameterType="Integer">
+        update fa_tutor_list set delete_flag = 1 where id = #{id}
+    </delete>
+
+    <delete id="deleteFaTutorListByIds" parameterType="String">
+        update fa_tutor_list set delete_flag = 1 where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

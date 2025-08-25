@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.biz.agreement.mapper.FaAgreementMapper">
+    
+    <resultMap type="FaAgreement" id="FaAgreementResult">
+        <result property="id"    column="id"    />
+        <result property="content"    column="content"    />
+        <result property="aboutContent"    column="about_content"    />
+        <result property="loginContent"    column="login_content"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="guanbiContent"    column="guanbi_content"    />
+        <result property="mzsmContent"    column="mzsm_content"    />
+        <result property="deleteFlag"    column="delete_flag"    />
+    </resultMap>
+
+    <sql id="selectFaAgreementVo">
+        select id, content, about_content, login_content, create_time, update_time, guanbi_content, mzsm_content, delete_flag from fa_agreement
+    </sql>
+
+    <select id="selectFaAgreementList" parameterType="FaAgreement" resultMap="FaAgreementResult">
+        <include refid="selectFaAgreementVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+            <if test="content != null  and content != ''"> and content = #{content}</if>
+            <if test="aboutContent != null  and aboutContent != ''"> and about_content = #{aboutContent}</if>
+            <if test="loginContent != null  and loginContent != ''"> and login_content = #{loginContent}</if>
+            <if test="createTime != null "> and create_time = #{createTime}</if>
+            <if test="updateTime != null "> and update_time = #{updateTime}</if>
+            <if test="guanbiContent != null  and guanbiContent != ''"> and guanbi_content = #{guanbiContent}</if>
+            <if test="mzsmContent != null  and mzsmContent != ''"> and mzsm_content = #{mzsmContent}</if>
+            <if test="deleteFlag != null "> and delete_flag = #{deleteFlag}</if>
+        </where>
+    </select>
+    
+    <select id="selectFaAgreementById" parameterType="Integer" resultMap="FaAgreementResult">
+        <include refid="selectFaAgreementVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertFaAgreement" parameterType="FaAgreement" useGeneratedKeys="true" keyProperty="id">
+        insert into fa_agreement
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="content != null">content,</if>
+            <if test="aboutContent != null">about_content,</if>
+            <if test="loginContent != null">login_content,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="guanbiContent != null">guanbi_content,</if>
+            <if test="mzsmContent != null">mzsm_content,</if>
+            <if test="deleteFlag != null">delete_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="content != null">#{content},</if>
+            <if test="aboutContent != null">#{aboutContent},</if>
+            <if test="loginContent != null">#{loginContent},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="guanbiContent != null">#{guanbiContent},</if>
+            <if test="mzsmContent != null">#{mzsmContent},</if>
+            <if test="deleteFlag != null">#{deleteFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFaAgreement" parameterType="FaAgreement">
+        update fa_agreement
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="content != null">content = #{content},</if>
+            <if test="aboutContent != null">about_content = #{aboutContent},</if>
+            <if test="loginContent != null">login_content = #{loginContent},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="guanbiContent != null">guanbi_content = #{guanbiContent},</if>
+            <if test="mzsmContent != null">mzsm_content = #{mzsmContent},</if>
+            <if test="deleteFlag != null">delete_flag = #{deleteFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteFaAgreementById" parameterType="Integer">
+        update fa_agreement set delete_flag = 1 where id = #{id}
+    </delete>
+
+    <delete id="deleteFaAgreementByIds" parameterType="String">
+        update fa_agreement set delete_flag = 1 where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

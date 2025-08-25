@@ -1,0 +1,1859 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.biz.member.mapper.FaMemberMapper">
+    
+    <resultMap type="FaMember" id="FaMemberResult">
+        <result property="id"    column="id"    />
+        <result property="username"    column="username"    />
+        <result property="nickname"    column="nickname"    />
+        <result property="password"    column="password"    />
+        <result property="salt"    column="salt"    />
+        <result property="mobile"    column="mobile"    />
+        <result property="avatar"    column="avatar"    />
+        <result property="money"    column="money"    />
+        <result property="successions"    column="successions"    />
+        <result property="maxSuccessions"    column="max_successions"    />
+        <result property="prevTime"    column="prev_time"    />
+        <result property="loginTime"    column="login_time"    />
+        <result property="loginIp"    column="login_ip"    />
+        <result property="paymentCode"    column="payment_code"    />
+        <result property="joinIp"    column="join_ip"    />
+        <result property="joinTime"    column="join_time"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="status"    column="status"    />
+        <result property="balance"    column="balance"    />
+        <result property="superiorName"    column="superior_name"    />
+        <result property="superiorCode"    column="superior_code"    />
+        <result property="superiorId"    column="superior_id"    />
+        <result property="institutionNumber"    column="institution_number"    />
+        <result property="dailiId"    column="daili_id"    />
+        <result property="jingzhijiaoyi"    column="jingzhijiaoyi"    />
+        <result property="isPz"    column="is_pz"    />
+        <result property="isDz"    column="is_dz"    />
+        <result property="isPs"    column="is_ps"    />
+        <result property="isSg"    column="is_sg"    />
+        <result property="isZs"    column="is_zs"    />
+        <result property="isQc"    column="is_qc"    />
+        <result property="isQh"    column="is_qh"    />
+        <result property="isVip"    column="is_vip"    />
+        <result property="isInform"    column="is_inform"    />
+        <result property="freezeProfit"    column="freeze_profit"    />
+        <result property="weiyima"    column="weiyima"    />
+        <result property="name"    column="name"    />
+        <result property="idCard"    column="id_card"    />
+        <result property="idCardFrontImage"    column="id_card_front_image"    />
+        <result property="idCardBackImage"    column="id_card_back_image"    />
+        <result property="submitAuthTime"    column="submit_auth_time"    />
+        <result property="authTime"    column="auth_time"    />
+        <result property="isAuth"    column="is_auth"    />
+        <result property="authRejectReason"    column="auth_reject_reason"    />
+        <result property="authRejectTime"    column="auth_reject_time"    />
+        <result property="depositBank"    column="deposit_bank"    />
+        <result property="khzhihang"    column="khzhihang"    />
+        <result property="accountName"    column="account_name"    />
+        <result property="account"    column="account"    />
+        <result property="cardImage"    column="card_image"    />
+        <result property="bindingTime"    column="binding_time"    />
+        <result property="unbindTime"    column="unbind_time"    />
+        <result property="deleteFlag"    column="delete_flag"    />
+        <result property="bankCardAuth"    column="bank_card_auth"    />
+        <result property="loginDomain"    column="login_domain"    />
+        <result property="phoneNo"    column="phone_no"    />
+        <result property="withdrawSwitch"    column="withdraw_switch"    />
+    </resultMap>
+
+    <sql id="selectFaMemberVo">
+        SELECT
+            m.id,
+            m.username,
+            m.nickname,
+--             m.PASSWORD,
+            m.salt,
+            m.mobile,
+            m.avatar,
+            m.successions,
+            m.max_successions,
+            m.prev_time,
+            m.login_time,
+            m.login_ip,
+            m.payment_code,
+            m.join_ip,
+            m.join_time,
+            m.create_time,
+            m.update_time,
+            m.STATUS,
+            m.balance,
+            m.superior_name,
+            m.superior_code,
+            m.superior_id,
+            m.institution_number,
+            m.daili_id,
+            m.jingzhijiaoyi,
+            m.is_pz,
+            m.is_dz,
+            m.is_ps,
+            m.is_sg,
+            m.is_zs,
+            m.is_qc,
+            m.is_qh,
+            m.is_vip,
+            m.is_inform,
+            m.freeze_profit,
+            m.weiyima,
+            m.NAME,
+            m.id_card,
+            m.id_card_front_image,
+            m.id_card_back_image,
+            m.submit_auth_time,
+            m.auth_time,
+            m.is_auth,
+            m.auth_reject_reason,
+            m.auth_reject_time,
+            m.deposit_bank,
+            m.khzhihang,
+            m.account_name,
+            m.account,
+            m.card_image,
+            m.binding_time,
+            m.unbind_time,
+            m.delete_flag,
+            m.bank_card_auth,
+            m.login_domain,
+            m.withdraw_switch
+        FROM
+            fa_member m
+    </sql>
+
+    <select id="selectFaMemberList" parameterType="FaMember" resultMap="FaMemberResult">
+        <include refid="selectFaMemberVo"/>
+        <where>  
+            <if test="id != null "> and m.id = #{id}</if>
+            <if test="username != null  and username != ''"> and m.username like concat('%', #{username}, '%')</if>
+            <if test="nickname != null  and nickname != ''"> and m.nickname like concat('%', #{nickname}, '%')</if>
+            <if test="password != null  and password != ''"> and m.password = #{password}</if>
+            <if test="salt != null  and salt != ''"> and m.salt = #{salt}</if>
+            <if test="mobile != null  and mobile != ''"> and m.mobile = #{mobile}</if>
+            <if test="avatar != null  and avatar != ''"> and m.avatar = #{avatar}</if>
+            <if test="successions != null "> and m.successions = #{successions}</if>
+            <if test="maxSuccessions != null "> and m.max_successions = #{maxSuccessions}</if>
+            <if test="prevTime != null "> and m.prev_time = #{prevTime}</if>
+            <if test="params.beginLoginTime != null and params.beginLoginTime != ''"><!-- 开始时间检索 -->
+                AND date_format(m.login_time,'%y%m%d') &gt;= date_format(#{params.beginLoginTime},'%y%m%d')
+            </if>
+            <if test="params.endLoginTime != null and params.endLoginTime != ''"><!-- 结束时间检索 -->
+                AND date_format(m.login_time,'%y%m%d') &lt;= date_format(#{params.endLoginTime},'%y%m%d')
+            </if>
+            <if test="loginIp != null  and loginIp != ''"> and m.login_ip = #{loginIp}</if>
+            <if test="paymentCode != null  and paymentCode != ''"> and m.payment_code = #{paymentCode}</if>
+            <if test="joinIp != null  and joinIp != ''"> and m.join_ip = #{joinIp}</if>
+            <if test="joinTime != null "> and m.join_time = #{joinTime}</if>
+            <if test="params.beginCreateTime != null and params.beginCreateTime != ''"><!-- 开始时间检索 -->
+                AND date_format(m.create_time,'%y%m%d') &gt;= date_format(#{params.beginCreateTime},'%y%m%d')
+            </if>
+            <if test="params.endCreateTime != null and params.endCreateTime != ''"><!-- 结束时间检索 -->
+                AND date_format(m.create_time,'%y%m%d') &lt;= date_format(#{params.endCreateTime},'%y%m%d')
+            </if>
+            <if test="updateTime != null "> and m.update_time = #{updateTime}</if>
+            <if test="status != null "> and m.status = #{status}</if>
+            <if test="balance != null "> and m.balance = #{balance}</if>
+            <if test="superiorName != null  and superiorName != ''"> and m.superior_name like concat('%', #{superiorName}, '%')</if>
+            <if test="superiorCode != null  and superiorCode != ''"> and m.superior_code = #{superiorCode}</if>
+            <if test="superiorId != null "> and m.superior_id = #{superiorId}</if>
+            <if test="institutionNumber != null  and institutionNumber != ''"> and m.institution_number = #{institutionNumber}</if>
+<!--            <if test="dailiId != null "> and m.daili_id = #{dailiId}</if>-->
+            <if test="jingzhijiaoyi != null "> and m.jingzhijiaoyi = #{jingzhijiaoyi}</if>
+            <if test="isPz != null "> and m.is_pz = #{isPz}</if>
+            <if test="isDz != null "> and m.is_dz = #{isDz}</if>
+            <if test="isPs != null "> and m.is_ps = #{isPs}</if>
+            <if test="isSg != null "> and m.is_sg = #{isSg}</if>
+            <if test="isZs != null "> and m.is_zs = #{isZs}</if>
+            <if test="isQc != null "> and m.is_qc = #{isQc}</if>
+            <if test="isQh != null "> and m.is_qh = #{isQh}</if>
+            <if test="isVip != null "> and m.is_vip = #{isVip}</if>
+            <if test="isInform != null "> and m.is_inform = #{isInform}</if>
+            <if test="freezeProfit != null "> and m.freeze_profit = #{freezeProfit}</if>
+            <if test="weiyima != null  and weiyima != ''"> and m.weiyima = #{weiyima}</if>
+            <if test="name != null  and name != ''"> and m.name like concat('%', #{name}, '%')</if>
+            <if test="idCard != null  and idCard != ''"> and m.id_card = #{idCard}</if>
+            <if test="idCardFrontImage != null  and idCardFrontImage != ''"> and m.id_card_front_image = #{idCardFrontImage}</if>
+            <if test="idCardBackImage != null  and idCardBackImage != ''"> and m.id_card_back_image = #{idCardBackImage}</if>
+            <if test="submitAuthTime != null "> and m.submit_auth_time = #{submitAuthTime}</if>
+            <if test="authTime != null "> and m.auth_time = #{authTime}</if>
+            <if test="isAuth != null "> and m.is_auth = #{isAuth}</if>
+            <if test="authRejectReason != null  and authRejectReason != ''"> and m.auth_reject_reason = #{authRejectReason}</if>
+            <if test="authRejectTime != null "> and m.auth_reject_time = #{authRejectTime}</if>
+            <if test="depositBank != null  and depositBank != ''"> and m.deposit_bank = #{depositBank}</if>
+            <if test="khzhihang != null  and khzhihang != ''"> and m.khzhihang = #{khzhihang}</if>
+            <if test="accountName != null  and accountName != ''"> and m.account_name = #{accountName}</if>
+            <if test="account != null  and account != ''"> and m.account = #{account}</if>
+            <if test="cardImage != null  and cardImage != ''"> and m.card_image = #{cardImage}</if>
+            <if test="bindingTime != null "> and m.binding_time = #{bindingTime}</if>
+            <if test="unbindTime != null "> and m.unbind_time = #{unbindTime}</if>
+            <if test="deleteFlag != null "> and m.delete_flag = #{deleteFlag}</if>
+            <if test="bankCardAuth != null "> and m.bank_card_auth = #{bankCardAuth}</if>
+            <if test="loginDomain != null "> and m.login_domain = #{loginDomain}</if>
+            <if test="withdrawSwitch != null "> and m.withdraw_switch = #{withdrawSwitch}</if>
+            and m.daili_id in ( select #{parentId} union all select u.user_id from sys_user u where u.path like concat('%,', #{parentId}, ',%'))
+        </where>
+    </select>
+
+    <select id="selectFaMemberListForExport" parameterType="FaMember" resultMap="FaMemberResult">
+        SELECT
+        m.id,
+        m.NAME,
+        <if test="mobileDecrypt == 0 ">
+            m.mobile AS mobile,
+        </if>
+        <if test="mobileDecrypt == 1 ">
+            m.phone_no AS mobile,
+        </if>
+        m.weiyima,
+        m.is_auth,
+        m.id_card,
+        m.id_card_front_image,
+        m.id_card_back_image,
+        m.superior_code,
+        m.superior_name,
+        m.balance,
+        m.freeze_profit,
+        m.deposit_bank,
+        m.account_name,
+        m.account,
+        m.login_ip,
+        m.login_time,
+        m.create_time
+        FROM
+        fa_member m
+        <where>
+            <if test="id != null "> and m.id = #{id}</if>
+            <if test="username != null  and username != ''"> and m.username like concat('%', #{username}, '%')</if>
+            <if test="nickname != null  and nickname != ''"> and m.nickname like concat('%', #{nickname}, '%')</if>
+            <if test="password != null  and password != ''"> and m.password = #{password}</if>
+            <if test="salt != null  and salt != ''"> and m.salt = #{salt}</if>
+            <if test="mobile != null  and mobile != ''"> and m.mobile = #{mobile}</if>
+            <if test="avatar != null  and avatar != ''"> and m.avatar = #{avatar}</if>
+            <if test="successions != null "> and m.successions = #{successions}</if>
+            <if test="maxSuccessions != null "> and m.max_successions = #{maxSuccessions}</if>
+            <if test="prevTime != null "> and m.prev_time = #{prevTime}</if>
+            <if test="params.beginLoginTime != null and params.beginLoginTime != ''"><!-- 开始时间检索 -->
+                AND date_format(m.login_time,'%y%m%d') &gt;= date_format(#{params.beginLoginTime},'%y%m%d')
+            </if>
+            <if test="params.endLoginTime != null and params.endLoginTime != ''"><!-- 结束时间检索 -->
+                AND date_format(m.login_time,'%y%m%d') &lt;= date_format(#{params.endLoginTime},'%y%m%d')
+            </if>
+            <if test="loginIp != null  and loginIp != ''"> and m.login_ip = #{loginIp}</if>
+            <if test="paymentCode != null  and paymentCode != ''"> and m.payment_code = #{paymentCode}</if>
+            <if test="joinIp != null  and joinIp != ''"> and m.join_ip = #{joinIp}</if>
+            <if test="joinTime != null "> and m.join_time = #{joinTime}</if>
+            <if test="params.beginCreateTime != null and params.beginCreateTime != ''"><!-- 开始时间检索 -->
+                AND date_format(m.create_time,'%y%m%d') &gt;= date_format(#{params.beginCreateTime},'%y%m%d')
+            </if>
+            <if test="params.endCreateTime != null and params.endCreateTime != ''"><!-- 结束时间检索 -->
+                AND date_format(m.create_time,'%y%m%d') &lt;= date_format(#{params.endCreateTime},'%y%m%d')
+            </if>
+            <if test="updateTime != null "> and m.update_time = #{updateTime}</if>
+            <if test="status != null "> and m.status = #{status}</if>
+            <if test="balance != null "> and m.balance = #{balance}</if>
+            <if test="superiorName != null  and superiorName != ''"> and m.superior_name like concat('%', #{superiorName}, '%')</if>
+            <if test="superiorCode != null  and superiorCode != ''"> and m.superior_code = #{superiorCode}</if>
+            <if test="superiorId != null "> and m.superior_id = #{superiorId}</if>
+            <if test="institutionNumber != null  and institutionNumber != ''"> and m.institution_number = #{institutionNumber}</if>
+            <if test="jingzhijiaoyi != null "> and m.jingzhijiaoyi = #{jingzhijiaoyi}</if>
+            <if test="isPz != null "> and m.is_pz = #{isPz}</if>
+            <if test="isDz != null "> and m.is_dz = #{isDz}</if>
+            <if test="isPs != null "> and m.is_ps = #{isPs}</if>
+            <if test="isSg != null "> and m.is_sg = #{isSg}</if>
+            <if test="isZs != null "> and m.is_zs = #{isZs}</if>
+            <if test="isQc != null "> and m.is_qc = #{isQc}</if>
+            <if test="isQh != null "> and m.is_qh = #{isQh}</if>
+            <if test="isVip != null "> and m.is_vip = #{isVip}</if>
+            <if test="isInform != null "> and m.is_inform = #{isInform}</if>
+            <if test="freezeProfit != null "> and m.freeze_profit = #{freezeProfit}</if>
+            <if test="weiyima != null  and weiyima != ''"> and m.weiyima = #{weiyima}</if>
+            <if test="name != null  and name != ''"> and m.name like concat('%', #{name}, '%')</if>
+            <if test="idCard != null  and idCard != ''"> and m.id_card = #{idCard}</if>
+            <if test="idCardFrontImage != null  and idCardFrontImage != ''"> and m.id_card_front_image = #{idCardFrontImage}</if>
+            <if test="idCardBackImage != null  and idCardBackImage != ''"> and m.id_card_back_image = #{idCardBackImage}</if>
+            <if test="submitAuthTime != null "> and m.submit_auth_time = #{submitAuthTime}</if>
+            <if test="authTime != null "> and m.auth_time = #{authTime}</if>
+            <if test="isAuth != null "> and m.is_auth = #{isAuth}</if>
+            <if test="authRejectReason != null  and authRejectReason != ''"> and m.auth_reject_reason = #{authRejectReason}</if>
+            <if test="authRejectTime != null "> and m.auth_reject_time = #{authRejectTime}</if>
+            <if test="depositBank != null  and depositBank != ''"> and m.deposit_bank = #{depositBank}</if>
+            <if test="khzhihang != null  and khzhihang != ''"> and m.khzhihang = #{khzhihang}</if>
+            <if test="accountName != null  and accountName != ''"> and m.account_name = #{accountName}</if>
+            <if test="account != null  and account != ''"> and m.account = #{account}</if>
+            <if test="cardImage != null  and cardImage != ''"> and m.card_image = #{cardImage}</if>
+            <if test="bindingTime != null "> and m.binding_time = #{bindingTime}</if>
+            <if test="unbindTime != null "> and m.unbind_time = #{unbindTime}</if>
+            <if test="deleteFlag != null "> and m.delete_flag = #{deleteFlag}</if>
+            <if test="bankCardAuth != null "> and m.bank_card_auth = #{bankCardAuth}</if>
+            <if test="loginDomain != null "> and m.login_domain = #{loginDomain}</if>
+            <if test="withdrawSwitch != null "> and m.withdraw_switch = #{withdrawSwitch}</if>
+            and m.daili_id in ( select #{parentId} union all select u.user_id from sys_user u where u.path like concat('%,', #{parentId}, ',%'))
+        </where>
+    </select>
+
+    <select id="authMemberList" resultType="com.ruoyi.common.core.domain.entity.FaMember">
+        SELECT
+        m.id,
+        m.username,
+        m.nickname,
+        --             m.PASSWORD,
+        m.salt,
+        m.mobile,
+        --             m.avatar,
+        m.successions,
+        m.max_successions,
+        m.prev_time,
+        m.login_time,
+        m.login_ip,
+        m.payment_code,
+        m.join_ip,
+        m.join_time,
+        m.create_time,
+        m.update_time,
+        m.STATUS,
+        m.balance,
+        m.superior_name,
+        m.superior_code,
+        m.superior_id,
+        m.institution_number,
+        m.daili_id,
+        m.jingzhijiaoyi,
+        m.is_pz,
+        m.is_dz,
+        m.is_ps,
+        m.is_sg,
+        m.is_zs,
+        m.is_qc,
+        m.is_qh,
+        m.is_vip,
+        m.is_inform,
+        m.freeze_profit,
+        m.weiyima,
+        m.NAME,
+        m.id_card,
+        m.id_card_front_image,
+        m.id_card_back_image,
+        m.submit_auth_time,
+        m.auth_time,
+        m.is_auth,
+        m.auth_reject_reason,
+        m.auth_reject_time,
+        m.deposit_bank,
+        m.khzhihang,
+        m.account_name,
+        m.account,
+        --             m.card_image,
+        m.binding_time,
+        m.unbind_time,
+        m.delete_flag,
+        m.bank_card_auth,
+        m.login_domain,
+        m.withdraw_switch
+        FROM
+        fa_member m
+        <where>
+            <if test="id != null "> and m.id = #{id}</if>
+            <if test="username != null  and username != ''"> and m.username like concat('%', #{username}, '%')</if>
+            <if test="nickname != null  and nickname != ''"> and m.nickname like concat('%', #{nickname}, '%')</if>
+            <if test="password != null  and password != ''"> and m.password = #{password}</if>
+            <if test="salt != null  and salt != ''"> and m.salt = #{salt}</if>
+            <if test="mobile != null  and mobile != ''"> and m.mobile = #{mobile}</if>
+            <if test="avatar != null  and avatar != ''"> and m.avatar = #{avatar}</if>
+            <if test="successions != null "> and m.successions = #{successions}</if>
+            <if test="maxSuccessions != null "> and m.max_successions = #{maxSuccessions}</if>
+            <if test="prevTime != null "> and m.prev_time = #{prevTime}</if>
+            <if test="params.beginLoginTime != null and params.beginLoginTime != ''"><!-- 开始时间检索 -->
+                AND date_format(m.login_time,'%y%m%d') &gt;= date_format(#{params.beginLoginTime},'%y%m%d')
+            </if>
+            <if test="params.endLoginTime != null and params.endLoginTime != ''"><!-- 结束时间检索 -->
+                AND date_format(m.login_time,'%y%m%d') &lt;= date_format(#{params.endLoginTime},'%y%m%d')
+            </if>
+            <if test="loginIp != null  and loginIp != ''"> and m.login_ip = #{loginIp}</if>
+            <if test="paymentCode != null  and paymentCode != ''"> and m.payment_code = #{paymentCode}</if>
+            <if test="joinIp != null  and joinIp != ''"> and m.join_ip = #{joinIp}</if>
+            <if test="joinTime != null "> and m.join_time = #{joinTime}</if>
+            <if test="params.beginCreateTime != null and params.beginCreateTime != ''"><!-- 开始时间检索 -->
+                AND date_format(m.create_time,'%y%m%d') &gt;= date_format(#{params.beginCreateTime},'%y%m%d')
+            </if>
+            <if test="params.endCreateTime != null and params.endCreateTime != ''"><!-- 结束时间检索 -->
+                AND date_format(m.create_time,'%y%m%d') &lt;= date_format(#{params.endCreateTime},'%y%m%d')
+            </if>
+            <if test="updateTime != null "> and m.update_time = #{updateTime}</if>
+            <if test="status != null "> and m.status = #{status}</if>
+            <if test="balance != null "> and m.balance = #{balance}</if>
+            <if test="superiorName != null  and superiorName != ''"> and m.superior_name like concat('%', #{superiorName}, '%')</if>
+            <if test="superiorCode != null  and superiorCode != ''"> and m.superior_code = #{superiorCode}</if>
+            <if test="superiorId != null "> and m.superior_id = #{superiorId}</if>
+            <if test="institutionNumber != null  and institutionNumber != ''"> and m.institution_number = #{institutionNumber}</if>
+            <if test="jingzhijiaoyi != null "> and m.jingzhijiaoyi = #{jingzhijiaoyi}</if>
+            <if test="isPz != null "> and m.is_pz = #{isPz}</if>
+            <if test="isDz != null "> and m.is_dz = #{isDz}</if>
+            <if test="isPs != null "> and m.is_ps = #{isPs}</if>
+            <if test="isSg != null "> and m.is_sg = #{isSg}</if>
+            <if test="isZs != null "> and m.is_zs = #{isZs}</if>
+            <if test="isQc != null "> and m.is_qc = #{isQc}</if>
+            <if test="isQh != null "> and m.is_qh = #{isQh}</if>
+            <if test="isVip != null "> and m.is_vip = #{isVip}</if>
+            <if test="isInform != null "> and m.is_inform = #{isInform}</if>
+            <if test="freezeProfit != null "> and m.freeze_profit = #{freezeProfit}</if>
+            <if test="weiyima != null  and weiyima != ''"> and m.weiyima = #{weiyima}</if>
+            <if test="name != null  and name != ''"> and m.name like concat('%', #{name}, '%')</if>
+            <if test="idCard != null  and idCard != ''"> and m.id_card = #{idCard}</if>
+            <if test="idCardFrontImage != null  and idCardFrontImage != ''"> and m.id_card_front_image = #{idCardFrontImage}</if>
+            <if test="idCardBackImage != null  and idCardBackImage != ''"> and m.id_card_back_image = #{idCardBackImage}</if>
+            <if test="submitAuthTime != null "> and m.submit_auth_time = #{submitAuthTime}</if>
+            <if test="authTime != null "> and m.auth_time = #{authTime}</if>
+            <if test="isAuth != null "> and m.is_auth = #{isAuth}</if>
+            <if test="authRejectReason != null  and authRejectReason != ''"> and m.auth_reject_reason = #{authRejectReason}</if>
+            <if test="authRejectTime != null "> and m.auth_reject_time = #{authRejectTime}</if>
+            <if test="depositBank != null  and depositBank != ''"> and m.deposit_bank = #{depositBank}</if>
+            <if test="khzhihang != null  and khzhihang != ''"> and m.khzhihang = #{khzhihang}</if>
+            <if test="accountName != null  and accountName != ''"> and m.account_name = #{accountName}</if>
+            <if test="account != null  and account != ''"> and m.account = #{account}</if>
+            <if test="cardImage != null  and cardImage != ''"> and m.card_image = #{cardImage}</if>
+            <if test="bindingTime != null "> and m.binding_time = #{bindingTime}</if>
+            <if test="unbindTime != null "> and m.unbind_time = #{unbindTime}</if>
+            <if test="deleteFlag != null "> and m.delete_flag = #{deleteFlag}</if>
+            <if test="bankCardAuth != null "> and m.bank_card_auth = #{bankCardAuth}</if>
+            <if test="loginDomain != null "> and m.login_domain = #{loginDomain}</if>
+            <if test="withdrawSwitch != null "> and m.withdraw_switch = #{withdrawSwitch}</if>
+            and m.is_auth in (1, 2, 3)
+            and m.daili_id in ( select #{parentId} union all select u.user_id from sys_user u where u.path like concat('%,', #{parentId}, ',%'))
+        </where>
+    </select>
+
+    <select id="memberBankList" resultType="com.ruoyi.common.core.domain.entity.FaMember">
+        SELECT
+        m.id,
+        m.username,
+        m.nickname,
+        --             m.PASSWORD,
+        m.salt,
+        m.mobile,
+        --             m.avatar,
+        m.successions,
+        m.max_successions,
+        m.prev_time,
+        m.login_time,
+        m.login_ip,
+        m.payment_code,
+        m.join_ip,
+        m.join_time,
+        m.create_time,
+        m.update_time,
+        m.STATUS,
+        m.balance,
+        m.superior_name,
+        m.superior_code,
+        m.superior_id,
+        m.institution_number,
+        m.daili_id,
+        m.jingzhijiaoyi,
+        m.is_pz,
+        m.is_dz,
+        m.is_ps,
+        m.is_sg,
+        m.is_zs,
+        m.is_qc,
+        m.is_qh,
+        m.is_vip,
+        m.is_inform,
+        m.freeze_profit,
+        m.weiyima,
+        m.NAME,
+        m.id_card,
+        --             m.id_card_front_image,
+        --             m.id_card_back_image,
+        m.submit_auth_time,
+        m.auth_time,
+        m.is_auth,
+        m.auth_reject_reason,
+        m.auth_reject_time,
+        m.deposit_bank,
+        m.khzhihang,
+        m.account_name,
+        m.account,
+        m.card_image,
+        m.binding_time,
+        m.unbind_time,
+        m.delete_flag,
+        m.bank_card_auth,
+        m.login_domain,
+        m.withdraw_switch
+        FROM
+        fa_member m
+        <where>
+            <if test="id != null "> and m.id = #{id}</if>
+            <if test="username != null  and username != ''"> and m.username like concat('%', #{username}, '%')</if>
+            <if test="nickname != null  and nickname != ''"> and m.nickname like concat('%', #{nickname}, '%')</if>
+            <if test="password != null  and password != ''"> and m.password = #{password}</if>
+            <if test="salt != null  and salt != ''"> and m.salt = #{salt}</if>
+            <if test="mobile != null  and mobile != ''"> and m.mobile = #{mobile}</if>
+            <if test="avatar != null  and avatar != ''"> and m.avatar = #{avatar}</if>
+            <if test="successions != null "> and m.successions = #{successions}</if>
+            <if test="maxSuccessions != null "> and m.max_successions = #{maxSuccessions}</if>
+            <if test="prevTime != null "> and m.prev_time = #{prevTime}</if>
+            <if test="params.beginLoginTime != null and params.beginLoginTime != ''"><!-- 开始时间检索 -->
+                AND date_format(m.login_time,'%y%m%d') &gt;= date_format(#{params.beginLoginTime},'%y%m%d')
+            </if>
+            <if test="params.endLoginTime != null and params.endLoginTime != ''"><!-- 结束时间检索 -->
+                AND date_format(m.login_time,'%y%m%d') &lt;= date_format(#{params.endLoginTime},'%y%m%d')
+            </if>
+            <if test="loginIp != null  and loginIp != ''"> and m.login_ip = #{loginIp}</if>
+            <if test="paymentCode != null  and paymentCode != ''"> and m.payment_code = #{paymentCode}</if>
+            <if test="joinIp != null  and joinIp != ''"> and m.join_ip = #{joinIp}</if>
+            <if test="joinTime != null "> and m.join_time = #{joinTime}</if>
+            <if test="params.beginCreateTime != null and params.beginCreateTime != ''"><!-- 开始时间检索 -->
+                AND date_format(m.create_time,'%y%m%d') &gt;= date_format(#{params.beginCreateTime},'%y%m%d')
+            </if>
+            <if test="params.endCreateTime != null and params.endCreateTime != ''"><!-- 结束时间检索 -->
+                AND date_format(m.create_time,'%y%m%d') &lt;= date_format(#{params.endCreateTime},'%y%m%d')
+            </if>
+            <if test="updateTime != null "> and m.update_time = #{updateTime}</if>
+            <if test="status != null "> and m.status = #{status}</if>
+            <if test="balance != null "> and m.balance = #{balance}</if>
+            <if test="superiorName != null  and superiorName != ''"> and m.superior_name like concat('%', #{superiorName}, '%')</if>
+            <if test="superiorCode != null  and superiorCode != ''"> and m.superior_code = #{superiorCode}</if>
+            <if test="superiorId != null "> and m.superior_id = #{superiorId}</if>
+            <if test="institutionNumber != null  and institutionNumber != ''"> and m.institution_number = #{institutionNumber}</if>
+            <if test="jingzhijiaoyi != null "> and m.jingzhijiaoyi = #{jingzhijiaoyi}</if>
+            <if test="isPz != null "> and m.is_pz = #{isPz}</if>
+            <if test="isDz != null "> and m.is_dz = #{isDz}</if>
+            <if test="isPs != null "> and m.is_ps = #{isPs}</if>
+            <if test="isSg != null "> and m.is_sg = #{isSg}</if>
+            <if test="isZs != null "> and m.is_zs = #{isZs}</if>
+            <if test="isQc != null "> and m.is_qc = #{isQc}</if>
+            <if test="isQh != null "> and m.is_qh = #{isQh}</if>
+            <if test="isVip != null "> and m.is_vip = #{isVip}</if>
+            <if test="isInform != null "> and m.is_inform = #{isInform}</if>
+            <if test="freezeProfit != null "> and m.freeze_profit = #{freezeProfit}</if>
+            <if test="weiyima != null  and weiyima != ''"> and m.weiyima = #{weiyima}</if>
+            <if test="name != null  and name != ''"> and m.name like concat('%', #{name}, '%')</if>
+            <if test="idCard != null  and idCard != ''"> and m.id_card = #{idCard}</if>
+            <if test="idCardFrontImage != null  and idCardFrontImage != ''"> and m.id_card_front_image = #{idCardFrontImage}</if>
+            <if test="idCardBackImage != null  and idCardBackImage != ''"> and m.id_card_back_image = #{idCardBackImage}</if>
+            <if test="submitAuthTime != null "> and m.submit_auth_time = #{submitAuthTime}</if>
+            <if test="authTime != null "> and m.auth_time = #{authTime}</if>
+            <if test="isAuth != null "> and m.is_auth = #{isAuth}</if>
+            <if test="authRejectReason != null  and authRejectReason != ''"> and m.auth_reject_reason = #{authRejectReason}</if>
+            <if test="authRejectTime != null "> and m.auth_reject_time = #{authRejectTime}</if>
+            <if test="depositBank != null  and depositBank != ''"> and m.deposit_bank = #{depositBank}</if>
+            <if test="khzhihang != null  and khzhihang != ''"> and m.khzhihang = #{khzhihang}</if>
+            <if test="accountName != null  and accountName != ''"> and m.account_name = #{accountName}</if>
+            <if test="account != null  and account != ''"> and m.account = #{account}</if>
+            <if test="cardImage != null  and cardImage != ''"> and m.card_image = #{cardImage}</if>
+            <if test="bindingTime != null "> and m.binding_time = #{bindingTime}</if>
+            <if test="unbindTime != null "> and m.unbind_time = #{unbindTime}</if>
+            <if test="deleteFlag != null "> and m.delete_flag = #{deleteFlag}</if>
+            <if test="bankCardAuth != null "> and m.bank_card_auth = #{bankCardAuth}</if>
+            <if test="loginDomain != null "> and m.login_domain = #{loginDomain}</if>
+            <if test="withdrawSwitch != null "> and m.withdraw_switch = #{withdrawSwitch}</if>
+            and m.bank_card_auth in (1, 2, 3)
+            and m.daili_id in ( select #{parentId} union all select u.user_id from sys_user u where u.path like concat('%,', #{parentId}, ',%'))
+        </where>
+    </select>
+
+    <select id="selectFaMemberById" parameterType="Integer" resultMap="FaMemberResult">
+        <include refid="selectFaMemberVo"/>
+        where m.id = #{id}
+    </select>
+
+    <insert id="insertFaMember" parameterType="FaMember" useGeneratedKeys="true" keyProperty="id">
+        insert into fa_member
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="username != null and username != ''">username,</if>
+            <if test="nickname != null and nickname != ''">nickname,</if>
+            <if test="password != null and password != ''">password,</if>
+            <if test="salt != null and salt != ''">salt,</if>
+            <if test="mobile != null">mobile,</if>
+            <if test="avatar != null">avatar,</if>
+            <if test="successions != null">successions,</if>
+            <if test="maxSuccessions != null">max_successions,</if>
+            <if test="prevTime != null">prev_time,</if>
+            <if test="loginTime != null">login_time,</if>
+            <if test="loginIp != null">login_ip,</if>
+            <if test="paymentCode != null">payment_code,</if>
+            <if test="joinIp != null">join_ip,</if>
+            <if test="joinTime != null">join_time,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="status != null">status,</if>
+            <if test="balance != null">balance,</if>
+            <if test="superiorName != null">superior_name,</if>
+            <if test="superiorCode != null">superior_code,</if>
+            <if test="superiorId != null">superior_id,</if>
+            <if test="institutionNumber != null">institution_number,</if>
+            <if test="dailiId != null">daili_id,</if>
+            <if test="jingzhijiaoyi != null">jingzhijiaoyi,</if>
+            <if test="isPz != null">is_pz,</if>
+            <if test="isDz != null">is_dz,</if>
+            <if test="isPs != null">is_ps,</if>
+            <if test="isSg != null">is_sg,</if>
+            <if test="isZs != null">is_zs,</if>
+            <if test="isQc != null">is_qc,</if>
+            <if test="isQh != null">is_qh,</if>
+            <if test="isVip != null">is_vip,</if>
+            <if test="isInform != null">is_inform,</if>
+            <if test="freezeProfit != null">freeze_profit,</if>
+            <if test="weiyima != null">weiyima,</if>
+            <if test="name != null">name,</if>
+            <if test="idCard != null">id_card,</if>
+            <if test="idCardFrontImage != null">id_card_front_image,</if>
+            <if test="idCardBackImage != null">id_card_back_image,</if>
+            <if test="submitAuthTime != null">submit_auth_time,</if>
+            <if test="authTime != null">auth_time,</if>
+            <if test="isAuth != null">is_auth,</if>
+            <if test="authRejectReason != null">auth_reject_reason,</if>
+            <if test="authRejectTime != null">auth_reject_time,</if>
+            <if test="depositBank != null">deposit_bank,</if>
+            <if test="khzhihang != null">khzhihang,</if>
+            <if test="accountName != null">account_name,</if>
+            <if test="account != null">account,</if>
+            <if test="cardImage != null">card_image,</if>
+            <if test="bindingTime != null">binding_time,</if>
+            <if test="unbindTime != null">unbind_time,</if>
+            <if test="deleteFlag != null">delete_flag,</if>
+            <if test="bankCardAuth != null">bank_card_auth,</if>
+            <if test="loginDomain != null">login_domain,</if>
+            <if test="withdrawSwitch != null">withdraw_switch,</if>
+            <if test="phoneNo != null">phone_no,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="username != null and username != ''">#{username},</if>
+            <if test="nickname != null and nickname != ''">#{nickname},</if>
+            <if test="password != null and password != ''">#{password},</if>
+            <if test="salt != null and salt != ''">#{salt},</if>
+            <if test="mobile != null">#{mobile},</if>
+            <if test="avatar != null">#{avatar},</if>
+            <if test="successions != null">#{successions},</if>
+            <if test="maxSuccessions != null">#{maxSuccessions},</if>
+            <if test="prevTime != null">#{prevTime},</if>
+            <if test="loginTime != null">#{loginTime},</if>
+            <if test="loginIp != null">#{loginIp},</if>
+            <if test="paymentCode != null">#{paymentCode},</if>
+            <if test="joinIp != null">#{joinIp},</if>
+            <if test="joinTime != null">#{joinTime},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="status != null">#{status},</if>
+            <if test="balance != null">#{balance},</if>
+            <if test="superiorName != null">#{superiorName},</if>
+            <if test="superiorCode != null">#{superiorCode},</if>
+            <if test="superiorId != null">#{superiorId},</if>
+            <if test="institutionNumber != null">#{institutionNumber},</if>
+            <if test="dailiId != null">#{dailiId},</if>
+            <if test="jingzhijiaoyi != null">#{jingzhijiaoyi},</if>
+            <if test="isPz != null">#{isPz},</if>
+            <if test="isDz != null">#{isDz},</if>
+            <if test="isPs != null">#{isPs},</if>
+            <if test="isSg != null">#{isSg},</if>
+            <if test="isZs != null">#{isZs},</if>
+            <if test="isQc != null">#{isQc},</if>
+            <if test="isQh != null">#{isQh},</if>
+            <if test="isVip != null">#{isVip},</if>
+            <if test="isInform != null">#{isInform},</if>
+            <if test="freezeProfit != null">#{freezeProfit},</if>
+            <if test="weiyima != null">#{weiyima},</if>
+            <if test="name != null">#{name},</if>
+            <if test="idCard != null">#{idCard},</if>
+            <if test="idCardFrontImage != null">#{idCardFrontImage},</if>
+            <if test="idCardBackImage != null">#{idCardBackImage},</if>
+            <if test="submitAuthTime != null">#{submitAuthTime},</if>
+            <if test="authTime != null">#{authTime},</if>
+            <if test="isAuth != null">#{isAuth},</if>
+            <if test="authRejectReason != null">#{authRejectReason},</if>
+            <if test="authRejectTime != null">#{authRejectTime},</if>
+            <if test="depositBank != null">#{depositBank},</if>
+            <if test="khzhihang != null">#{khzhihang},</if>
+            <if test="accountName != null">#{accountName},</if>
+            <if test="account != null">#{account},</if>
+            <if test="cardImage != null">#{cardImage},</if>
+            <if test="bindingTime != null">#{bindingTime},</if>
+            <if test="unbindTime != null">#{unbindTime},</if>
+            <if test="deleteFlag != null">#{deleteFlag},</if>
+            <if test="bankCardAuth != null">#{bankCardAuth},</if>
+            <if test="loginDomain != null">#{loginDomain},</if>
+            <if test="withdrawSwitch != null">#{withdrawSwitch},</if>
+            <if test="phoneNo != null">#{phoneNo},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFaMember" parameterType="FaMember">
+        update fa_member
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="username != null and username != ''">username = #{username},</if>
+            <if test="nickname != null and nickname != ''">nickname = #{nickname},</if>
+            <if test="password != null and password != ''">password = #{password},</if>
+            <if test="salt != null and salt != ''">salt = #{salt},</if>
+            <if test="mobile != null">mobile = #{mobile},</if>
+            <if test="avatar != null">avatar = #{avatar},</if>
+            <if test="successions != null">successions = #{successions},</if>
+            <if test="maxSuccessions != null">max_successions = #{maxSuccessions},</if>
+            <if test="prevTime != null">prev_time = #{prevTime},</if>
+            <if test="loginTime != null">login_time = #{loginTime},</if>
+            <if test="loginIp != null">login_ip = #{loginIp},</if>
+            <if test="paymentCode != null">payment_code = #{paymentCode},</if>
+            <if test="joinIp != null">join_ip = #{joinIp},</if>
+            <if test="joinTime != null">join_time = #{joinTime},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="balance != null">balance = #{balance},</if>
+            <if test="superiorName != null">superior_name = #{superiorName},</if>
+            <if test="superiorCode != null">superior_code = #{superiorCode},</if>
+            <if test="superiorId != null">superior_id = #{superiorId},</if>
+            <if test="institutionNumber != null">institution_number = #{institutionNumber},</if>
+            <if test="dailiId != null">daili_id = #{dailiId},</if>
+            <if test="jingzhijiaoyi != null">jingzhijiaoyi = #{jingzhijiaoyi},</if>
+            <if test="isPz != null">is_pz = #{isPz},</if>
+            <if test="isDz != null">is_dz = #{isDz},</if>
+            <if test="isPs != null">is_ps = #{isPs},</if>
+            <if test="isSg != null">is_sg = #{isSg},</if>
+            <if test="isZs != null">is_zs = #{isZs},</if>
+            <if test="isQc != null">is_qc = #{isQc},</if>
+            <if test="isQh != null">is_qh = #{isQh},</if>
+            <if test="isVip != null">is_vip = #{isVip},</if>
+            <if test="isInform != null">is_inform = #{isInform},</if>
+            <if test="freezeProfit != null">freeze_profit = #{freezeProfit},</if>
+            <if test="weiyima != null">weiyima = #{weiyima},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="idCard != null">id_card = #{idCard},</if>
+            <if test="idCardFrontImage != null">id_card_front_image = #{idCardFrontImage},</if>
+            <if test="idCardBackImage != null">id_card_back_image = #{idCardBackImage},</if>
+            <if test="submitAuthTime != null">submit_auth_time = #{submitAuthTime},</if>
+            <if test="authTime != null">auth_time = #{authTime},</if>
+            <if test="isAuth != null">is_auth = #{isAuth},</if>
+            <if test="authRejectReason != null">auth_reject_reason = #{authRejectReason},</if>
+            <if test="authRejectTime != null">auth_reject_time = #{authRejectTime},</if>
+            <if test="depositBank != null">deposit_bank = #{depositBank},</if>
+            <if test="khzhihang != null">khzhihang = #{khzhihang},</if>
+            <if test="accountName != null">account_name = #{accountName},</if>
+            <if test="account != null">account = #{account},</if>
+            <if test="cardImage != null">card_image = #{cardImage},</if>
+            <if test="bindingTime != null">binding_time = #{bindingTime},</if>
+            <if test="unbindTime != null">unbind_time = #{unbindTime},</if>
+            <if test="deleteFlag != null">delete_flag = #{deleteFlag},</if>
+            <if test="bankCardAuth != null">bank_card_auth = #{bankCardAuth},</if>
+            <if test="loginDomain != null">login_domain = #{loginDomain},</if>
+            <if test="withdrawSwitch != null">withdraw_switch = #{withdrawSwitch},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteFaMemberById" parameterType="Integer">
+        update fa_member set delete_flag = 1 where id = #{id}
+    </delete>
+
+    <delete id="deleteFaMemberByIds" parameterType="String">
+        update fa_member set delete_flag = 1 where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="delAuthMemberByIds" parameterType="String">
+        update fa_member
+        set name = null,
+            id_card = null,
+            id_card_front_image = null,
+            id_card_back_image = null,
+            submit_auth_time = null,
+            auth_time = null,
+            is_auth = 0,
+            auth_reject_reason = null,
+            auth_reject_time = null
+        where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <delete id="delMemberBankByIds" parameterType="String">
+        update fa_member
+        set deposit_bank = null,
+            account_name = null,
+            account = null,
+            binding_time = null,
+            unbind_time = null,
+            bank_card_auth = 0
+        where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="getMemberStatistics" resultType="java.util.Map">
+        SELECT
+            COALESCE(sum( m.balance ), 0) balance,
+            COALESCE(sum( r.money ), 0) recharge,
+            COALESCE(sum( w.money ), 0) withdraw,
+            COALESCE(sum( sg.zq_nums * sg.sg_fx_price ), 0) newStockSg,
+            COALESCE(sum( ps.zq_nums * ps.sg_fx_price ), 0) newStockPs,
+            COALESCE(sum( h.hold_number * s.cai_trade ), 0) listedHold,
+            COALESCE(sum( h.hold_number * ns.fx_price ), 0) unlistedHold
+        FROM
+            fa_member m
+        LEFT JOIN fa_recharge r ON m.id = r.user_id and r.is_pay = 1
+        LEFT JOIN fa_withdraw w ON m.id = w.user_id and w.is_pay = 1
+        LEFT JOIN fa_stock_hold_detail h ON m.id = h.member_id and h.status = 0
+        LEFT JOIN fa_stock_sg sg ON m.id = sg.user_id and sg.is_cc = 0
+        LEFT JOIN fa_stock_ps ps ON m.id = ps.user_id and ps.is_cc = 0
+        LEFT JOIN fa_strategy s ON h.stock_id = s.id
+        LEFT JOIN fa_new_stock ns ON h.new_stock_id = ns.id
+        <where>
+            <if test="id != null "> and m.id = #{id}</if>
+            <if test="username != null  and username != ''"> and m.username like concat('%', #{username}, '%')</if>
+            <if test="nickname != null  and nickname != ''"> and m.nickname like concat('%', #{nickname}, '%')</if>
+            <if test="password != null  and password != ''"> and m.password = #{password}</if>
+            <if test="salt != null  and salt != ''"> and m.salt = #{salt}</if>
+            <if test="mobile != null  and mobile != ''"> and m.mobile = #{mobile}</if>
+            <if test="avatar != null  and avatar != ''"> and m.avatar = #{avatar}</if>
+            <if test="successions != null "> and m.successions = #{successions}</if>
+            <if test="maxSuccessions != null "> and m.max_successions = #{maxSuccessions}</if>
+            <if test="prevTime != null "> and m.prev_time = #{prevTime}</if>
+            <if test="params.beginLoginTime != null and params.beginLoginTime != ''"><!-- 开始时间检索 -->
+                AND date_format(m.login_time,'%y%m%d') &gt;= date_format(#{params.beginLoginTime},'%y%m%d')
+            </if>
+            <if test="params.endLoginTime != null and params.endLoginTime != ''"><!-- 结束时间检索 -->
+                AND date_format(m.login_time,'%y%m%d') &lt;= date_format(#{params.endLoginTime},'%y%m%d')
+            </if>
+            <if test="loginIp != null  and loginIp != ''"> and m.login_ip = #{loginIp}</if>
+            <if test="paymentCode != null  and paymentCode != ''"> and m.payment_code = #{paymentCode}</if>
+            <if test="joinIp != null  and joinIp != ''"> and m.join_ip = #{joinIp}</if>
+            <if test="joinTime != null "> and m.join_time = #{joinTime}</if>
+            <if test="params.beginCreateTime != null and params.beginCreateTime != ''"><!-- 开始时间检索 -->
+                AND date_format(m.create_time,'%y%m%d') &gt;= date_format(#{params.beginCreateTime},'%y%m%d')
+            </if>
+            <if test="params.endCreateTime != null and params.endCreateTime != ''"><!-- 结束时间检索 -->
+                AND date_format(m.create_time,'%y%m%d') &lt;= date_format(#{params.endCreateTime},'%y%m%d')
+            </if>
+            <if test="updateTime != null "> and m.update_time = #{updateTime}</if>
+            <if test="status != null "> and m.status = #{status}</if>
+            <if test="balance != null "> and m.balance = #{balance}</if>
+            <if test="superiorName != null  and superiorName != ''"> and m.superior_name like concat('%', #{superiorName}, '%')</if>
+            <if test="superiorCode != null  and superiorCode != ''"> and m.superior_code = #{superiorCode}</if>
+            <if test="superiorId != null "> and m.superior_id = #{superiorId}</if>
+            <if test="institutionNumber != null  and institutionNumber != ''"> and m.institution_number = #{institutionNumber}</if>
+            <if test="jingzhijiaoyi != null "> and m.jingzhijiaoyi = #{jingzhijiaoyi}</if>
+            <if test="isPz != null "> and m.is_pz = #{isPz}</if>
+            <if test="isDz != null "> and m.is_dz = #{isDz}</if>
+            <if test="isPs != null "> and m.is_ps = #{isPs}</if>
+            <if test="isSg != null "> and m.is_sg = #{isSg}</if>
+            <if test="isZs != null "> and m.is_zs = #{isZs}</if>
+            <if test="isQc != null "> and m.is_qc = #{isQc}</if>
+            <if test="isQh != null "> and m.is_qh = #{isQh}</if>
+            <if test="isVip != null "> and m.is_vip = #{isVip}</if>
+            <if test="isInform != null "> and m.is_inform = #{isInform}</if>
+            <if test="freezeProfit != null "> and m.freeze_profit = #{freezeProfit}</if>
+            <if test="weiyima != null  and weiyima != ''"> and m.weiyima = #{weiyima}</if>
+            <if test="name != null  and name != ''"> and m.name like concat('%', #{name}, '%')</if>
+            <if test="idCard != null  and idCard != ''"> and m.id_card = #{idCard}</if>
+            <if test="idCardFrontImage != null  and idCardFrontImage != ''"> and m.id_card_front_image = #{idCardFrontImage}</if>
+            <if test="idCardBackImage != null  and idCardBackImage != ''"> and m.id_card_back_image = #{idCardBackImage}</if>
+            <if test="submitAuthTime != null "> and m.submit_auth_time = #{submitAuthTime}</if>
+            <if test="authTime != null "> and m.auth_time = #{authTime}</if>
+            <if test="isAuth != null "> and m.is_auth = #{isAuth}</if>
+            <if test="authRejectReason != null  and authRejectReason != ''"> and m.auth_reject_reason = #{authRejectReason}</if>
+            <if test="authRejectTime != null "> and m.auth_reject_time = #{authRejectTime}</if>
+            <if test="depositBank != null  and depositBank != ''"> and m.deposit_bank = #{depositBank}</if>
+            <if test="khzhihang != null  and khzhihang != ''"> and m.khzhihang = #{khzhihang}</if>
+            <if test="accountName != null  and accountName != ''"> and m.account_name = #{accountName}</if>
+            <if test="account != null  and account != ''"> and m.account = #{account}</if>
+            <if test="cardImage != null  and cardImage != ''"> and m.card_image = #{cardImage}</if>
+            <if test="bindingTime != null "> and m.binding_time = #{bindingTime}</if>
+            <if test="unbindTime != null "> and m.unbind_time = #{unbindTime}</if>
+            <if test="deleteFlag != null "> and m.delete_flag = #{deleteFlag}</if>
+            <if test="bankCardAuth != null "> and m.bank_card_auth = #{bankCardAuth}</if>
+            <if test="loginDomain != null "> and m.login_domain = #{loginDomain}</if>
+            <if test="withdrawSwitch != null "> and m.withdraw_switch = #{withdrawSwitch}</if>
+            and m.daili_id in ( select #{parentId} union all select u.user_id from sys_user u where u.path like concat('%,', #{parentId}, ',%'))
+        </where>
+    </select>
+
+    <select id="getFundInfoMarket" resultType="java.math.BigDecimal">
+        SELECT
+            COALESCE( SUM( shd.hold_number * s.cai_trade ), 0)
+        FROM
+            fa_stock_hold_detail shd
+        LEFT JOIN
+            fa_strategy s
+        ON shd.stock_id = s.id
+        WHERE
+            shd.member_id = #{id}
+          AND shd.`status` = 0
+          AND shd.delete_flag = 0
+    </select>
+
+    <select id="getFundInfoMarketListed" resultType="java.math.BigDecimal">
+        SELECT
+            COALESCE( SUM( shd.hold_number * s.cai_trade ), 0)
+        FROM
+            fa_stock_hold_detail shd
+                LEFT JOIN
+            fa_strategy s
+            ON shd.stock_id = s.id
+        WHERE
+            shd.member_id = #{id}
+          AND shd.`status` = 0
+          AND shd.delete_flag = 0
+          AND shd.is_list = 1
+    </select>
+
+    <select id="getFundInfoMarketUnlisted" resultType="java.math.BigDecimal">
+        SELECT
+            COALESCE( SUM( shd.hold_number * ns.fx_price ), 0)
+        FROM
+            fa_stock_hold_detail shd
+                LEFT JOIN
+            fa_new_stock ns
+            ON shd.new_stock_id = ns.id
+        WHERE
+            shd.member_id = #{id}
+          AND shd.`status` = 0
+          AND shd.delete_flag = 0
+          AND shd.is_list = 0
+    </select>
+
+    <select id="getFundInfoRecharge" resultType="java.math.BigDecimal">
+        SELECT
+            COALESCE( SUM( r.money ), 0 )
+        FROM
+            fa_recharge r
+        WHERE
+            r.is_pay = 1
+          AND r.delete_flag = 0
+          AND r.user_id = #{id}
+    </select>
+
+    <select id="getFundInfoWithdraw" resultType="java.math.BigDecimal">
+        SELECT
+            COALESCE( SUM( w.money ), 0 )
+        FROM
+            fa_withdraw w
+        WHERE
+            w.is_pay in (0, 1)
+          AND w.delete_flag = 0
+          AND w.user_id = #{id}
+    </select>
+
+    <select id="getFundInfoSg" resultType="java.math.BigDecimal">
+        SELECT
+            COALESCE( SUM( ss.zq_money ), 0 )
+        FROM
+            fa_stock_sg ss
+        WHERE
+            ss.delete_flag = 0
+          AND ss.`status` = 1
+          AND ss.renjiao = 1
+          AND ss.is_cc = 0
+          AND ss.user_id = #{id}
+    </select>
+
+    <select id="getFundInfoPs" resultType="java.math.BigDecimal">
+        SELECT
+            COALESCE( SUM( CASE WHEN ps.is_tz = 0 THEN ps.money WHEN ps.is_tz = 1 THEN ps.zq_money END ), 0 )
+        FROM
+            fa_stock_ps ps
+        WHERE
+            ps.delete_flag = 0
+          AND ps.`status` in (0,1)
+          AND ps.renjiao = 1
+          AND ps.is_cc = 0
+          AND ps.user_id = #{id}
+    </select>
+
+    <select id="getTradeInfoHoldProfit" resultType="java.math.BigDecimal">
+        SELECT
+            COALESCE( SUM( shd.hold_number * ( CAST( s.cai_trade AS DECIMAL ( 10, 2 )) - shd.average ) * IF(shd.trade_direct = 2, -1, 1)), 0 )
+        FROM
+            fa_stock_hold_detail shd
+                LEFT JOIN fa_strategy s ON shd.stock_id = s.id
+        WHERE
+            shd.delete_flag = 0
+          AND shd.`status` = 0
+          AND shd.member_id = #{id}
+    </select>
+
+    <select id="getTradeInfoHoldProfitRq" resultType="java.math.BigDecimal">
+        SELECT
+            COALESCE( SUM( shd.hold_number * ( CAST( s.cai_trade AS DECIMAL ( 10, 2 )) - shd.average ) * IF(shd.trade_direct = 2, -1, 1)), 0 )
+        FROM
+            fa_stock_hold_detail shd
+                LEFT JOIN fa_strategy s ON shd.stock_id = s.id
+        WHERE
+            shd.delete_flag = 0
+          AND shd.`status` = 0
+          AND shd.member_id = #{id}
+          AND shd.hold_type = 8
+    </select>
+
+    <select id="getTradeInfoTradeProfit" resultType="java.math.BigDecimal">
+        SELECT
+            COALESCE( SUM( shd.profit_lose ), 0 )
+        FROM
+            fa_stock_hold_detail shd
+        WHERE
+            shd.delete_flag = 0
+          AND shd.`status` = 1
+          AND shd.member_id = #{id}
+    </select>
+
+    <update id="updateFaMemberFreezeProfit">
+        UPDATE fa_member m
+        <if test="direct == 0 ">
+            SET m.freeze_profit = m.freeze_profit + #{money}
+        </if>
+        <if test="direct == 1 ">
+            SET m.freeze_profit = IF(m.freeze_profit <![CDATA[<]]> #{money}, 0, m.freeze_profit - #{money})
+        </if>
+        WHERE m.id = #{userId}
+    </update>
+
+    <update id="updateMemberBalance">
+        UPDATE fa_member m
+        <if test="direct == 0 ">
+            SET m.balance = m.balance + #{money}
+        </if>
+        <if test="direct == 1 ">
+            SET m.balance = m.balance - #{money}
+        </if>
+        WHERE m.id = #{userId}
+    </update>
+
+    <select id="getTotalBalance" resultType="java.math.BigDecimal">
+        SELECT
+        COALESCE(sum( m.balance ), 0) balance
+        FROM
+        fa_member m
+        <where>
+            <if test="id != null "> and m.id = #{id}</if>
+            <if test="username != null  and username != ''"> and m.username like concat('%', #{username}, '%')</if>
+            <if test="nickname != null  and nickname != ''"> and m.nickname like concat('%', #{nickname}, '%')</if>
+            <if test="password != null  and password != ''"> and m.password = #{password}</if>
+            <if test="salt != null  and salt != ''"> and m.salt = #{salt}</if>
+            <if test="mobile != null  and mobile != ''"> and m.mobile = #{mobile}</if>
+            <if test="avatar != null  and avatar != ''"> and m.avatar = #{avatar}</if>
+            <if test="successions != null "> and m.successions = #{successions}</if>
+            <if test="maxSuccessions != null "> and m.max_successions = #{maxSuccessions}</if>
+            <if test="prevTime != null "> and m.prev_time = #{prevTime}</if>
+            <if test="params.beginLoginTime != null and params.beginLoginTime != ''"><!-- 开始时间检索 -->
+                AND date_format(m.login_time,'%y%m%d') &gt;= date_format(#{params.beginLoginTime},'%y%m%d')
+            </if>
+            <if test="params.endLoginTime != null and params.endLoginTime != ''"><!-- 结束时间检索 -->
+                AND date_format(m.login_time,'%y%m%d') &lt;= date_format(#{params.endLoginTime},'%y%m%d')
+            </if>
+            <if test="loginIp != null  and loginIp != ''"> and m.login_ip = #{loginIp}</if>
+            <if test="paymentCode != null  and paymentCode != ''"> and m.payment_code = #{paymentCode}</if>
+            <if test="joinIp != null  and joinIp != ''"> and m.join_ip = #{joinIp}</if>
+            <if test="joinTime != null "> and m.join_time = #{joinTime}</if>
+            <if test="params.beginCreateTime != null and params.beginCreateTime != ''"><!-- 开始时间检索 -->
+                AND date_format(m.create_time,'%y%m%d') &gt;= date_format(#{params.beginCreateTime},'%y%m%d')
+            </if>
+            <if test="params.endCreateTime != null and params.endCreateTime != ''"><!-- 结束时间检索 -->
+                AND date_format(m.create_time,'%y%m%d') &lt;= date_format(#{params.endCreateTime},'%y%m%d')
+            </if>
+            <if test="updateTime != null "> and m.update_time = #{updateTime}</if>
+            <if test="status != null "> and m.status = #{status}</if>
+            <if test="balance != null "> and m.balance = #{balance}</if>
+            <if test="superiorName != null  and superiorName != ''"> and m.superior_name like concat('%', #{superiorName}, '%')</if>
+            <if test="superiorCode != null  and superiorCode != ''"> and m.superior_code = #{superiorCode}</if>
+            <if test="superiorId != null "> and m.superior_id = #{superiorId}</if>
+            <if test="institutionNumber != null  and institutionNumber != ''"> and m.institution_number = #{institutionNumber}</if>
+            <if test="jingzhijiaoyi != null "> and m.jingzhijiaoyi = #{jingzhijiaoyi}</if>
+            <if test="isPz != null "> and m.is_pz = #{isPz}</if>
+            <if test="isDz != null "> and m.is_dz = #{isDz}</if>
+            <if test="isPs != null "> and m.is_ps = #{isPs}</if>
+            <if test="isSg != null "> and m.is_sg = #{isSg}</if>
+            <if test="isZs != null "> and m.is_zs = #{isZs}</if>
+            <if test="isQc != null "> and m.is_qc = #{isQc}</if>
+            <if test="isQh != null "> and m.is_qh = #{isQh}</if>
+            <if test="isVip != null "> and m.is_vip = #{isVip}</if>
+            <if test="isInform != null "> and m.is_inform = #{isInform}</if>
+            <if test="freezeProfit != null "> and m.freeze_profit = #{freezeProfit}</if>
+            <if test="weiyima != null  and weiyima != ''"> and m.weiyima = #{weiyima}</if>
+            <if test="name != null  and name != ''"> and m.name like concat('%', #{name}, '%')</if>
+            <if test="idCard != null  and idCard != ''"> and m.id_card = #{idCard}</if>
+            <if test="idCardFrontImage != null  and idCardFrontImage != ''"> and m.id_card_front_image = #{idCardFrontImage}</if>
+            <if test="idCardBackImage != null  and idCardBackImage != ''"> and m.id_card_back_image = #{idCardBackImage}</if>
+            <if test="submitAuthTime != null "> and m.submit_auth_time = #{submitAuthTime}</if>
+            <if test="authTime != null "> and m.auth_time = #{authTime}</if>
+            <if test="isAuth != null "> and m.is_auth = #{isAuth}</if>
+            <if test="authRejectReason != null  and authRejectReason != ''"> and m.auth_reject_reason = #{authRejectReason}</if>
+            <if test="authRejectTime != null "> and m.auth_reject_time = #{authRejectTime}</if>
+            <if test="depositBank != null  and depositBank != ''"> and m.deposit_bank = #{depositBank}</if>
+            <if test="khzhihang != null  and khzhihang != ''"> and m.khzhihang = #{khzhihang}</if>
+            <if test="accountName != null  and accountName != ''"> and m.account_name = #{accountName}</if>
+            <if test="account != null  and account != ''"> and m.account = #{account}</if>
+            <if test="cardImage != null  and cardImage != ''"> and m.card_image = #{cardImage}</if>
+            <if test="bindingTime != null "> and m.binding_time = #{bindingTime}</if>
+            <if test="unbindTime != null "> and m.unbind_time = #{unbindTime}</if>
+            <if test="deleteFlag != null "> and m.delete_flag = #{deleteFlag}</if>
+            <if test="bankCardAuth != null "> and m.bank_card_auth = #{bankCardAuth}</if>
+            <if test="loginDomain != null "> and m.login_domain = #{loginDomain}</if>
+            <if test="withdrawSwitch != null "> and m.withdraw_switch = #{withdrawSwitch}</if>
+            and m.daili_id in ( select #{parentId} union all select u.user_id from sys_user u where u.path like concat('%,', #{parentId}, ',%'))
+        </where>
+    </select>
+
+    <select id="getTotalRecharge" resultType="java.math.BigDecimal">
+        SELECT
+        COALESCE(sum( r.money ), 0) recharge
+        FROM
+        fa_member m
+        LEFT JOIN fa_recharge r ON m.id = r.user_id and r.is_pay = 1 and r.delete_flag = 0
+        <where>
+            <if test="id != null "> and m.id = #{id}</if>
+            <if test="username != null  and username != ''"> and m.username like concat('%', #{username}, '%')</if>
+            <if test="nickname != null  and nickname != ''"> and m.nickname like concat('%', #{nickname}, '%')</if>
+            <if test="password != null  and password != ''"> and m.password = #{password}</if>
+            <if test="salt != null  and salt != ''"> and m.salt = #{salt}</if>
+            <if test="mobile != null  and mobile != ''"> and m.mobile = #{mobile}</if>
+            <if test="avatar != null  and avatar != ''"> and m.avatar = #{avatar}</if>
+            <if test="successions != null "> and m.successions = #{successions}</if>
+            <if test="maxSuccessions != null "> and m.max_successions = #{maxSuccessions}</if>
+            <if test="prevTime != null "> and m.prev_time = #{prevTime}</if>
+            <if test="params.beginLoginTime != null and params.beginLoginTime != ''"><!-- 开始时间检索 -->
+                AND date_format(m.login_time,'%y%m%d') &gt;= date_format(#{params.beginLoginTime},'%y%m%d')
+            </if>
+            <if test="params.endLoginTime != null and params.endLoginTime != ''"><!-- 结束时间检索 -->
+                AND date_format(m.login_time,'%y%m%d') &lt;= date_format(#{params.endLoginTime},'%y%m%d')
+            </if>
+            <if test="loginIp != null  and loginIp != ''"> and m.login_ip = #{loginIp}</if>
+            <if test="paymentCode != null  and paymentCode != ''"> and m.payment_code = #{paymentCode}</if>
+            <if test="joinIp != null  and joinIp != ''"> and m.join_ip = #{joinIp}</if>
+            <if test="joinTime != null "> and m.join_time = #{joinTime}</if>
+            <if test="params.beginCreateTime != null and params.beginCreateTime != ''"><!-- 开始时间检索 -->
+                AND date_format(m.create_time,'%y%m%d') &gt;= date_format(#{params.beginCreateTime},'%y%m%d')
+            </if>
+            <if test="params.endCreateTime != null and params.endCreateTime != ''"><!-- 结束时间检索 -->
+                AND date_format(m.create_time,'%y%m%d') &lt;= date_format(#{params.endCreateTime},'%y%m%d')
+            </if>
+            <if test="updateTime != null "> and m.update_time = #{updateTime}</if>
+            <if test="status != null "> and m.status = #{status}</if>
+            <if test="balance != null "> and m.balance = #{balance}</if>
+            <if test="superiorName != null  and superiorName != ''"> and m.superior_name like concat('%', #{superiorName}, '%')</if>
+            <if test="superiorCode != null  and superiorCode != ''"> and m.superior_code = #{superiorCode}</if>
+            <if test="superiorId != null "> and m.superior_id = #{superiorId}</if>
+            <if test="institutionNumber != null  and institutionNumber != ''"> and m.institution_number = #{institutionNumber}</if>
+            <if test="jingzhijiaoyi != null "> and m.jingzhijiaoyi = #{jingzhijiaoyi}</if>
+            <if test="isPz != null "> and m.is_pz = #{isPz}</if>
+            <if test="isDz != null "> and m.is_dz = #{isDz}</if>
+            <if test="isPs != null "> and m.is_ps = #{isPs}</if>
+            <if test="isSg != null "> and m.is_sg = #{isSg}</if>
+            <if test="isZs != null "> and m.is_zs = #{isZs}</if>
+            <if test="isQc != null "> and m.is_qc = #{isQc}</if>
+            <if test="isQh != null "> and m.is_qh = #{isQh}</if>
+            <if test="isVip != null "> and m.is_vip = #{isVip}</if>
+            <if test="isInform != null "> and m.is_inform = #{isInform}</if>
+            <if test="freezeProfit != null "> and m.freeze_profit = #{freezeProfit}</if>
+            <if test="weiyima != null  and weiyima != ''"> and m.weiyima = #{weiyima}</if>
+            <if test="name != null  and name != ''"> and m.name like concat('%', #{name}, '%')</if>
+            <if test="idCard != null  and idCard != ''"> and m.id_card = #{idCard}</if>
+            <if test="idCardFrontImage != null  and idCardFrontImage != ''"> and m.id_card_front_image = #{idCardFrontImage}</if>
+            <if test="idCardBackImage != null  and idCardBackImage != ''"> and m.id_card_back_image = #{idCardBackImage}</if>
+            <if test="submitAuthTime != null "> and m.submit_auth_time = #{submitAuthTime}</if>
+            <if test="authTime != null "> and m.auth_time = #{authTime}</if>
+            <if test="isAuth != null "> and m.is_auth = #{isAuth}</if>
+            <if test="authRejectReason != null  and authRejectReason != ''"> and m.auth_reject_reason = #{authRejectReason}</if>
+            <if test="authRejectTime != null "> and m.auth_reject_time = #{authRejectTime}</if>
+            <if test="depositBank != null  and depositBank != ''"> and m.deposit_bank = #{depositBank}</if>
+            <if test="khzhihang != null  and khzhihang != ''"> and m.khzhihang = #{khzhihang}</if>
+            <if test="accountName != null  and accountName != ''"> and m.account_name = #{accountName}</if>
+            <if test="account != null  and account != ''"> and m.account = #{account}</if>
+            <if test="cardImage != null  and cardImage != ''"> and m.card_image = #{cardImage}</if>
+            <if test="bindingTime != null "> and m.binding_time = #{bindingTime}</if>
+            <if test="unbindTime != null "> and m.unbind_time = #{unbindTime}</if>
+            <if test="deleteFlag != null "> and m.delete_flag = #{deleteFlag}</if>
+            <if test="bankCardAuth != null "> and m.bank_card_auth = #{bankCardAuth}</if>
+            <if test="loginDomain != null "> and m.login_domain = #{loginDomain}</if>
+            <if test="withdrawSwitch != null "> and m.withdraw_switch = #{withdrawSwitch}</if>
+            and m.daili_id in ( select #{parentId} union all select u.user_id from sys_user u where u.path like concat('%,', #{parentId}, ',%'))
+        </where>
+    </select>
+
+    <select id="getTotalWithdraw" resultType="java.math.BigDecimal">
+        SELECT
+        COALESCE(sum( w.money ), 0) withdraw
+        FROM
+        fa_member m
+        LEFT JOIN fa_withdraw w ON m.id = w.user_id and w.is_pay = 1 and w.delete_flag = 0
+        <where>
+            <if test="id != null "> and m.id = #{id}</if>
+            <if test="username != null  and username != ''"> and m.username like concat('%', #{username}, '%')</if>
+            <if test="nickname != null  and nickname != ''"> and m.nickname like concat('%', #{nickname}, '%')</if>
+            <if test="password != null  and password != ''"> and m.password = #{password}</if>
+            <if test="salt != null  and salt != ''"> and m.salt = #{salt}</if>
+            <if test="mobile != null  and mobile != ''"> and m.mobile = #{mobile}</if>
+            <if test="avatar != null  and avatar != ''"> and m.avatar = #{avatar}</if>
+            <if test="successions != null "> and m.successions = #{successions}</if>
+            <if test="maxSuccessions != null "> and m.max_successions = #{maxSuccessions}</if>
+            <if test="prevTime != null "> and m.prev_time = #{prevTime}</if>
+            <if test="params.beginLoginTime != null and params.beginLoginTime != ''"><!-- 开始时间检索 -->
+                AND date_format(m.login_time,'%y%m%d') &gt;= date_format(#{params.beginLoginTime},'%y%m%d')
+            </if>
+            <if test="params.endLoginTime != null and params.endLoginTime != ''"><!-- 结束时间检索 -->
+                AND date_format(m.login_time,'%y%m%d') &lt;= date_format(#{params.endLoginTime},'%y%m%d')
+            </if>
+            <if test="loginIp != null  and loginIp != ''"> and m.login_ip = #{loginIp}</if>
+            <if test="paymentCode != null  and paymentCode != ''"> and m.payment_code = #{paymentCode}</if>
+            <if test="joinIp != null  and joinIp != ''"> and m.join_ip = #{joinIp}</if>
+            <if test="joinTime != null "> and m.join_time = #{joinTime}</if>
+            <if test="params.beginCreateTime != null and params.beginCreateTime != ''"><!-- 开始时间检索 -->
+                AND date_format(m.create_time,'%y%m%d') &gt;= date_format(#{params.beginCreateTime},'%y%m%d')
+            </if>
+            <if test="params.endCreateTime != null and params.endCreateTime != ''"><!-- 结束时间检索 -->
+                AND date_format(m.create_time,'%y%m%d') &lt;= date_format(#{params.endCreateTime},'%y%m%d')
+            </if>
+            <if test="updateTime != null "> and m.update_time = #{updateTime}</if>
+            <if test="status != null "> and m.status = #{status}</if>
+            <if test="balance != null "> and m.balance = #{balance}</if>
+            <if test="superiorName != null  and superiorName != ''"> and m.superior_name like concat('%', #{superiorName}, '%')</if>
+            <if test="superiorCode != null  and superiorCode != ''"> and m.superior_code = #{superiorCode}</if>
+            <if test="superiorId != null "> and m.superior_id = #{superiorId}</if>
+            <if test="institutionNumber != null  and institutionNumber != ''"> and m.institution_number = #{institutionNumber}</if>
+            <if test="jingzhijiaoyi != null "> and m.jingzhijiaoyi = #{jingzhijiaoyi}</if>
+            <if test="isPz != null "> and m.is_pz = #{isPz}</if>
+            <if test="isDz != null "> and m.is_dz = #{isDz}</if>
+            <if test="isPs != null "> and m.is_ps = #{isPs}</if>
+            <if test="isSg != null "> and m.is_sg = #{isSg}</if>
+            <if test="isZs != null "> and m.is_zs = #{isZs}</if>
+            <if test="isQc != null "> and m.is_qc = #{isQc}</if>
+            <if test="isQh != null "> and m.is_qh = #{isQh}</if>
+            <if test="isVip != null "> and m.is_vip = #{isVip}</if>
+            <if test="isInform != null "> and m.is_inform = #{isInform}</if>
+            <if test="freezeProfit != null "> and m.freeze_profit = #{freezeProfit}</if>
+            <if test="weiyima != null  and weiyima != ''"> and m.weiyima = #{weiyima}</if>
+            <if test="name != null  and name != ''"> and m.name like concat('%', #{name}, '%')</if>
+            <if test="idCard != null  and idCard != ''"> and m.id_card = #{idCard}</if>
+            <if test="idCardFrontImage != null  and idCardFrontImage != ''"> and m.id_card_front_image = #{idCardFrontImage}</if>
+            <if test="idCardBackImage != null  and idCardBackImage != ''"> and m.id_card_back_image = #{idCardBackImage}</if>
+            <if test="submitAuthTime != null "> and m.submit_auth_time = #{submitAuthTime}</if>
+            <if test="authTime != null "> and m.auth_time = #{authTime}</if>
+            <if test="isAuth != null "> and m.is_auth = #{isAuth}</if>
+            <if test="authRejectReason != null  and authRejectReason != ''"> and m.auth_reject_reason = #{authRejectReason}</if>
+            <if test="authRejectTime != null "> and m.auth_reject_time = #{authRejectTime}</if>
+            <if test="depositBank != null  and depositBank != ''"> and m.deposit_bank = #{depositBank}</if>
+            <if test="khzhihang != null  and khzhihang != ''"> and m.khzhihang = #{khzhihang}</if>
+            <if test="accountName != null  and accountName != ''"> and m.account_name = #{accountName}</if>
+            <if test="account != null  and account != ''"> and m.account = #{account}</if>
+            <if test="cardImage != null  and cardImage != ''"> and m.card_image = #{cardImage}</if>
+            <if test="bindingTime != null "> and m.binding_time = #{bindingTime}</if>
+            <if test="unbindTime != null "> and m.unbind_time = #{unbindTime}</if>
+            <if test="deleteFlag != null "> and m.delete_flag = #{deleteFlag}</if>
+            <if test="bankCardAuth != null "> and m.bank_card_auth = #{bankCardAuth}</if>
+            <if test="loginDomain != null "> and m.login_domain = #{loginDomain}</if>
+            <if test="withdrawSwitch != null "> and m.withdraw_switch = #{withdrawSwitch}</if>
+            and m.daili_id in ( select #{parentId} union all select u.user_id from sys_user u where u.path like concat('%,', #{parentId}, ',%'))
+        </where>
+    </select>
+
+    <select id="getTotalSg" resultType="java.math.BigDecimal">
+        SELECT
+        COALESCE(sum( sg.zq_nums * sg.sg_fx_price ), 0) newStockSg
+        FROM
+        fa_member m
+        LEFT JOIN fa_stock_sg sg ON m.id = sg.user_id and sg.is_cc = 0
+        <where>
+            <if test="id != null "> and m.id = #{id}</if>
+            <if test="username != null  and username != ''"> and m.username like concat('%', #{username}, '%')</if>
+            <if test="nickname != null  and nickname != ''"> and m.nickname like concat('%', #{nickname}, '%')</if>
+            <if test="password != null  and password != ''"> and m.password = #{password}</if>
+            <if test="salt != null  and salt != ''"> and m.salt = #{salt}</if>
+            <if test="mobile != null  and mobile != ''"> and m.mobile = #{mobile}</if>
+            <if test="avatar != null  and avatar != ''"> and m.avatar = #{avatar}</if>
+            <if test="successions != null "> and m.successions = #{successions}</if>
+            <if test="maxSuccessions != null "> and m.max_successions = #{maxSuccessions}</if>
+            <if test="prevTime != null "> and m.prev_time = #{prevTime}</if>
+            <if test="params.beginLoginTime != null and params.beginLoginTime != ''"><!-- 开始时间检索 -->
+                AND date_format(m.login_time,'%y%m%d') &gt;= date_format(#{params.beginLoginTime},'%y%m%d')
+            </if>
+            <if test="params.endLoginTime != null and params.endLoginTime != ''"><!-- 结束时间检索 -->
+                AND date_format(m.login_time,'%y%m%d') &lt;= date_format(#{params.endLoginTime},'%y%m%d')
+            </if>
+            <if test="loginIp != null  and loginIp != ''"> and m.login_ip = #{loginIp}</if>
+            <if test="paymentCode != null  and paymentCode != ''"> and m.payment_code = #{paymentCode}</if>
+            <if test="joinIp != null  and joinIp != ''"> and m.join_ip = #{joinIp}</if>
+            <if test="joinTime != null "> and m.join_time = #{joinTime}</if>
+            <if test="params.beginCreateTime != null and params.beginCreateTime != ''"><!-- 开始时间检索 -->
+                AND date_format(m.create_time,'%y%m%d') &gt;= date_format(#{params.beginCreateTime},'%y%m%d')
+            </if>
+            <if test="params.endCreateTime != null and params.endCreateTime != ''"><!-- 结束时间检索 -->
+                AND date_format(m.create_time,'%y%m%d') &lt;= date_format(#{params.endCreateTime},'%y%m%d')
+            </if>
+            <if test="updateTime != null "> and m.update_time = #{updateTime}</if>
+            <if test="status != null "> and m.status = #{status}</if>
+            <if test="balance != null "> and m.balance = #{balance}</if>
+            <if test="superiorName != null  and superiorName != ''"> and m.superior_name like concat('%', #{superiorName}, '%')</if>
+            <if test="superiorCode != null  and superiorCode != ''"> and m.superior_code = #{superiorCode}</if>
+            <if test="superiorId != null "> and m.superior_id = #{superiorId}</if>
+            <if test="institutionNumber != null  and institutionNumber != ''"> and m.institution_number = #{institutionNumber}</if>
+            <if test="jingzhijiaoyi != null "> and m.jingzhijiaoyi = #{jingzhijiaoyi}</if>
+            <if test="isPz != null "> and m.is_pz = #{isPz}</if>
+            <if test="isDz != null "> and m.is_dz = #{isDz}</if>
+            <if test="isPs != null "> and m.is_ps = #{isPs}</if>
+            <if test="isSg != null "> and m.is_sg = #{isSg}</if>
+            <if test="isZs != null "> and m.is_zs = #{isZs}</if>
+            <if test="isQc != null "> and m.is_qc = #{isQc}</if>
+            <if test="isQh != null "> and m.is_qh = #{isQh}</if>
+            <if test="isVip != null "> and m.is_vip = #{isVip}</if>
+            <if test="isInform != null "> and m.is_inform = #{isInform}</if>
+            <if test="freezeProfit != null "> and m.freeze_profit = #{freezeProfit}</if>
+            <if test="weiyima != null  and weiyima != ''"> and m.weiyima = #{weiyima}</if>
+            <if test="name != null  and name != ''"> and m.name like concat('%', #{name}, '%')</if>
+            <if test="idCard != null  and idCard != ''"> and m.id_card = #{idCard}</if>
+            <if test="idCardFrontImage != null  and idCardFrontImage != ''"> and m.id_card_front_image = #{idCardFrontImage}</if>
+            <if test="idCardBackImage != null  and idCardBackImage != ''"> and m.id_card_back_image = #{idCardBackImage}</if>
+            <if test="submitAuthTime != null "> and m.submit_auth_time = #{submitAuthTime}</if>
+            <if test="authTime != null "> and m.auth_time = #{authTime}</if>
+            <if test="isAuth != null "> and m.is_auth = #{isAuth}</if>
+            <if test="authRejectReason != null  and authRejectReason != ''"> and m.auth_reject_reason = #{authRejectReason}</if>
+            <if test="authRejectTime != null "> and m.auth_reject_time = #{authRejectTime}</if>
+            <if test="depositBank != null  and depositBank != ''"> and m.deposit_bank = #{depositBank}</if>
+            <if test="khzhihang != null  and khzhihang != ''"> and m.khzhihang = #{khzhihang}</if>
+            <if test="accountName != null  and accountName != ''"> and m.account_name = #{accountName}</if>
+            <if test="account != null  and account != ''"> and m.account = #{account}</if>
+            <if test="cardImage != null  and cardImage != ''"> and m.card_image = #{cardImage}</if>
+            <if test="bindingTime != null "> and m.binding_time = #{bindingTime}</if>
+            <if test="unbindTime != null "> and m.unbind_time = #{unbindTime}</if>
+            <if test="deleteFlag != null "> and m.delete_flag = #{deleteFlag}</if>
+            <if test="bankCardAuth != null "> and m.bank_card_auth = #{bankCardAuth}</if>
+            <if test="loginDomain != null "> and m.login_domain = #{loginDomain}</if>
+            <if test="withdrawSwitch != null "> and m.withdraw_switch = #{withdrawSwitch}</if>
+            and m.daili_id in ( select #{parentId} union all select u.user_id from sys_user u where u.path like concat('%,', #{parentId}, ',%'))
+        </where>
+    </select>
+
+    <select id="getTotalPs" resultType="java.math.BigDecimal">
+        SELECT
+        COALESCE(sum( ps.money ), 0) newStockPs
+        FROM
+        fa_member m
+        LEFT JOIN fa_stock_ps ps ON m.id = ps.user_id
+        <where>
+            <if test="id != null "> and m.id = #{id}</if>
+            <if test="username != null  and username != ''"> and m.username like concat('%', #{username}, '%')</if>
+            <if test="nickname != null  and nickname != ''"> and m.nickname like concat('%', #{nickname}, '%')</if>
+            <if test="password != null  and password != ''"> and m.password = #{password}</if>
+            <if test="salt != null  and salt != ''"> and m.salt = #{salt}</if>
+            <if test="mobile != null  and mobile != ''"> and m.mobile = #{mobile}</if>
+            <if test="avatar != null  and avatar != ''"> and m.avatar = #{avatar}</if>
+            <if test="successions != null "> and m.successions = #{successions}</if>
+            <if test="maxSuccessions != null "> and m.max_successions = #{maxSuccessions}</if>
+            <if test="prevTime != null "> and m.prev_time = #{prevTime}</if>
+            <if test="params.beginLoginTime != null and params.beginLoginTime != ''"><!-- 开始时间检索 -->
+                AND date_format(m.login_time,'%y%m%d') &gt;= date_format(#{params.beginLoginTime},'%y%m%d')
+            </if>
+            <if test="params.endLoginTime != null and params.endLoginTime != ''"><!-- 结束时间检索 -->
+                AND date_format(m.login_time,'%y%m%d') &lt;= date_format(#{params.endLoginTime},'%y%m%d')
+            </if>
+            <if test="loginIp != null  and loginIp != ''"> and m.login_ip = #{loginIp}</if>
+            <if test="paymentCode != null  and paymentCode != ''"> and m.payment_code = #{paymentCode}</if>
+            <if test="joinIp != null  and joinIp != ''"> and m.join_ip = #{joinIp}</if>
+            <if test="joinTime != null "> and m.join_time = #{joinTime}</if>
+            <if test="params.beginCreateTime != null and params.beginCreateTime != ''"><!-- 开始时间检索 -->
+                AND date_format(m.create_time,'%y%m%d') &gt;= date_format(#{params.beginCreateTime},'%y%m%d')
+            </if>
+            <if test="params.endCreateTime != null and params.endCreateTime != ''"><!-- 结束时间检索 -->
+                AND date_format(m.create_time,'%y%m%d') &lt;= date_format(#{params.endCreateTime},'%y%m%d')
+            </if>
+            <if test="updateTime != null "> and m.update_time = #{updateTime}</if>
+            <if test="status != null "> and m.status = #{status}</if>
+            <if test="balance != null "> and m.balance = #{balance}</if>
+            <if test="superiorName != null  and superiorName != ''"> and m.superior_name like concat('%', #{superiorName}, '%')</if>
+            <if test="superiorCode != null  and superiorCode != ''"> and m.superior_code = #{superiorCode}</if>
+            <if test="superiorId != null "> and m.superior_id = #{superiorId}</if>
+            <if test="institutionNumber != null  and institutionNumber != ''"> and m.institution_number = #{institutionNumber}</if>
+            <if test="jingzhijiaoyi != null "> and m.jingzhijiaoyi = #{jingzhijiaoyi}</if>
+            <if test="isPz != null "> and m.is_pz = #{isPz}</if>
+            <if test="isDz != null "> and m.is_dz = #{isDz}</if>
+            <if test="isPs != null "> and m.is_ps = #{isPs}</if>
+            <if test="isSg != null "> and m.is_sg = #{isSg}</if>
+            <if test="isZs != null "> and m.is_zs = #{isZs}</if>
+            <if test="isQc != null "> and m.is_qc = #{isQc}</if>
+            <if test="isQh != null "> and m.is_qh = #{isQh}</if>
+            <if test="isVip != null "> and m.is_vip = #{isVip}</if>
+            <if test="isInform != null "> and m.is_inform = #{isInform}</if>
+            <if test="freezeProfit != null "> and m.freeze_profit = #{freezeProfit}</if>
+            <if test="weiyima != null  and weiyima != ''"> and m.weiyima = #{weiyima}</if>
+            <if test="name != null  and name != ''"> and m.name like concat('%', #{name}, '%')</if>
+            <if test="idCard != null  and idCard != ''"> and m.id_card = #{idCard}</if>
+            <if test="idCardFrontImage != null  and idCardFrontImage != ''"> and m.id_card_front_image = #{idCardFrontImage}</if>
+            <if test="idCardBackImage != null  and idCardBackImage != ''"> and m.id_card_back_image = #{idCardBackImage}</if>
+            <if test="submitAuthTime != null "> and m.submit_auth_time = #{submitAuthTime}</if>
+            <if test="authTime != null "> and m.auth_time = #{authTime}</if>
+            <if test="isAuth != null "> and m.is_auth = #{isAuth}</if>
+            <if test="authRejectReason != null  and authRejectReason != ''"> and m.auth_reject_reason = #{authRejectReason}</if>
+            <if test="authRejectTime != null "> and m.auth_reject_time = #{authRejectTime}</if>
+            <if test="depositBank != null  and depositBank != ''"> and m.deposit_bank = #{depositBank}</if>
+            <if test="khzhihang != null  and khzhihang != ''"> and m.khzhihang = #{khzhihang}</if>
+            <if test="accountName != null  and accountName != ''"> and m.account_name = #{accountName}</if>
+            <if test="account != null  and account != ''"> and m.account = #{account}</if>
+            <if test="cardImage != null  and cardImage != ''"> and m.card_image = #{cardImage}</if>
+            <if test="bindingTime != null "> and m.binding_time = #{bindingTime}</if>
+            <if test="unbindTime != null "> and m.unbind_time = #{unbindTime}</if>
+            <if test="deleteFlag != null "> and m.delete_flag = #{deleteFlag}</if>
+            <if test="bankCardAuth != null "> and m.bank_card_auth = #{bankCardAuth}</if>
+            <if test="loginDomain != null "> and m.login_domain = #{loginDomain}</if>
+            <if test="withdrawSwitch != null "> and m.withdraw_switch = #{withdrawSwitch}</if>
+            and ps.is_cc = 0
+            and ps.`status` in (0,1)
+            and ps.renjiao = 1
+            and m.daili_id in ( select #{parentId} union all select u.user_id from sys_user u where u.path like concat('%,', #{parentId}, ',%'))
+        </where>
+    </select>
+
+    <select id="getTotalListed" resultType="java.math.BigDecimal">
+        SELECT
+        COALESCE(sum( h.hold_number * s.cai_trade ), 0) listedHold
+        FROM
+        fa_member m
+        LEFT JOIN fa_stock_hold_detail h ON m.id = h.member_id and h.status = 0 and h.is_list = 1
+        LEFT JOIN fa_strategy s ON h.stock_id = s.id
+        <where>
+            <if test="id != null "> and m.id = #{id}</if>
+            <if test="username != null  and username != ''"> and m.username like concat('%', #{username}, '%')</if>
+            <if test="nickname != null  and nickname != ''"> and m.nickname like concat('%', #{nickname}, '%')</if>
+            <if test="password != null  and password != ''"> and m.password = #{password}</if>
+            <if test="salt != null  and salt != ''"> and m.salt = #{salt}</if>
+            <if test="mobile != null  and mobile != ''"> and m.mobile = #{mobile}</if>
+            <if test="avatar != null  and avatar != ''"> and m.avatar = #{avatar}</if>
+            <if test="successions != null "> and m.successions = #{successions}</if>
+            <if test="maxSuccessions != null "> and m.max_successions = #{maxSuccessions}</if>
+            <if test="prevTime != null "> and m.prev_time = #{prevTime}</if>
+            <if test="params.beginLoginTime != null and params.beginLoginTime != ''"><!-- 开始时间检索 -->
+                AND date_format(m.login_time,'%y%m%d') &gt;= date_format(#{params.beginLoginTime},'%y%m%d')
+            </if>
+            <if test="params.endLoginTime != null and params.endLoginTime != ''"><!-- 结束时间检索 -->
+                AND date_format(m.login_time,'%y%m%d') &lt;= date_format(#{params.endLoginTime},'%y%m%d')
+            </if>
+            <if test="loginIp != null  and loginIp != ''"> and m.login_ip = #{loginIp}</if>
+            <if test="paymentCode != null  and paymentCode != ''"> and m.payment_code = #{paymentCode}</if>
+            <if test="joinIp != null  and joinIp != ''"> and m.join_ip = #{joinIp}</if>
+            <if test="joinTime != null "> and m.join_time = #{joinTime}</if>
+            <if test="params.beginCreateTime != null and params.beginCreateTime != ''"><!-- 开始时间检索 -->
+                AND date_format(m.create_time,'%y%m%d') &gt;= date_format(#{params.beginCreateTime},'%y%m%d')
+            </if>
+            <if test="params.endCreateTime != null and params.endCreateTime != ''"><!-- 结束时间检索 -->
+                AND date_format(m.create_time,'%y%m%d') &lt;= date_format(#{params.endCreateTime},'%y%m%d')
+            </if>
+            <if test="updateTime != null "> and m.update_time = #{updateTime}</if>
+            <if test="status != null "> and m.status = #{status}</if>
+            <if test="balance != null "> and m.balance = #{balance}</if>
+            <if test="superiorName != null  and superiorName != ''"> and m.superior_name like concat('%', #{superiorName}, '%')</if>
+            <if test="superiorCode != null  and superiorCode != ''"> and m.superior_code = #{superiorCode}</if>
+            <if test="superiorId != null "> and m.superior_id = #{superiorId}</if>
+            <if test="institutionNumber != null  and institutionNumber != ''"> and m.institution_number = #{institutionNumber}</if>
+            <if test="jingzhijiaoyi != null "> and m.jingzhijiaoyi = #{jingzhijiaoyi}</if>
+            <if test="isPz != null "> and m.is_pz = #{isPz}</if>
+            <if test="isDz != null "> and m.is_dz = #{isDz}</if>
+            <if test="isPs != null "> and m.is_ps = #{isPs}</if>
+            <if test="isSg != null "> and m.is_sg = #{isSg}</if>
+            <if test="isZs != null "> and m.is_zs = #{isZs}</if>
+            <if test="isQc != null "> and m.is_qc = #{isQc}</if>
+            <if test="isQh != null "> and m.is_qh = #{isQh}</if>
+            <if test="isVip != null "> and m.is_vip = #{isVip}</if>
+            <if test="isInform != null "> and m.is_inform = #{isInform}</if>
+            <if test="freezeProfit != null "> and m.freeze_profit = #{freezeProfit}</if>
+            <if test="weiyima != null  and weiyima != ''"> and m.weiyima = #{weiyima}</if>
+            <if test="name != null  and name != ''"> and m.name like concat('%', #{name}, '%')</if>
+            <if test="idCard != null  and idCard != ''"> and m.id_card = #{idCard}</if>
+            <if test="idCardFrontImage != null  and idCardFrontImage != ''"> and m.id_card_front_image = #{idCardFrontImage}</if>
+            <if test="idCardBackImage != null  and idCardBackImage != ''"> and m.id_card_back_image = #{idCardBackImage}</if>
+            <if test="submitAuthTime != null "> and m.submit_auth_time = #{submitAuthTime}</if>
+            <if test="authTime != null "> and m.auth_time = #{authTime}</if>
+            <if test="isAuth != null "> and m.is_auth = #{isAuth}</if>
+            <if test="authRejectReason != null  and authRejectReason != ''"> and m.auth_reject_reason = #{authRejectReason}</if>
+            <if test="authRejectTime != null "> and m.auth_reject_time = #{authRejectTime}</if>
+            <if test="depositBank != null  and depositBank != ''"> and m.deposit_bank = #{depositBank}</if>
+            <if test="khzhihang != null  and khzhihang != ''"> and m.khzhihang = #{khzhihang}</if>
+            <if test="accountName != null  and accountName != ''"> and m.account_name = #{accountName}</if>
+            <if test="account != null  and account != ''"> and m.account = #{account}</if>
+            <if test="cardImage != null  and cardImage != ''"> and m.card_image = #{cardImage}</if>
+            <if test="bindingTime != null "> and m.binding_time = #{bindingTime}</if>
+            <if test="unbindTime != null "> and m.unbind_time = #{unbindTime}</if>
+            <if test="deleteFlag != null "> and m.delete_flag = #{deleteFlag}</if>
+            <if test="bankCardAuth != null "> and m.bank_card_auth = #{bankCardAuth}</if>
+            <if test="loginDomain != null "> and m.login_domain = #{loginDomain}</if>
+            <if test="withdrawSwitch != null "> and m.withdraw_switch = #{withdrawSwitch}</if>
+            and m.daili_id in ( select #{parentId} union all select u.user_id from sys_user u where u.path like concat('%,', #{parentId}, ',%'))
+        </where>
+    </select>
+
+    <select id="getTotalUnlisted" resultType="java.math.BigDecimal">
+        SELECT
+        COALESCE(sum( h.hold_number * ns.fx_price ), 0) unlistedHold
+        FROM
+        fa_member m
+        LEFT JOIN fa_stock_hold_detail h ON m.id = h.member_id and h.status = 0 and h.is_list = 0
+        LEFT JOIN fa_new_stock ns ON h.new_stock_id = ns.id
+        <where>
+            <if test="id != null "> and m.id = #{id}</if>
+            <if test="username != null  and username != ''"> and m.username like concat('%', #{username}, '%')</if>
+            <if test="nickname != null  and nickname != ''"> and m.nickname like concat('%', #{nickname}, '%')</if>
+            <if test="password != null  and password != ''"> and m.password = #{password}</if>
+            <if test="salt != null  and salt != ''"> and m.salt = #{salt}</if>
+            <if test="mobile != null  and mobile != ''"> and m.mobile = #{mobile}</if>
+            <if test="avatar != null  and avatar != ''"> and m.avatar = #{avatar}</if>
+            <if test="successions != null "> and m.successions = #{successions}</if>
+            <if test="maxSuccessions != null "> and m.max_successions = #{maxSuccessions}</if>
+            <if test="prevTime != null "> and m.prev_time = #{prevTime}</if>
+            <if test="params.beginLoginTime != null and params.beginLoginTime != ''"><!-- 开始时间检索 -->
+                AND date_format(m.login_time,'%y%m%d') &gt;= date_format(#{params.beginLoginTime},'%y%m%d')
+            </if>
+            <if test="params.endLoginTime != null and params.endLoginTime != ''"><!-- 结束时间检索 -->
+                AND date_format(m.login_time,'%y%m%d') &lt;= date_format(#{params.endLoginTime},'%y%m%d')
+            </if>
+            <if test="loginIp != null  and loginIp != ''"> and m.login_ip = #{loginIp}</if>
+            <if test="paymentCode != null  and paymentCode != ''"> and m.payment_code = #{paymentCode}</if>
+            <if test="joinIp != null  and joinIp != ''"> and m.join_ip = #{joinIp}</if>
+            <if test="joinTime != null "> and m.join_time = #{joinTime}</if>
+            <if test="params.beginCreateTime != null and params.beginCreateTime != ''"><!-- 开始时间检索 -->
+                AND date_format(m.create_time,'%y%m%d') &gt;= date_format(#{params.beginCreateTime},'%y%m%d')
+            </if>
+            <if test="params.endCreateTime != null and params.endCreateTime != ''"><!-- 结束时间检索 -->
+                AND date_format(m.create_time,'%y%m%d') &lt;= date_format(#{params.endCreateTime},'%y%m%d')
+            </if>
+            <if test="updateTime != null "> and m.update_time = #{updateTime}</if>
+            <if test="status != null "> and m.status = #{status}</if>
+            <if test="balance != null "> and m.balance = #{balance}</if>
+            <if test="superiorName != null  and superiorName != ''"> and m.superior_name like concat('%', #{superiorName}, '%')</if>
+            <if test="superiorCode != null  and superiorCode != ''"> and m.superior_code = #{superiorCode}</if>
+            <if test="superiorId != null "> and m.superior_id = #{superiorId}</if>
+            <if test="institutionNumber != null  and institutionNumber != ''"> and m.institution_number = #{institutionNumber}</if>
+            <if test="jingzhijiaoyi != null "> and m.jingzhijiaoyi = #{jingzhijiaoyi}</if>
+            <if test="isPz != null "> and m.is_pz = #{isPz}</if>
+            <if test="isDz != null "> and m.is_dz = #{isDz}</if>
+            <if test="isPs != null "> and m.is_ps = #{isPs}</if>
+            <if test="isSg != null "> and m.is_sg = #{isSg}</if>
+            <if test="isZs != null "> and m.is_zs = #{isZs}</if>
+            <if test="isQc != null "> and m.is_qc = #{isQc}</if>
+            <if test="isQh != null "> and m.is_qh = #{isQh}</if>
+            <if test="isVip != null "> and m.is_vip = #{isVip}</if>
+            <if test="isInform != null "> and m.is_inform = #{isInform}</if>
+            <if test="freezeProfit != null "> and m.freeze_profit = #{freezeProfit}</if>
+            <if test="weiyima != null  and weiyima != ''"> and m.weiyima = #{weiyima}</if>
+            <if test="name != null  and name != ''"> and m.name like concat('%', #{name}, '%')</if>
+            <if test="idCard != null  and idCard != ''"> and m.id_card = #{idCard}</if>
+            <if test="idCardFrontImage != null  and idCardFrontImage != ''"> and m.id_card_front_image = #{idCardFrontImage}</if>
+            <if test="idCardBackImage != null  and idCardBackImage != ''"> and m.id_card_back_image = #{idCardBackImage}</if>
+            <if test="submitAuthTime != null "> and m.submit_auth_time = #{submitAuthTime}</if>
+            <if test="authTime != null "> and m.auth_time = #{authTime}</if>
+            <if test="isAuth != null "> and m.is_auth = #{isAuth}</if>
+            <if test="authRejectReason != null  and authRejectReason != ''"> and m.auth_reject_reason = #{authRejectReason}</if>
+            <if test="authRejectTime != null "> and m.auth_reject_time = #{authRejectTime}</if>
+            <if test="depositBank != null  and depositBank != ''"> and m.deposit_bank = #{depositBank}</if>
+            <if test="khzhihang != null  and khzhihang != ''"> and m.khzhihang = #{khzhihang}</if>
+            <if test="accountName != null  and accountName != ''"> and m.account_name = #{accountName}</if>
+            <if test="account != null  and account != ''"> and m.account = #{account}</if>
+            <if test="cardImage != null  and cardImage != ''"> and m.card_image = #{cardImage}</if>
+            <if test="bindingTime != null "> and m.binding_time = #{bindingTime}</if>
+            <if test="unbindTime != null "> and m.unbind_time = #{unbindTime}</if>
+            <if test="deleteFlag != null "> and m.delete_flag = #{deleteFlag}</if>
+            <if test="bankCardAuth != null "> and m.bank_card_auth = #{bankCardAuth}</if>
+            <if test="loginDomain != null "> and m.login_domain = #{loginDomain}</if>
+            <if test="withdrawSwitch != null "> and m.withdraw_switch = #{withdrawSwitch}</if>
+            and m.daili_id in ( select #{parentId} union all select u.user_id from sys_user u where u.path like concat('%,', #{parentId}, ',%'))
+        </where>
+    </select>
+
+    <select id="getListedHold" resultType="java.math.BigDecimal">
+        SELECT
+            COALESCE ( sum( h.hold_number * s.cai_trade ), 0 ) listedHold
+        FROM
+            fa_member m
+        LEFT JOIN fa_stock_hold_detail h ON m.id = h.member_id
+        LEFT JOIN fa_strategy s ON h.stock_id = s.id
+        WHERE
+            m.id = #{id}
+            AND h.STATUS = 0
+            AND h.is_list = 1
+            AND h.delete_flag = 0
+    </select>
+
+    <select id="getUnlistedHold" resultType="java.math.BigDecimal">
+        SELECT
+            COALESCE ( sum( h.hold_number * ns.fx_price ), 0 ) unlistedHold
+        FROM
+            fa_member m
+        LEFT JOIN fa_stock_hold_detail h ON m.id = h.member_id
+        LEFT JOIN fa_new_stock ns ON h.new_stock_id = ns.id
+        WHERE
+            m.id = #{id}
+            AND h.STATUS = 0
+            AND h.is_list = 0
+            AND h.delete_flag = 0
+    </select>
+
+    <select id="getSgFreeze" resultType="java.math.BigDecimal">
+        SELECT
+            COALESCE ( sum( sg.zq_nums * sg.sg_fx_price ), 0 ) newStockSg
+        FROM
+            fa_member m
+        LEFT JOIN fa_stock_sg sg ON m.id = sg.user_id
+        WHERE
+            m.id = #{id}
+            AND sg.is_cc = 0
+            AND sg.delete_flag = 0
+    </select>
+
+    <select id="getPsFreeze" resultType="java.math.BigDecimal">
+        SELECT
+            COALESCE ( sum( ps.money ), 0 ) newStockPs
+        FROM
+            fa_member m
+        LEFT JOIN fa_stock_ps ps ON m.id = ps.user_id
+        WHERE
+            m.id = #{id}
+          AND ps.`status` in (0,1)
+          AND ps.renjiao = 1
+          AND ps.is_cc = 0
+          AND ps.delete_flag = 0
+    </select>
+
+    <select id="getRecharge" resultType="java.math.BigDecimal">
+        SELECT
+            COALESCE ( sum( r.money ), 0 ) recharge
+        FROM
+            fa_recharge r
+        WHERE
+            r.user_id = #{id}
+            AND r.is_pay = 1
+            AND r.delete_flag = 0
+    </select>
+
+    <select id="getWithdraw" resultType="java.math.BigDecimal">
+        SELECT
+            COALESCE ( sum( w.money ), 0 ) withdraw
+        FROM
+            fa_withdraw w
+        WHERE
+            w.user_id = #{id}
+          AND w.is_pay in (0, 1)
+          AND w.delete_flag = 0
+    </select>
+
+    <select id="getDzFundInfoMarket" resultType="java.math.BigDecimal">
+        SELECT
+            COALESCE( SUM( shd.hold_number * s.cai_trade ), 0)
+        FROM
+            fa_stock_hold_detail shd
+                LEFT JOIN
+            fa_strategy s
+            ON shd.stock_id = s.id
+        WHERE
+            shd.member_id = #{id}
+          AND shd.`status` = 0
+          AND shd.delete_flag = 0
+          AND shd.is_list = 1
+          AND shd.hold_type = 2
+    </select>
+
+    <select id="getDzTradeInfoHoldProfit" resultType="java.math.BigDecimal">
+        SELECT
+            COALESCE( SUM( shd.hold_number * ( CAST( s.cai_trade AS DECIMAL ( 10, 2 )) - shd.average )), 0 )
+        FROM
+            fa_stock_hold_detail shd
+                LEFT JOIN fa_strategy s ON shd.stock_id = s.id
+        WHERE
+            shd.delete_flag = 0
+          AND shd.`status` = 0
+          AND shd.member_id = #{id}
+          AND shd.hold_type = 2
+    </select>
+
+    <select id="getTotalPoundage" resultType="java.math.BigDecimal">
+        SELECT
+            COALESCE( SUM( st.trading_poundage + st.stamp_duty ), 0 )
+        FROM
+            fa_stock_trading st
+        WHERE
+            st.delete_flag = 0
+          AND st.member_id = #{id}
+    </select>
+
+    <select id="getFundInfos" resultType="java.math.BigDecimal">
+        SELECT
+            COALESCE( SUM( ss.zq_money ), 0 ) amount
+        FROM
+            fa_stock_sg ss
+        WHERE
+            ss.delete_flag = 0
+          AND ss.`status` = 1
+          AND ss.renjiao = 1
+          AND ss.is_cc = 0
+          AND ss.user_id = #{id}
+
+        UNION ALL
+
+        SELECT a.amount + b.amount amount FROM
+              (SELECT COALESCE(SUM(CASE WHEN ps.is_tz = 0 THEN ps.money WHEN ps.is_tz = 1 THEN ps.zq_money END), 0) amount
+               FROM fa_stock_ps ps
+               WHERE ps.delete_flag = 0
+                 AND ps.`status` in (0, 1)
+                 AND ps.renjiao = 1
+                 AND ps.is_cc = 0
+                 AND ps.user_id = #{id}) a,
+              (SELECT COALESCE(SUM(ps.zq_money), 0) amount
+               FROM fa_stock_sg_second ps
+               WHERE ps.delete_flag = 0
+                 AND ps.`status` = 1
+                 AND ps.renjiao = 1
+                 AND ps.is_cc = 0
+                 AND ps.user_id = #{id}) b
+
+        UNION ALL
+
+        SELECT
+            COALESCE( SUM( shd.hold_number * s.cai_trade ), 0) amount
+        FROM
+            fa_stock_hold_detail shd
+                LEFT JOIN
+            fa_strategy s
+            ON shd.stock_id = s.id
+        WHERE
+            shd.member_id = #{id}
+          AND shd.`status` = 0
+          AND shd.delete_flag = 0
+          AND shd.is_list = 1
+
+        UNION ALL
+
+        SELECT
+            COALESCE( SUM( shd.hold_number * ns.fx_price ), 0) amount
+        FROM
+            fa_stock_hold_detail shd
+                LEFT JOIN
+            fa_new_stock ns
+            ON shd.new_stock_id = ns.id
+        WHERE
+            shd.member_id = #{id}
+          AND shd.`status` = 0
+          AND shd.delete_flag = 0
+          AND shd.is_list = 0
+
+        UNION ALL
+
+        SELECT
+            COALESCE( SUM( r.money ), 0 ) amount
+        FROM
+            fa_recharge r
+        WHERE
+            r.is_pay = 1
+          AND r.delete_flag = 0
+          AND r.user_id = #{id}
+
+        UNION ALL
+
+        SELECT
+            COALESCE( SUM( w.money ), 0 ) amount
+        FROM
+            fa_withdraw w
+        WHERE
+            w.is_pay in (0, 1)
+          AND w.delete_flag = 0
+          AND w.user_id = #{id}
+
+        UNION ALL
+
+        SELECT
+            COALESCE( SUM( shd.profit_lose ), 0 ) amount
+        FROM
+            fa_stock_hold_detail shd
+        WHERE
+            shd.delete_flag = 0
+          AND shd.`status` = 1
+          AND shd.member_id = #{id}
+
+        UNION ALL
+
+        SELECT
+            COALESCE( SUM( st.trading_poundage + st.stamp_duty ), 0 ) amount
+        FROM
+            fa_stock_trading st
+        WHERE
+            st.delete_flag = 0
+          AND st.member_id = #{id}
+
+        UNION ALL
+
+        SELECT
+            COALESCE( SUM( shd.hold_number * ( CAST( s.cai_trade AS DECIMAL ( 10, 2 )) - shd.buy_price ) * IF(shd.trade_direct = 2, -1, 1)), 0 ) amount
+        FROM
+            fa_stock_hold_detail shd
+                LEFT JOIN fa_strategy s ON shd.stock_id = s.id
+        WHERE
+            shd.delete_flag = 0
+          AND shd.`status` = 0
+          AND shd.member_id = #{id}
+          AND shd.hold_type = 8
+
+        UNION ALL
+
+        SELECT
+            COALESCE( SUM( shd.hold_number * ( CAST( s.cai_trade AS DECIMAL ( 10, 2 )) - shd.buy_price ) * IF(shd.trade_direct = 2, -1, 1)), 0 ) amount
+        FROM
+            fa_stock_hold_detail shd
+                LEFT JOIN fa_strategy s ON shd.stock_id = s.id
+        WHERE
+            shd.delete_flag = 0
+          AND shd.`status` = 0
+          AND shd.member_id = #{id}
+
+        UNION ALL
+
+        SELECT
+            COALESCE( SUM( shd.hold_number * s.cai_trade ), 0) amount
+        FROM
+            fa_stock_hold_detail shd
+                LEFT JOIN
+            fa_strategy s
+            ON shd.stock_id = s.id
+        WHERE
+            shd.member_id = #{id}
+          AND shd.`status` = 0
+          AND shd.delete_flag = 0
+          AND shd.is_list = 1
+          AND shd.hold_type = 2
+
+        UNION ALL
+
+        SELECT
+            COALESCE( SUM( shd.hold_number * ( CAST( s.cai_trade AS DECIMAL ( 10, 2 )) - shd.average )), 0 ) amount
+        FROM
+            fa_stock_hold_detail shd
+                LEFT JOIN fa_strategy s ON shd.stock_id = s.id
+        WHERE
+            shd.delete_flag = 0
+          AND shd.`status` = 0
+          AND shd.member_id = #{id}
+          AND shd.hold_type = 2
+
+        UNION ALL
+
+        SELECT
+
+            COALESCE( SUM( shd.hold_number * ( CAST( s.cai_trade AS DECIMAL ( 10, 2 )) -
+
+               CASE
+                   WHEN shd.buy_time <![CDATA[<]]> DATE_FORMAT(NOW(), '%Y-%m-%d 00:00:00') THEN s.cai_settlement
+                   WHEN shd.buy_time > DATE_FORMAT(NOW(), '%Y-%m-%d 00:00:00') THEN shd.buy_price
+                   END
+
+                ) * IF(shd.trade_direct = 2, -1, 1)), 0 ) amount
+
+        FROM
+            fa_stock_hold_detail shd
+                LEFT JOIN fa_strategy s ON shd.stock_id = s.id
+        WHERE
+            shd.delete_flag = 0
+          AND shd.`status` = 0
+          AND shd.member_id = #{id}
+    </select>
+
+</mapper>

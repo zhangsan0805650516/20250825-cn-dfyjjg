@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.biz.attention.mapper.FaAttentionMapper">
+    
+    <resultMap type="FaAttention" id="FaAttentionResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="expertUserId"    column="expert_user_id"    />
+        <result property="isAttention"    column="is_attention"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="deleteTime"    column="delete_time"    />
+        <result property="deleteFlag"    column="delete_flag"    />
+    </resultMap>
+
+    <sql id="selectFaAttentionVo">
+        select id, user_id, expert_user_id, is_attention, create_time, update_time, delete_time, delete_flag from fa_attention
+    </sql>
+
+    <select id="selectFaAttentionList" parameterType="FaAttention" resultMap="FaAttentionResult">
+        <include refid="selectFaAttentionVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+            <if test="userId != null "> and user_id = #{userId}</if>
+            <if test="expertUserId != null "> and expert_user_id = #{expertUserId}</if>
+            <if test="isAttention != null "> and is_attention = #{isAttention}</if>
+            <if test="createTime != null "> and create_time = #{createTime}</if>
+            <if test="updateTime != null "> and update_time = #{updateTime}</if>
+            <if test="deleteTime != null "> and delete_time = #{deleteTime}</if>
+            <if test="deleteFlag != null "> and delete_flag = #{deleteFlag}</if>
+        </where>
+    </select>
+    
+    <select id="selectFaAttentionById" parameterType="Integer" resultMap="FaAttentionResult">
+        <include refid="selectFaAttentionVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertFaAttention" parameterType="FaAttention" useGeneratedKeys="true" keyProperty="id">
+        insert into fa_attention
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="expertUserId != null">expert_user_id,</if>
+            <if test="isAttention != null">is_attention,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="deleteTime != null">delete_time,</if>
+            <if test="deleteFlag != null">delete_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="expertUserId != null">#{expertUserId},</if>
+            <if test="isAttention != null">#{isAttention},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="deleteTime != null">#{deleteTime},</if>
+            <if test="deleteFlag != null">#{deleteFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFaAttention" parameterType="FaAttention">
+        update fa_attention
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="expertUserId != null">expert_user_id = #{expertUserId},</if>
+            <if test="isAttention != null">is_attention = #{isAttention},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="deleteTime != null">delete_time = #{deleteTime},</if>
+            <if test="deleteFlag != null">delete_flag = #{deleteFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteFaAttentionById" parameterType="Integer">
+        update fa_attention set delete_flag = 1 where id = #{id}
+    </delete>
+
+    <delete id="deleteFaAttentionByIds" parameterType="String">
+        update fa_attention set delete_flag = 1 where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

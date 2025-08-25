@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.biz.banner.mapper.FaBannerMapper">
+    
+    <resultMap type="FaBanner" id="FaBannerResult">
+        <result property="id"    column="id"    />
+        <result property="title"    column="title"    />
+        <result property="image"    column="image"    />
+        <result property="link"    column="link"    />
+        <result property="sort"    column="sort"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="deleteTime"    column="delete_time"    />
+        <result property="deleteFlag"    column="delete_flag"    />
+    </resultMap>
+
+    <sql id="selectFaBannerVo">
+        select id, title, image, link, sort, create_time, update_time, delete_time, delete_flag from fa_banner
+    </sql>
+
+    <select id="selectFaBannerList" parameterType="FaBanner" resultMap="FaBannerResult">
+        <include refid="selectFaBannerVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+            <if test="title != null  and title != ''"> and title = #{title}</if>
+            <if test="image != null  and image != ''"> and image = #{image}</if>
+            <if test="link != null  and link != ''"> and link = #{link}</if>
+            <if test="sort != null  and sort != ''"> and sort = #{sort}</if>
+            <if test="createTime != null "> and create_time = #{createTime}</if>
+            <if test="updateTime != null "> and update_time = #{updateTime}</if>
+            <if test="deleteTime != null "> and delete_time = #{deleteTime}</if>
+            <if test="deleteFlag != null "> and delete_flag = #{deleteFlag}</if>
+        </where>
+    </select>
+    
+    <select id="selectFaBannerById" parameterType="Integer" resultMap="FaBannerResult">
+        <include refid="selectFaBannerVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertFaBanner" parameterType="FaBanner" useGeneratedKeys="true" keyProperty="id">
+        insert into fa_banner
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="title != null">title,</if>
+            <if test="image != null">image,</if>
+            <if test="link != null">link,</if>
+            <if test="sort != null">sort,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="deleteTime != null">delete_time,</if>
+            <if test="deleteFlag != null">delete_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="title != null">#{title},</if>
+            <if test="image != null">#{image},</if>
+            <if test="link != null">#{link},</if>
+            <if test="sort != null">#{sort},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="deleteTime != null">#{deleteTime},</if>
+            <if test="deleteFlag != null">#{deleteFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFaBanner" parameterType="FaBanner">
+        update fa_banner
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="title != null">title = #{title},</if>
+            <if test="image != null">image = #{image},</if>
+            <if test="link != null">link = #{link},</if>
+            <if test="sort != null">sort = #{sort},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="deleteTime != null">delete_time = #{deleteTime},</if>
+            <if test="deleteFlag != null">delete_flag = #{deleteFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteFaBannerById" parameterType="Integer">
+        update fa_banner set delete_flag = 1 where id = #{id}
+    </delete>
+
+    <delete id="deleteFaBannerByIds" parameterType="String">
+        update fa_banner set delete_flag = 1 where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

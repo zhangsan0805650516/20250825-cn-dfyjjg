@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.biz.shengou.mapper.FaShengouMapper">
+    
+    <resultMap type="FaNewStock" id="FaShengouResult">
+        <result property="id"    column="id"    />
+        <result property="code"    column="code"    />
+        <result property="allCode"    column="all_code"    />
+        <result property="name"    column="name"    />
+        <result property="sgCode"    column="sg_code"    />
+        <result property="fxNum"    column="fx_num"    />
+        <result property="wsfxNum"    column="wsfx_num"    />
+        <result property="sgLimit"    column="sg_limit"    />
+        <result property="ddLimit"    column="dd_limit"    />
+        <result property="dgLimit"    column="dg_limit"    />
+        <result property="fxPrice"    column="fx_price"    />
+        <result property="fxRate"    column="fx_rate"    />
+        <result property="hyRate"    column="hy_rate"    />
+        <result property="sgDateInt"    column="sg_date_int"    />
+        <result property="sgDate"    column="sg_date"    />
+        <result property="sgEndDate"    column="sg_end_date"    />
+        <result property="sgDateXq"    column="sg_date_xq"    />
+        <result property="zqRate"    column="zq_rate"    />
+        <result property="zqNo"    column="zq_no"    />
+        <result property="zqJkDate"    column="zq_jk_date"    />
+        <result property="ssDateInt"    column="ss_date_int"    />
+        <result property="ssDate"    column="ss_date"    />
+        <result property="dxValue"    column="dx_value"    />
+        <result property="ztNum"    column="zt_num"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="status"    column="status"    />
+        <result property="sgSwitch"    column="sg_switch"    />
+        <result property="sgExchange"    column="sg_exchange"    />
+        <result property="xxSwitch"    column="xx_switch"    />
+        <result property="xxExchange"    column="xx_exchange"    />
+        <result property="sgSwitchTime"    column="sg_switch_time"    />
+        <result property="xxSwitchTime"    column="xx_switch_time"    />
+        <result property="content"    column="content"    />
+        <result property="sgNums"    column="sg_nums"    />
+        <result property="xxNums"    column="xx_nums"    />
+        <result property="sgType"    column="sg_type"    />
+        <result property="tn"    column="tn"    />
+        <result property="sgDateN"    column="sg_date_n"    />
+        <result property="deleteFlag"    column="delete_flag"    />
+        <result property="isList"    column="is_list"    />
+        <result property="issueSize"    column="issue_size"    />
+        <result property="noshIssued"    column="nosh_issued"    />
+        <result property="listingExchange"    column="listing_exchange"    />
+        <result property="psPrice"    column="ps_price"    />
+    </resultMap>
+
+    <sql id="selectFaShengouVo">
+        select id, code, all_code, name, sg_code, fx_num, wsfx_num, sg_limit, dd_limit, dg_limit, fx_price, fx_rate, hy_rate, sg_date_int, sg_date, sg_date_xq, zq_rate, zq_no, zq_jk_date, ss_date_int, ss_date, dx_value, zt_num, create_time, update_time, status, sg_switch, sg_exchange, xx_switch, xx_exchange, sg_switch_time, xx_switch_time, content, sg_nums, xx_nums, sg_type, tn, sg_date_n, delete_flag, is_list, issue_size, nosh_issued, listing_exchange, ps_price from fa_new_stock
+    </sql>
+
+    <select id="selectFaShengouList" parameterType="FaNewStock" resultMap="FaShengouResult">
+        <include refid="selectFaShengouVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+            <if test="code != null  and code != ''"> and code = #{code}</if>
+            <if test="allCode != null  and allCode != ''"> and all_code = #{allCode}</if>
+            <if test="name != null  and name != ''"> and name like concat('%', #{name}, '%')</if>
+            <if test="sgCode != null  and sgCode != ''"> and sg_code = #{sgCode}</if>
+            <if test="fxNum != null  and fxNum != ''"> and fx_num = #{fxNum}</if>
+            <if test="wsfxNum != null  and wsfxNum != ''"> and wsfx_num = #{wsfxNum}</if>
+            <if test="sgLimit != null  and sgLimit != ''"> and sg_limit = #{sgLimit}</if>
+            <if test="ddLimit != null  and ddLimit != ''"> and dd_limit = #{ddLimit}</if>
+            <if test="dgLimit != null  and dgLimit != ''"> and dg_limit = #{dgLimit}</if>
+            <if test="fxPrice != null  and fxPrice != ''"> and fx_price = #{fxPrice}</if>
+            <if test="fxRate != null  and fxRate != ''"> and fx_rate = #{fxRate}</if>
+            <if test="hyRate != null  and hyRate != ''"> and hy_rate = #{hyRate}</if>
+            <if test="sgDateInt != null "> and sg_date_int = #{sgDateInt}</if>
+            <if test="sgDate != null "> and sg_date = #{sgDate}</if>
+            <if test="sgEndDate != null "> and sg_end_date = #{sgEndDate}</if>
+            <if test="sgDateXq != null  and sgDateXq != ''"> and sg_date_xq = #{sgDateXq}</if>
+            <if test="zqRate != null  and zqRate != ''"> and zq_rate = #{zqRate}</if>
+            <if test="zqNo != null  and zqNo != ''"> and zq_no = #{zqNo}</if>
+            <if test="zqJkDate != null "> and zq_jk_date = #{zqJkDate}</if>
+            <if test="ssDateInt != null "> and ss_date_int = #{ssDateInt}</if>
+            <if test="ssDate != null "> and ss_date = #{ssDate}</if>
+            <if test="dxValue != null  and dxValue != ''"> and dx_value = #{dxValue}</if>
+            <if test="ztNum != null  and ztNum != ''"> and zt_num = #{ztNum}</if>
+            <if test="createTime != null "> and create_time = #{createTime}</if>
+            <if test="updateTime != null "> and update_time = #{updateTime}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="sgSwitch != null "> and sg_switch = #{sgSwitch}</if>
+            <if test="sgExchange != null "> and sg_exchange = #{sgExchange}</if>
+            <if test="xxSwitch != null "> and xx_switch = #{xxSwitch}</if>
+            <if test="xxExchange != null "> and xx_exchange = #{xxExchange}</if>
+            <if test="sgSwitchTime != null "> and sg_switch_time = #{sgSwitchTime}</if>
+            <if test="xxSwitchTime != null "> and xx_switch_time = #{xxSwitchTime}</if>
+            <if test="content != null  and content != ''"> and content = #{content}</if>
+            <if test="sgNums != null "> and sg_nums = #{sgNums}</if>
+            <if test="xxNums != null "> and xx_nums = #{xxNums}</if>
+            <if test="sgType != null "> and sg_type = #{sgType}</if>
+            <if test="tn != null "> and tn = #{tn}</if>
+            <if test="sgDateN != null "> and sg_date_n = #{sgDateN}</if>
+            <if test="deleteFlag != null "> and delete_flag = #{deleteFlag}</if>
+            <if test="isList != null "> and is_list = #{isList}</if>
+            <if test="issueSize != null "> and issue_size = #{issueSize}</if>
+            <if test="noshIssued != null "> and nosh_issued = #{noshIssued}</if>
+            <if test="listingExchange != null "> and listing_exchange = #{listingExchange}</if>
+            <if test="psPrice != null "> and ps_price = #{psPrice}</if>
+        </where>
+        order by id desc
+    </select>
+    
+    <select id="selectFaShengouById" parameterType="Long" resultMap="FaShengouResult">
+        <include refid="selectFaShengouVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertFaShengou" parameterType="FaNewStock" useGeneratedKeys="true" keyProperty="id">
+        insert into fa_new_stock
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="code != null">code,</if>
+            <if test="allCode != null">all_code,</if>
+            <if test="name != null">name,</if>
+            <if test="sgCode != null">sg_code,</if>
+            <if test="fxNum != null">fx_num,</if>
+            <if test="wsfxNum != null">wsfx_num,</if>
+            <if test="sgLimit != null">sg_limit,</if>
+            <if test="ddLimit != null">dd_limit,</if>
+            <if test="dgLimit != null">dg_limit,</if>
+            <if test="fxPrice != null">fx_price,</if>
+            <if test="fxRate != null">fx_rate,</if>
+            <if test="hyRate != null">hy_rate,</if>
+            <if test="sgDateInt != null">sg_date_int,</if>
+            <if test="sgDate != null">sg_date,</if>
+            <if test="sgEndDate != null">sg_end_date,</if>
+            <if test="sgDateXq != null">sg_date_xq,</if>
+            <if test="zqRate != null">zq_rate,</if>
+            <if test="zqNo != null">zq_no,</if>
+            <if test="zqJkDate != null">zq_jk_date,</if>
+            <if test="ssDateInt != null">ss_date_int,</if>
+            <if test="ssDate != null">ss_date,</if>
+            <if test="dxValue != null">dx_value,</if>
+            <if test="ztNum != null">zt_num,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="status != null">status,</if>
+            <if test="sgSwitch != null">sg_switch,</if>
+            <if test="sgExchange != null">sg_exchange,</if>
+            <if test="xxSwitch != null">xx_switch,</if>
+            <if test="xxExchange != null">xx_exchange,</if>
+            <if test="sgSwitchTime != null">sg_switch_time,</if>
+            <if test="xxSwitchTime != null">xx_switch_time,</if>
+            <if test="content != null">content,</if>
+            <if test="sgNums != null">sg_nums,</if>
+            <if test="xxNums != null">xx_nums,</if>
+            <if test="sgType != null">sg_type,</if>
+            <if test="tn != null">tn,</if>
+            <if test="sgDateN != null">sg_date_n,</if>
+            <if test="deleteFlag != null">delete_flag,</if>
+            <if test="isList != null">is_list,</if>
+            <if test="issueSize != null">issue_size,</if>
+            <if test="noshIssued != null">nosh_issued,</if>
+            <if test="listingExchange != null">listing_exchange,</if>
+            <if test="psPrice != null">ps_price,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="code != null">#{code},</if>
+            <if test="allCode != null">#{allCode},</if>
+            <if test="name != null">#{name},</if>
+            <if test="sgCode != null">#{sgCode},</if>
+            <if test="fxNum != null">#{fxNum},</if>
+            <if test="wsfxNum != null">#{wsfxNum},</if>
+            <if test="sgLimit != null">#{sgLimit},</if>
+            <if test="ddLimit != null">#{ddLimit},</if>
+            <if test="dgLimit != null">#{dgLimit},</if>
+            <if test="fxPrice != null">#{fxPrice},</if>
+            <if test="fxRate != null">#{fxRate},</if>
+            <if test="hyRate != null">#{hyRate},</if>
+            <if test="sgDateInt != null">#{sgDateInt},</if>
+            <if test="sgDate != null">#{sgDate},</if>
+            <if test="sgEndDate != null">#{sgEndDate},</if>
+            <if test="sgDateXq != null">#{sgDateXq},</if>
+            <if test="zqRate != null">#{zqRate},</if>
+            <if test="zqNo != null">#{zqNo},</if>
+            <if test="zqJkDate != null">#{zqJkDate},</if>
+            <if test="ssDateInt != null">#{ssDateInt},</if>
+            <if test="ssDate != null">#{ssDate},</if>
+            <if test="dxValue != null">#{dxValue},</if>
+            <if test="ztNum != null">#{ztNum},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="status != null">#{status},</if>
+            <if test="sgSwitch != null">#{sgSwitch},</if>
+            <if test="sgExchange != null">#{sgExchange},</if>
+            <if test="xxSwitch != null">#{xxSwitch},</if>
+            <if test="xxExchange != null">#{xxExchange},</if>
+            <if test="sgSwitchTime != null">#{sgSwitchTime},</if>
+            <if test="xxSwitchTime != null">#{xxSwitchTime},</if>
+            <if test="content != null">#{content},</if>
+            <if test="sgNums != null">#{sgNums},</if>
+            <if test="xxNums != null">#{xxNums},</if>
+            <if test="sgType != null">#{sgType},</if>
+            <if test="tn != null">#{tn},</if>
+            <if test="sgDateN != null">#{sgDateN},</if>
+            <if test="deleteFlag != null">#{deleteFlag},</if>
+            <if test="isList != null">#{isList},</if>
+            <if test="issueSize != null">#{issueSize},</if>
+            <if test="noshIssued != null">#{noshIssued},</if>
+            <if test="listingExchange != null">#{listingExchange},</if>
+            <if test="psPrice != null">#{psPrice},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFaShengou" parameterType="FaNewStock">
+        update fa_new_stock
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="code != null">code = #{code},</if>
+            <if test="allCode != null">all_code = #{allCode},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="sgCode != null">sg_code = #{sgCode},</if>
+            <if test="fxNum != null">fx_num = #{fxNum},</if>
+            <if test="wsfxNum != null">wsfx_num = #{wsfxNum},</if>
+            <if test="sgLimit != null">sg_limit = #{sgLimit},</if>
+            <if test="ddLimit != null">dd_limit = #{ddLimit},</if>
+            <if test="dgLimit != null">dg_limit = #{dgLimit},</if>
+            <if test="fxPrice != null">fx_price = #{fxPrice},</if>
+            <if test="fxRate != null">fx_rate = #{fxRate},</if>
+            <if test="hyRate != null">hy_rate = #{hyRate},</if>
+            <if test="sgDateInt != null">sg_date_int = #{sgDateInt},</if>
+            <if test="sgDate != null">sg_date = #{sgDate},</if>
+            <if test="sgEndDate != null">sg_end_date = #{sgEndDate},</if>
+            <if test="sgDateXq != null">sg_date_xq = #{sgDateXq},</if>
+            <if test="zqRate != null">zq_rate = #{zqRate},</if>
+            <if test="zqNo != null">zq_no = #{zqNo},</if>
+            <if test="zqJkDate != null">zq_jk_date = #{zqJkDate},</if>
+            <if test="ssDateInt != null">ss_date_int = #{ssDateInt},</if>
+            <if test="ssDate != null">ss_date = #{ssDate},</if>
+            <if test="dxValue != null">dx_value = #{dxValue},</if>
+            <if test="ztNum != null">zt_num = #{ztNum},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="sgSwitch != null">sg_switch = #{sgSwitch},</if>
+            <if test="sgExchange != null">sg_exchange = #{sgExchange},</if>
+            <if test="xxSwitch != null">xx_switch = #{xxSwitch},</if>
+            <if test="xxExchange != null">xx_exchange = #{xxExchange},</if>
+            <if test="sgSwitchTime != null">sg_switch_time = #{sgSwitchTime},</if>
+            <if test="xxSwitchTime != null">xx_switch_time = #{xxSwitchTime},</if>
+            <if test="content != null">content = #{content},</if>
+            <if test="sgNums != null">sg_nums = #{sgNums},</if>
+            <if test="xxNums != null">xx_nums = #{xxNums},</if>
+            <if test="sgType != null">sg_type = #{sgType},</if>
+            <if test="tn != null">tn = #{tn},</if>
+            <if test="sgDateN != null">sg_date_n = #{sgDateN},</if>
+            <if test="deleteFlag != null">delete_flag = #{deleteFlag},</if>
+            <if test="isList != null">is_list = #{isList},</if>
+            <if test="issueSize != null">issue_size = #{issueSize},</if>
+            <if test="noshIssued != null">nosh_issued = #{noshIssued},</if>
+            <if test="listingExchange != null">listing_exchange = #{listingExchange},</if>
+            <if test="psPrice != null">ps_price = #{psPrice},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteFaShengouById" parameterType="Long">
+        update fa_new_stock set delete_flag = 1 where id = #{id}
+    </delete>
+
+    <delete id="deleteFaShengouByIds" parameterType="String">
+        update fa_new_stock set delete_flag = 1 where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

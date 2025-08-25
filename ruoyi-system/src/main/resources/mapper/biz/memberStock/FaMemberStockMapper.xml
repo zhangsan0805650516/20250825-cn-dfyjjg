@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.biz.memberStock.mapper.FaMemberStockMapper">
+    
+    <resultMap type="FaMemberStock" id="FaMemberStockResult">
+        <result property="id"    column="id"    />
+        <result property="memberId"    column="member_id"    />
+        <result property="stockId"    column="stock_id"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="deleteFlag"    column="delete_flag"    />
+    </resultMap>
+
+    <sql id="selectFaMemberStockVo">
+        select id, member_id, stock_id, create_time, update_time, delete_flag from fa_member_stock
+    </sql>
+
+    <select id="selectFaMemberStockList" parameterType="FaMemberStock" resultMap="FaMemberStockResult">
+        <include refid="selectFaMemberStockVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+            <if test="memberId != null "> and member_id = #{memberId}</if>
+            <if test="stockId != null "> and stock_id = #{stockId}</if>
+            <if test="createTime != null "> and create_time = #{createTime}</if>
+            <if test="updateTime != null "> and update_time = #{updateTime}</if>
+            <if test="deleteFlag != null "> and delete_flag = #{deleteFlag}</if>
+        </where>
+    </select>
+    
+    <select id="selectFaMemberStockById" parameterType="Integer" resultMap="FaMemberStockResult">
+        <include refid="selectFaMemberStockVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertFaMemberStock" parameterType="FaMemberStock" useGeneratedKeys="true" keyProperty="id">
+        insert into fa_member_stock
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="memberId != null">member_id,</if>
+            <if test="stockId != null">stock_id,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="deleteFlag != null">delete_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="memberId != null">#{memberId},</if>
+            <if test="stockId != null">#{stockId},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="deleteFlag != null">#{deleteFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFaMemberStock" parameterType="FaMemberStock">
+        update fa_member_stock
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="memberId != null">member_id = #{memberId},</if>
+            <if test="stockId != null">stock_id = #{stockId},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="deleteFlag != null">delete_flag = #{deleteFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteFaMemberStockById" parameterType="Integer">
+        update fa_member_stock set delete_flag = 1 where id = #{id}
+    </delete>
+
+    <delete id="deleteFaMemberStockByIds" parameterType="String">
+        update fa_member_stock set delete_flag = 1 where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="getMemberStock" resultType="com.ruoyi.biz.strategy.domain.FaStrategy">
+        SELECT
+            s.*
+        FROM
+            fa_strategy s
+        LEFT JOIN
+            fa_member_stock ms
+        ON s.id = ms.stock_id
+        WHERE
+            ms.member_id = #{faMemberStock.memberId}
+          AND ms.delete_flag = 0
+          AND s.delete_flag = 0
+        ORDER BY
+            ms.create_time DESC
+    </select>
+
+</mapper>

@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.biz.userNotice.mapper.FaUserNoticeMapper">
+    
+    <resultMap type="FaUserNotice" id="FaUserNoticeResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="title"    column="title"    />
+        <result property="content"    column="content"    />
+        <result property="noticeType"    column="notice_type"    />
+        <result property="link"    column="link"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="readTime"    column="read_time"    />
+        <result property="isRead"    column="is_read"    />
+        <result property="isAll"    column="is_all"    />
+        <result property="isDialog"    column="is_dialog"    />
+        <result property="deleteFlag"    column="delete_flag"    />
+
+        <association property="faMember" columnPrefix="m_" resultMap="com.ruoyi.biz.member.mapper.FaMemberMapper.FaMemberResult" />
+    </resultMap>
+
+    <sql id="selectFaUserNoticeVo">
+        select
+            un.id,
+            un.user_id,
+            un.title,
+            un.content,
+            un.notice_type,
+            un.link,
+            un.create_time,
+            un.update_time,
+            un.read_time,
+            un.is_read,
+            un.is_all,
+            un.is_dialog,
+            un.delete_flag,
+            m.id m_id,
+            m.username m_username,
+            m.nickname m_nickname,
+--             m.password m_password,
+            m.salt m_salt,
+            m.mobile m_mobile,
+--             m.avatar m_avatar,
+            m.successions m_successions,
+            m.max_successions m_max_successions,
+            m.prev_time m_prev_time,
+            m.login_time m_login_time,
+--             m.login_ip m_login_ip,
+--             m.payment_code m_payment_code,
+--             m.join_ip m_join_ip,
+            m.join_time m_join_time,
+            m.create_time m_create_time,
+            m.update_time m_update_time,
+            m.status m_status,
+            m.balance m_balance,
+            m.superior_name m_superior_name,
+            m.superior_code m_superior_code,
+            m.superior_id m_superior_id,
+            m.institution_number m_institution_number,
+            m.daili_id m_daili_id,
+            m.jingzhijiaoyi m_jingzhijiaoyi,
+            m.is_pz m_is_pz,
+            m.is_dz m_is_dz,
+            m.is_ps m_is_ps,
+            m.is_sg m_is_sg,
+            m.is_zs m_is_zs,
+            m.is_qc m_is_qc,
+            m.is_qh m_is_qh,
+            m.is_inform m_is_inform,
+            m.freeze_profit m_freeze_profit,
+            m.weiyima m_weiyima,
+            m.name m_name,
+            m.id_card m_id_card,
+            m.submit_auth_time m_submit_auth_time,
+            m.auth_time m_auth_time,
+            m.is_auth m_is_auth,
+            m.auth_reject_reason m_auth_reject_reason,
+            m.auth_reject_time m_auth_reject_time,
+            m.deposit_bank m_deposit_bank,
+            m.khzhihang m_khzhihang,
+            m.account_name m_account_name,
+            m.account m_account,
+--             m.card_image m_card_image,
+            m.binding_time m_binding_time,
+            m.unbind_time m_unbind_time,
+            m.delete_flag m_delete_flag,
+            m.bank_card_auth m_bank_card_auth,
+            m.withdraw_switch m_withdraw_switch
+        from fa_user_notice un
+        left join fa_member m
+        on un.user_id = m.id
+    </sql>
+
+    <select id="selectFaUserNoticeList" parameterType="FaUserNotice" resultMap="FaUserNoticeResult">
+        <include refid="selectFaUserNoticeVo"/>
+        <where>  
+            <if test="id != null "> and un.id = #{id}</if>
+            <if test="userId != null "> and un.user_id = #{userId}</if>
+            <if test="title != null  and title != ''"> and un.title = #{title}</if>
+            <if test="content != null  and content != ''"> and un.content = #{content}</if>
+            <if test="noticeType != null "> and un.notice_type = #{noticeType}</if>
+            <if test="link != null  and link != ''"> and un.link = #{link}</if>
+            <if test="createTime != null "> and un.create_time = #{createTime}</if>
+            <if test="updateTime != null "> and un.update_time = #{updateTime}</if>
+            <if test="readTime != null "> and un.read_time = #{readTime}</if>
+            <if test="isRead != null "> and un.is_read = #{isRead}</if>
+            <if test="isAll != null "> and un.is_all = #{isAll}</if>
+            <if test="isDialog != null "> and un.is_dialog = #{isDialog}</if>
+            <if test="deleteFlag != null "> and un.delete_flag = #{deleteFlag}</if>
+            <if test="dailiId != null "> and m.daili_id = #{dailiId}</if>
+            <if test="memberName != null "> and m.name like concat('%', #{memberName}, '%')</if>
+            <if test="mobile != null "> and m.mobile like concat('%', #{mobile}, '%')</if>
+            <if test="weiyima != null "> and m.weiyima like concat('%', #{weiyima}, '%')</if>
+            <if test="salt != null "> and m.salt like concat('%', #{salt}, '%')</if>
+        </where>
+        order by un.id desc
+    </select>
+    
+    <select id="selectFaUserNoticeById" parameterType="Integer" resultMap="FaUserNoticeResult">
+        <include refid="selectFaUserNoticeVo"/>
+        where un.id = #{id}
+    </select>
+        
+    <insert id="insertFaUserNotice" parameterType="FaUserNotice" useGeneratedKeys="true" keyProperty="id">
+        insert into fa_user_notice
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="title != null">title,</if>
+            <if test="content != null">content,</if>
+            <if test="noticeType != null">notice_type,</if>
+            <if test="link != null">link,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="readTime != null">read_time,</if>
+            <if test="isRead != null">is_read,</if>
+            <if test="isAll != null">is_all,</if>
+            <if test="isDialog != null">is_dialog,</if>
+            <if test="deleteFlag != null">delete_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="title != null">#{title},</if>
+            <if test="content != null">#{content},</if>
+            <if test="noticeType != null">#{noticeType},</if>
+            <if test="link != null">#{link},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="readTime != null">#{readTime},</if>
+            <if test="isRead != null">#{isRead},</if>
+            <if test="isAll != null">#{isAll},</if>
+            <if test="isDialog != null">#{isDialog},</if>
+            <if test="deleteFlag != null">#{deleteFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFaUserNotice" parameterType="FaUserNotice">
+        update fa_user_notice
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="title != null">title = #{title},</if>
+            <if test="content != null">content = #{content},</if>
+            <if test="noticeType != null">notice_type = #{noticeType},</if>
+            <if test="link != null">link = #{link},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="readTime != null">read_time = #{readTime},</if>
+            <if test="isRead != null">is_read = #{isRead},</if>
+            <if test="isAll != null">is_all = #{isAll},</if>
+            <if test="isDialog != null">is_dialog = #{isDialog},</if>
+            <if test="deleteFlag != null">delete_flag = #{deleteFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteFaUserNoticeById" parameterType="Integer">
+        update fa_user_notice set delete_flag = 1 where id = #{id}
+    </delete>
+
+    <delete id="deleteFaUserNoticeByIds" parameterType="String">
+        update fa_user_notice set delete_flag = 1 where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

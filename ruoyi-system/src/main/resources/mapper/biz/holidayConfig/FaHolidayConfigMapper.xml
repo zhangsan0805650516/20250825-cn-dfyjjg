@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.biz.holidayConfig.mapper.FaHolidayConfigMapper">
+    
+    <resultMap type="FaHolidayConfig" id="FaHolidayConfigResult">
+        <result property="id"    column="id"    />
+        <result property="holidayName"    column="holiday_name"    />
+        <result property="holidayStart"    column="holiday_start"    />
+        <result property="holidayEnd"    column="holiday_end"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="remark"    column="remark"    />
+        <result property="deleteFlag"    column="delete_flag"    />
+    </resultMap>
+
+    <sql id="selectFaHolidayConfigVo">
+        select id, holiday_name, holiday_start, holiday_end, create_by, create_time, update_by, update_time, remark, delete_flag from fa_holiday_config
+    </sql>
+
+    <select id="selectFaHolidayConfigList" parameterType="FaHolidayConfig" resultMap="FaHolidayConfigResult">
+        <include refid="selectFaHolidayConfigVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+            <if test="holidayName != null  and holidayName != ''"> and holiday_name like concat('%', #{holidayName}, '%')</if>
+            <if test="holidayStart != null "> and holiday_start = #{holidayStart}</if>
+            <if test="holidayEnd != null "> and holiday_end = #{holidayEnd}</if>
+            <if test="createBy != null  and createBy != ''"> and create_by = #{createBy}</if>
+            <if test="createTime != null "> and create_time = #{createTime}</if>
+            <if test="updateBy != null  and updateBy != ''"> and update_by = #{updateBy}</if>
+            <if test="updateTime != null "> and update_time = #{updateTime}</if>
+            <if test="remark != null  and remark != ''"> and remark = #{remark}</if>
+            <if test="deleteFlag != null "> and delete_flag = #{deleteFlag}</if>
+        </where>
+    </select>
+    
+    <select id="selectFaHolidayConfigById" parameterType="Long" resultMap="FaHolidayConfigResult">
+        <include refid="selectFaHolidayConfigVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertFaHolidayConfig" parameterType="FaHolidayConfig">
+        insert into fa_holiday_config
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="holidayName != null">holiday_name,</if>
+            <if test="holidayStart != null">holiday_start,</if>
+            <if test="holidayEnd != null">holiday_end,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="remark != null">remark,</if>
+            <if test="deleteFlag != null">delete_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id},</if>
+            <if test="holidayName != null">#{holidayName},</if>
+            <if test="holidayStart != null">#{holidayStart},</if>
+            <if test="holidayEnd != null">#{holidayEnd},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="remark != null">#{remark},</if>
+            <if test="deleteFlag != null">#{deleteFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFaHolidayConfig" parameterType="FaHolidayConfig">
+        update fa_holiday_config
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="holidayName != null">holiday_name = #{holidayName},</if>
+            <if test="holidayStart != null">holiday_start = #{holidayStart},</if>
+            <if test="holidayEnd != null">holiday_end = #{holidayEnd},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="remark != null">remark = #{remark},</if>
+            <if test="deleteFlag != null">delete_flag = #{deleteFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteFaHolidayConfigById" parameterType="Long">
+        update fa_holiday_config set delete_flag = 1 where id = #{id}
+    </delete>
+
+    <delete id="deleteFaHolidayConfigByIds" parameterType="String">
+        update fa_holiday_config set delete_flag = 1 where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="isHoliday" resultType="java.lang.Integer">
+        SELECT
+            count( 1 )
+        FROM
+            fa_holiday_config hc
+        WHERE
+            DATE_FORMAT( hc.holiday_start, '%Y-%m-%d 00:00:00' ) <![CDATA[<=]]> NOW()
+        AND DATE_FORMAT( hc.holiday_end, '%Y-%m-%d 23:59:59' ) >= NOW()
+    </select>
+
+</mapper>

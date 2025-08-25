@@ -1,0 +1,509 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.biz.withdraw.mapper.FaWithdrawMapper">
+    
+    <resultMap type="FaWithdraw" id="FaWithdrawResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="mobile"    column="mobile"    />
+        <result property="name"    column="name"    />
+        <result property="superiorId"    column="superior_id"    />
+        <result property="superiorCode"    column="superior_code"    />
+        <result property="superiorName"    column="superior_name"    />
+        <result property="money"    column="money"    />
+        <result property="bfb"    column="bfb"    />
+        <result property="sxf"    column="sxf"    />
+        <result property="reject"    column="reject"    />
+        <result property="wxAccount"    column="wx_account"    />
+        <result property="accountId"    column="account_id"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="deleteTime"    column="delete_time"    />
+        <result property="payType"    column="pay_type"    />
+        <result property="isPay"    column="is_pay"    />
+        <result property="isQx"    column="is_qx"    />
+        <result property="deleteFlag"    column="delete_flag"    />
+        <result property="isApprove"    column="is_approve"    />
+        <result property="accountName"    column="account_name"    />
+        <result property="account"    column="account"    />
+        <result property="depositBank"    column="deposit_bank"    />
+
+        <association property="faMember" columnPrefix="m_" resultMap="com.ruoyi.biz.member.mapper.FaMemberMapper.FaMemberResult" />
+    </resultMap>
+
+    <sql id="selectFaWithdrawVo">
+        select
+            w.id,
+            w.user_id,
+            CONCAT(SUBSTRING(w.mobile, 1, 3), '****', SUBSTRING(w.mobile, 8)) AS mobile,
+            w.name,
+            w.superior_id,
+            w.superior_code,
+            w.superior_name,
+            w.money,
+            w.bfb,
+            w.sxf,
+            w.reject,
+            w.wx_account,
+            w.account_id,
+            w.create_time,
+            w.update_time,
+            w.delete_time,
+            w.pay_type,
+            w.is_pay,
+            w.is_qx,
+            w.delete_flag,
+            w.is_approve,
+            w.account_name,
+            w.account,
+            w.deposit_bank,
+            m.id m_id,
+            m.username m_username,
+            m.nickname m_nickname,
+--             m.password m_password,
+            m.salt m_salt,
+            m.mobile m_mobile,
+--             m.avatar m_avatar,
+            m.successions m_successions,
+            m.max_successions m_max_successions,
+            m.prev_time m_prev_time,
+            m.login_time m_login_time,
+--             m.login_ip m_login_ip,
+--             m.payment_code m_payment_code,
+--             m.join_ip m_join_ip,
+            m.join_time m_join_time,
+            m.create_time m_create_time,
+            m.update_time m_update_time,
+            m.status m_status,
+            m.balance m_balance,
+            m.superior_name m_superior_name,
+            m.superior_code m_superior_code,
+            m.superior_id m_superior_id,
+            m.institution_number m_institution_number,
+            m.daili_id m_daili_id,
+            m.jingzhijiaoyi m_jingzhijiaoyi,
+            m.is_pz m_is_pz,
+            m.is_dz m_is_dz,
+            m.is_ps m_is_ps,
+            m.is_sg m_is_sg,
+            m.is_zs m_is_zs,
+            m.is_qc m_is_qc,
+            m.is_qh m_is_qh,
+            m.is_inform m_is_inform,
+            m.freeze_profit m_freeze_profit,
+            m.weiyima m_weiyima,
+            m.name m_name,
+            m.id_card m_id_card,
+            m.submit_auth_time m_submit_auth_time,
+            m.auth_time m_auth_time,
+            m.is_auth m_is_auth,
+            m.auth_reject_reason m_auth_reject_reason,
+            m.auth_reject_time m_auth_reject_time,
+            m.deposit_bank m_deposit_bank,
+            m.khzhihang m_khzhihang,
+            m.account_name m_account_name,
+            m.account m_account,
+--             m.card_image m_card_image,
+            m.binding_time m_binding_time,
+            m.unbind_time m_unbind_time,
+            m.delete_flag m_delete_flag,
+            m.bank_card_auth m_bank_card_auth,
+            m.withdraw_switch m_withdraw_switch
+        from fa_withdraw w
+        left join fa_member m
+        on w.user_id = m.id
+    </sql>
+
+    <select id="selectFaWithdrawList" parameterType="FaWithdraw" resultMap="FaWithdrawResult">
+        <include refid="selectFaWithdrawVo"/>
+        <where>  
+            <if test="id != null "> and w.id = #{id}</if>
+            <if test="userId != null "> and w.user_id = #{userId}</if>
+            <if test="mobile != null  and mobile != ''"> and w.mobile = #{mobile}</if>
+            <if test="name != null  and name != ''"> and w.name like concat('%', #{name}, '%')</if>
+            <if test="superiorId != null "> and w.superior_id = #{superiorId}</if>
+            <if test="superiorCode != null  and superiorCode != ''"> and w.superior_code = #{superiorCode}</if>
+            <if test="superiorName != null  and superiorName != ''"> and w.superior_name like concat('%', #{superiorName}, '%')</if>
+            <if test="money != null "> and w.money = #{money}</if>
+            <if test="bfb != null  and bfb != ''"> and w.bfb = #{bfb}</if>
+            <if test="sxf != null  and sxf != ''"> and w.sxf = #{sxf}</if>
+            <if test="reject != null  and reject != ''"> and w.reject = #{reject}</if>
+            <if test="wxAccount != null  and wxAccount != ''"> and w.wx_account = #{wxAccount}</if>
+            <if test="accountId != null "> and w.account_id = #{accountId}</if>
+            <if test="createTime != null "> and w.create_time = #{createTime}</if>
+            <if test="updateTime != null "> and w.update_time = #{updateTime}</if>
+            <if test="deleteTime != null "> and w.delete_time = #{deleteTime}</if>
+            <if test="payType != null "> and w.pay_type = #{payType}</if>
+            <if test="isPay != null "> and w.is_pay = #{isPay}</if>
+            <if test="isQx != null "> and w.is_qx = #{isQx}</if>
+            <if test="deleteFlag != null "> and w.delete_flag = #{deleteFlag}</if>
+            <if test="isApprove != null "> and w.is_approve = #{isApprove}</if>
+            <if test="accountName != null "> and w.account_name = #{accountName}</if>
+            <if test="account != null "> and w.account = #{account}</if>
+            <if test="depositBank != null "> and w.deposit_bank = #{depositBank}</if>
+<!--            <if test="dailiId != null "> and m.daili_id = #{dailiId}</if>-->
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                AND date_format(w.create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+            </if>
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                AND date_format(w.create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+            </if>
+            <if test="weiyima != null "> and m.weiyima like concat('%', #{weiyima}, '%')</if>
+            <if test="salt != null "> and m.salt like concat('%', #{salt}, '%')</if>
+        </where>
+        and w.user_id in (
+            SELECT
+                m.id
+            FROM
+                fa_member m
+            WHERE
+                m.daili_id IN ( SELECT #{parentId} UNION ALL SELECT u.user_id FROM sys_user u WHERE u.path LIKE concat('%,', #{parentId}, ',%') )
+        )
+        order by w.id desc
+    </select>
+    
+    <select id="selectFaWithdrawById" parameterType="Integer" resultMap="FaWithdrawResult">
+        <include refid="selectFaWithdrawVo"/>
+        where w.id = #{id}
+    </select>
+
+    <insert id="insertFaWithdraw" parameterType="FaWithdraw" useGeneratedKeys="true" keyProperty="id">
+        insert into fa_withdraw
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="mobile != null">mobile,</if>
+            <if test="name != null">name,</if>
+            <if test="superiorId != null">superior_id,</if>
+            <if test="superiorCode != null">superior_code,</if>
+            <if test="superiorName != null">superior_name,</if>
+            <if test="money != null">money,</if>
+            <if test="bfb != null">bfb,</if>
+            <if test="sxf != null">sxf,</if>
+            <if test="reject != null">reject,</if>
+            <if test="wxAccount != null">wx_account,</if>
+            <if test="accountId != null">account_id,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="deleteTime != null">delete_time,</if>
+            <if test="payType != null">pay_type,</if>
+            <if test="isPay != null">is_pay,</if>
+            <if test="isQx != null">is_qx,</if>
+            <if test="deleteFlag != null">delete_flag,</if>
+            <if test="isApprove != null">is_approve,</if>
+            <if test="accountName != null">account_name,</if>
+            <if test="account != null">account,</if>
+            <if test="depositBank != null">deposit_bank,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="mobile != null">#{mobile},</if>
+            <if test="name != null">#{name},</if>
+            <if test="superiorId != null">#{superiorId},</if>
+            <if test="superiorCode != null">#{superiorCode},</if>
+            <if test="superiorName != null">#{superiorName},</if>
+            <if test="money != null">#{money},</if>
+            <if test="bfb != null">#{bfb},</if>
+            <if test="sxf != null">#{sxf},</if>
+            <if test="reject != null">#{reject},</if>
+            <if test="wxAccount != null">#{wxAccount},</if>
+            <if test="accountId != null">#{accountId},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="deleteTime != null">#{deleteTime},</if>
+            <if test="payType != null">#{payType},</if>
+            <if test="isPay != null">#{isPay},</if>
+            <if test="isQx != null">#{isQx},</if>
+            <if test="deleteFlag != null">#{deleteFlag},</if>
+            <if test="isApprove != null">#{isApprove},</if>
+            <if test="accountName != null">#{accountName},</if>
+            <if test="account != null">#{account},</if>
+            <if test="depositBank != null">#{depositBank},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFaWithdraw" parameterType="FaWithdraw">
+        update fa_withdraw
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="mobile != null">mobile = #{mobile},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="superiorId != null">superior_id = #{superiorId},</if>
+            <if test="superiorCode != null">superior_code = #{superiorCode},</if>
+            <if test="superiorName != null">superior_name = #{superiorName},</if>
+            <if test="money != null">money = #{money},</if>
+            <if test="bfb != null">bfb = #{bfb},</if>
+            <if test="sxf != null">sxf = #{sxf},</if>
+            <if test="reject != null">reject = #{reject},</if>
+            <if test="wxAccount != null">wx_account = #{wxAccount},</if>
+            <if test="accountId != null">account_id = #{accountId},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="deleteTime != null">delete_time = #{deleteTime},</if>
+            <if test="payType != null">pay_type = #{payType},</if>
+            <if test="isPay != null">is_pay = #{isPay},</if>
+            <if test="isQx != null">is_qx = #{isQx},</if>
+            <if test="deleteFlag != null">delete_flag = #{deleteFlag},</if>
+            <if test="isApprove != null">is_approve = #{isApprove},</if>
+            <if test="accountName != null">account_name = #{accountName},</if>
+            <if test="account != null">account = #{account},</if>
+            <if test="depositBank != null">deposit_bank = #{depositBank},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteFaWithdrawById" parameterType="Integer">
+        update fa_withdraw set delete_flag = 1 where id = #{id}
+    </delete>
+
+    <delete id="deleteFaWithdrawByIds" parameterType="String">
+        update fa_withdraw set delete_flag = 1 where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+
+    <select id="getWithdrawTimesToday" resultType="java.lang.Integer">
+        SELECT
+            count( 1 )
+        FROM
+            fa_withdraw w
+        WHERE
+            w.user_id = #{userId}
+          AND w.create_time >= DATE_FORMAT( NOW(), '%Y-%m-%d 00:00:00' )
+    </select>
+
+    <select id="getWithdrawStatistics" resultType="java.math.BigDecimal">
+        select COALESCE(SUM(w.money), 0) total from fa_withdraw w
+        <where>
+            <if test="id != null "> and w.id = #{id}</if>
+            <if test="userId != null "> and w.user_id = #{userId}</if>
+            <if test="mobile != null  and mobile != ''"> and w.mobile = #{mobile}</if>
+            <if test="name != null  and name != ''"> and w.name like concat('%', #{name}, '%')</if>
+            <if test="superiorId != null "> and w.superior_id = #{superiorId}</if>
+            <if test="superiorCode != null  and superiorCode != ''"> and w.superior_code = #{superiorCode}</if>
+            <if test="superiorName != null  and superiorName != ''"> and w.superior_name like concat('%', #{superiorName}, '%')</if>
+            <if test="money != null "> and w.money = #{money}</if>
+            <if test="bfb != null  and bfb != ''"> and w.bfb = #{bfb}</if>
+            <if test="sxf != null  and sxf != ''"> and w.sxf = #{sxf}</if>
+            <if test="reject != null  and reject != ''"> and w.reject = #{reject}</if>
+            <if test="wxAccount != null  and wxAccount != ''"> and w.wx_account = #{wxAccount}</if>
+            <if test="accountId != null "> and w.account_id = #{accountId}</if>
+            <if test="createTime != null "> and w.create_time = #{createTime}</if>
+            <if test="updateTime != null "> and w.update_time = #{updateTime}</if>
+            <if test="deleteTime != null "> and w.delete_time = #{deleteTime}</if>
+            <if test="payType != null "> and w.pay_type = #{payType}</if>
+            <if test="isPay != null "> and w.is_pay = #{isPay}</if>
+            <if test="isQx != null "> and w.is_qx = #{isQx}</if>
+            <if test="deleteFlag != null "> and w.delete_flag = #{deleteFlag}</if>
+            <if test="dailiId != null "> and m.daili_id = #{dailiId}</if>
+        </where>
+        UNION ALL
+        select COALESCE(SUM(w.money), 0) total from fa_withdraw w
+        <where>
+            and w.is_pay = 0
+            <if test="id != null "> and w.id = #{id}</if>
+            <if test="userId != null "> and w.user_id = #{userId}</if>
+            <if test="mobile != null  and mobile != ''"> and w.mobile = #{mobile}</if>
+            <if test="name != null  and name != ''"> and w.name like concat('%', #{name}, '%')</if>
+            <if test="superiorId != null "> and w.superior_id = #{superiorId}</if>
+            <if test="superiorCode != null  and superiorCode != ''"> and w.superior_code = #{superiorCode}</if>
+            <if test="superiorName != null  and superiorName != ''"> and w.superior_name like concat('%', #{superiorName}, '%')</if>
+            <if test="money != null "> and w.money = #{money}</if>
+            <if test="bfb != null  and bfb != ''"> and w.bfb = #{bfb}</if>
+            <if test="sxf != null  and sxf != ''"> and w.sxf = #{sxf}</if>
+            <if test="reject != null  and reject != ''"> and w.reject = #{reject}</if>
+            <if test="wxAccount != null  and wxAccount != ''"> and w.wx_account = #{wxAccount}</if>
+            <if test="accountId != null "> and w.account_id = #{accountId}</if>
+            <if test="createTime != null "> and w.create_time = #{createTime}</if>
+            <if test="updateTime != null "> and w.update_time = #{updateTime}</if>
+            <if test="deleteTime != null "> and w.delete_time = #{deleteTime}</if>
+            <if test="payType != null "> and w.pay_type = #{payType}</if>
+            <if test="isPay != null "> and w.is_pay = #{isPay}</if>
+            <if test="isQx != null "> and w.is_qx = #{isQx}</if>
+            <if test="deleteFlag != null "> and w.delete_flag = #{deleteFlag}</if>
+            <if test="dailiId != null "> and m.daili_id = #{dailiId}</if>
+        </where>
+        UNION ALL
+        select COALESCE(SUM(w.money), 0) total from fa_withdraw w
+        <where>
+            and w.is_pay = 1
+            <if test="id != null "> and w.id = #{id}</if>
+            <if test="userId != null "> and w.user_id = #{userId}</if>
+            <if test="mobile != null  and mobile != ''"> and w.mobile = #{mobile}</if>
+            <if test="name != null  and name != ''"> and w.name like concat('%', #{name}, '%')</if>
+            <if test="superiorId != null "> and w.superior_id = #{superiorId}</if>
+            <if test="superiorCode != null  and superiorCode != ''"> and w.superior_code = #{superiorCode}</if>
+            <if test="superiorName != null  and superiorName != ''"> and w.superior_name like concat('%', #{superiorName}, '%')</if>
+            <if test="money != null "> and w.money = #{money}</if>
+            <if test="bfb != null  and bfb != ''"> and w.bfb = #{bfb}</if>
+            <if test="sxf != null  and sxf != ''"> and w.sxf = #{sxf}</if>
+            <if test="reject != null  and reject != ''"> and w.reject = #{reject}</if>
+            <if test="wxAccount != null  and wxAccount != ''"> and w.wx_account = #{wxAccount}</if>
+            <if test="accountId != null "> and w.account_id = #{accountId}</if>
+            <if test="createTime != null "> and w.create_time = #{createTime}</if>
+            <if test="updateTime != null "> and w.update_time = #{updateTime}</if>
+            <if test="deleteTime != null "> and w.delete_time = #{deleteTime}</if>
+            <if test="payType != null "> and w.pay_type = #{payType}</if>
+            <if test="isPay != null "> and w.is_pay = #{isPay}</if>
+            <if test="isQx != null "> and w.is_qx = #{isQx}</if>
+            <if test="deleteFlag != null "> and w.delete_flag = #{deleteFlag}</if>
+            <if test="dailiId != null "> and m.daili_id = #{dailiId}</if>
+        </where>
+        UNION ALL
+        select COALESCE(SUM(w.money), 0) total from fa_withdraw w
+        <where>
+            and w.is_pay = 2
+            <if test="id != null "> and w.id = #{id}</if>
+            <if test="userId != null "> and w.user_id = #{userId}</if>
+            <if test="mobile != null  and mobile != ''"> and w.mobile = #{mobile}</if>
+            <if test="name != null  and name != ''"> and w.name like concat('%', #{name}, '%')</if>
+            <if test="superiorId != null "> and w.superior_id = #{superiorId}</if>
+            <if test="superiorCode != null  and superiorCode != ''"> and w.superior_code = #{superiorCode}</if>
+            <if test="superiorName != null  and superiorName != ''"> and w.superior_name like concat('%', #{superiorName}, '%')</if>
+            <if test="money != null "> and w.money = #{money}</if>
+            <if test="bfb != null  and bfb != ''"> and w.bfb = #{bfb}</if>
+            <if test="sxf != null  and sxf != ''"> and w.sxf = #{sxf}</if>
+            <if test="reject != null  and reject != ''"> and w.reject = #{reject}</if>
+            <if test="wxAccount != null  and wxAccount != ''"> and w.wx_account = #{wxAccount}</if>
+            <if test="accountId != null "> and w.account_id = #{accountId}</if>
+            <if test="createTime != null "> and w.create_time = #{createTime}</if>
+            <if test="updateTime != null "> and w.update_time = #{updateTime}</if>
+            <if test="deleteTime != null "> and w.delete_time = #{deleteTime}</if>
+            <if test="payType != null "> and w.pay_type = #{payType}</if>
+            <if test="isPay != null "> and w.is_pay = #{isPay}</if>
+            <if test="isQx != null "> and w.is_qx = #{isQx}</if>
+            <if test="deleteFlag != null "> and w.delete_flag = #{deleteFlag}</if>
+            <if test="dailiId != null "> and m.daili_id = #{dailiId}</if>
+        </where>
+    </select>
+
+    <select id="getWithdrawAlreadyToday" resultType="java.math.BigDecimal">
+        SELECT
+            COALESCE( SUM( w.money ), 0 )
+        FROM
+            fa_withdraw w
+        WHERE
+            w.user_id = #{userId}
+          AND w.create_time >= DATE_FORMAT(NOW(), '%Y-%m-%d 00:00:00')
+    </select>
+
+    <select id="getTotalPaid" resultType="java.math.BigDecimal">
+        select COALESCE(SUM(w.money), 0) total from fa_withdraw w
+        left join fa_member m
+        on w.user_id = m.id
+        <where>
+            <if test="id != null "> and w.id = #{id}</if>
+            <if test="userId != null "> and w.user_id = #{userId}</if>
+            <if test="mobile != null  and mobile != ''"> and w.mobile = #{mobile}</if>
+            <if test="name != null  and name != ''"> and w.name like concat('%', #{name}, '%')</if>
+            <if test="superiorId != null "> and w.superior_id = #{superiorId}</if>
+            <if test="superiorCode != null  and superiorCode != ''"> and w.superior_code = #{superiorCode}</if>
+            <if test="superiorName != null  and superiorName != ''"> and w.superior_name like concat('%', #{superiorName}, '%')</if>
+            <if test="money != null "> and w.money = #{money}</if>
+            <if test="bfb != null  and bfb != ''"> and w.bfb = #{bfb}</if>
+            <if test="sxf != null  and sxf != ''"> and w.sxf = #{sxf}</if>
+            <if test="reject != null  and reject != ''"> and w.reject = #{reject}</if>
+            <if test="wxAccount != null  and wxAccount != ''"> and w.wx_account = #{wxAccount}</if>
+            <if test="accountId != null "> and w.account_id = #{accountId}</if>
+            <if test="createTime != null "> and w.create_time = #{createTime}</if>
+            <if test="updateTime != null "> and w.update_time = #{updateTime}</if>
+            <if test="deleteTime != null "> and w.delete_time = #{deleteTime}</if>
+            <if test="payType != null "> and w.pay_type = #{payType}</if>
+            <if test="isPay != null "> and w.is_pay = #{isPay}</if>
+            <if test="isQx != null "> and w.is_qx = #{isQx}</if>
+            <if test="deleteFlag != null "> and w.delete_flag = #{deleteFlag}</if>
+<!--            <if test="dailiId != null "> and m.daili_id = #{dailiId}</if>-->
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                AND date_format(w.create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+            </if>
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                AND date_format(w.create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+            </if>
+            <if test="weiyima != null "> and m.weiyima like concat('%', #{weiyima}, '%')</if>
+            <if test="salt != null "> and m.salt like concat('%', #{salt}, '%')</if>
+            and w.is_pay = 1 and w.delete_flag = 0
+        </where>
+        and m.daili_id in ( select #{parentId} union all select u.user_id from sys_user u where u.path like concat('%,', #{parentId}, ',%'))
+    </select>
+
+    <select id="getTotalUnpaid" resultType="java.math.BigDecimal">
+        select COALESCE(SUM(w.money), 0) total from fa_withdraw w
+        left join fa_member m
+        on w.user_id = m.id
+        <where>
+            <if test="id != null "> and w.id = #{id}</if>
+            <if test="userId != null "> and w.user_id = #{userId}</if>
+            <if test="mobile != null  and mobile != ''"> and w.mobile = #{mobile}</if>
+            <if test="name != null  and name != ''"> and w.name like concat('%', #{name}, '%')</if>
+            <if test="superiorId != null "> and w.superior_id = #{superiorId}</if>
+            <if test="superiorCode != null  and superiorCode != ''"> and w.superior_code = #{superiorCode}</if>
+            <if test="superiorName != null  and superiorName != ''"> and w.superior_name like concat('%', #{superiorName}, '%')</if>
+            <if test="money != null "> and w.money = #{money}</if>
+            <if test="bfb != null  and bfb != ''"> and w.bfb = #{bfb}</if>
+            <if test="sxf != null  and sxf != ''"> and w.sxf = #{sxf}</if>
+            <if test="reject != null  and reject != ''"> and w.reject = #{reject}</if>
+            <if test="wxAccount != null  and wxAccount != ''"> and w.wx_account = #{wxAccount}</if>
+            <if test="accountId != null "> and w.account_id = #{accountId}</if>
+            <if test="createTime != null "> and w.create_time = #{createTime}</if>
+            <if test="updateTime != null "> and w.update_time = #{updateTime}</if>
+            <if test="deleteTime != null "> and w.delete_time = #{deleteTime}</if>
+            <if test="payType != null "> and w.pay_type = #{payType}</if>
+            <if test="isPay != null "> and w.is_pay = #{isPay}</if>
+            <if test="isQx != null "> and w.is_qx = #{isQx}</if>
+            <if test="deleteFlag != null "> and w.delete_flag = #{deleteFlag}</if>
+<!--            <if test="dailiId != null "> and m.daili_id = #{dailiId}</if>-->
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                AND date_format(w.create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+            </if>
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                AND date_format(w.create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+            </if>
+            <if test="weiyima != null "> and m.weiyima like concat('%', #{weiyima}, '%')</if>
+            <if test="salt != null "> and m.salt like concat('%', #{salt}, '%')</if>
+            and w.is_pay = 0 and w.delete_flag = 0
+        </where>
+        and m.daili_id in ( select #{parentId} union all select u.user_id from sys_user u where u.path like concat('%,', #{parentId}, ',%'))
+    </select>
+
+    <select id="getTotalRefuse" resultType="java.math.BigDecimal">
+        select COALESCE(SUM(w.money), 0) total from fa_withdraw w
+        left join fa_member m
+        on w.user_id = m.id
+        <where>
+            <if test="id != null "> and w.id = #{id}</if>
+            <if test="userId != null "> and w.user_id = #{userId}</if>
+            <if test="mobile != null  and mobile != ''"> and w.mobile = #{mobile}</if>
+            <if test="name != null  and name != ''"> and w.name like concat('%', #{name}, '%')</if>
+            <if test="superiorId != null "> and w.superior_id = #{superiorId}</if>
+            <if test="superiorCode != null  and superiorCode != ''"> and w.superior_code = #{superiorCode}</if>
+            <if test="superiorName != null  and superiorName != ''"> and w.superior_name like concat('%', #{superiorName}, '%')</if>
+            <if test="money != null "> and w.money = #{money}</if>
+            <if test="bfb != null  and bfb != ''"> and w.bfb = #{bfb}</if>
+            <if test="sxf != null  and sxf != ''"> and w.sxf = #{sxf}</if>
+            <if test="reject != null  and reject != ''"> and w.reject = #{reject}</if>
+            <if test="wxAccount != null  and wxAccount != ''"> and w.wx_account = #{wxAccount}</if>
+            <if test="accountId != null "> and w.account_id = #{accountId}</if>
+            <if test="createTime != null "> and w.create_time = #{createTime}</if>
+            <if test="updateTime != null "> and w.update_time = #{updateTime}</if>
+            <if test="deleteTime != null "> and w.delete_time = #{deleteTime}</if>
+            <if test="payType != null "> and w.pay_type = #{payType}</if>
+            <if test="isPay != null "> and w.is_pay = #{isPay}</if>
+            <if test="isQx != null "> and w.is_qx = #{isQx}</if>
+            <if test="deleteFlag != null "> and w.delete_flag = #{deleteFlag}</if>
+<!--            <if test="dailiId != null "> and m.daili_id = #{dailiId}</if>-->
+            <if test="params.beginTime != null and params.beginTime != ''"><!-- 开始时间检索 -->
+                AND date_format(w.create_time,'%y%m%d') &gt;= date_format(#{params.beginTime},'%y%m%d')
+            </if>
+            <if test="params.endTime != null and params.endTime != ''"><!-- 结束时间检索 -->
+                AND date_format(w.create_time,'%y%m%d') &lt;= date_format(#{params.endTime},'%y%m%d')
+            </if>
+            <if test="weiyima != null "> and m.weiyima like concat('%', #{weiyima}, '%')</if>
+            <if test="salt != null "> and m.salt like concat('%', #{salt}, '%')</if>
+            and w.is_pay = 2 and w.delete_flag = 0
+        </where>
+        and m.daili_id in ( select #{parentId} union all select u.user_id from sys_user u where u.path like concat('%,', #{parentId}, ',%'))
+    </select>
+
+</mapper>

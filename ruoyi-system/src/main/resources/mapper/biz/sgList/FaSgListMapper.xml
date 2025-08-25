@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.biz.sgList.mapper.FaSgListMapper">
+    
+    <resultMap type="FaSgList" id="FaSgListResult">
+        <result property="id"    column="id"    />
+        <result property="userId"    column="user_id"    />
+        <result property="shengouId"    column="shengou_id"    />
+        <result property="code"    column="code"    />
+        <result property="allCode"    column="all_code"    />
+        <result property="name"    column="name"    />
+        <result property="sgFxPrice"    column="sg_fx_price"    />
+        <result property="sgHyRate"    column="sg_hy_rate"    />
+        <result property="sgNum"    column="sg_num"    />
+        <result property="sgNums"    column="sg_nums"    />
+        <result property="maxSg"    column="max_sg"    />
+        <result property="status"    column="status"    />
+        <result property="money"    column="money"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="zqNum"    column="zq_num"    />
+        <result property="djMoney"    column="dj_money"    />
+        <result property="sgSgDate"    column="sg_sg_date"    />
+        <result property="sgZqJkDate"    column="sg_zq_jk_date"    />
+        <result property="sgSsDate"    column="sg_ss_date"    />
+        <result property="renjiao"    column="renjiao"    />
+        <result property="renjiaoTime"    column="renjiao_time"    />
+        <result property="isCc"    column="is_cc"    />
+        <result property="isCcTime"    column="is_cc_time"    />
+        <result property="zqMoney"    column="zq_money"    />
+        <result property="zqNums"    column="zq_nums"    />
+        <result property="freezeProfit"    column="freeze_profit"    />
+        <result property="balance"    column="balance"    />
+        <result property="oldSgNum"    column="old_sg_num"    />
+        <result property="oldSgNums"    column="old_sg_nums"    />
+        <result property="sgType"    column="sg_type"    />
+        <result property="deleteFlag"    column="delete_flag"    />
+
+        <association property="faMember" columnPrefix="m_" resultMap="com.ruoyi.biz.member.mapper.FaMemberMapper.FaMemberResult" />
+    </resultMap>
+
+    <sql id="selectFaSgListVo">
+        select
+            sg.id,
+            sg.user_id,
+            sg.shengou_id,
+            sg.code,
+            sg.all_code,
+            sg.name,
+            sg.sg_fx_price,
+            sg.sg_hy_rate,
+            sg.sg_num,
+            sg.sg_nums,
+            sg.max_sg,
+            sg.status,
+            sg.money,
+            sg.create_time,
+            sg.update_time,
+            sg.zq_num,
+            sg.dj_money,
+            sg.sg_sg_date,
+            sg.sg_zq_jk_date,
+            sg.sg_ss_date,
+            sg.renjiao,
+            sg.renjiao_time,
+            sg.is_cc,
+            sg.is_cc_time,
+            sg.zq_money,
+            sg.zq_nums,
+            sg.freeze_profit,
+            sg.balance,
+            sg.old_sg_num,
+            sg.old_sg_nums,
+            sg.sg_type,
+            sg.delete_flag,
+            m.id m_id,
+            m.username m_username,
+            m.nickname m_nickname,
+--             m.password m_password,
+            m.salt m_salt,
+            m.mobile m_mobile,
+--             m.avatar m_avatar,
+            m.successions m_successions,
+            m.max_successions m_max_successions,
+            m.prev_time m_prev_time,
+            m.login_time m_login_time,
+--             m.login_ip m_login_ip,
+--             m.payment_code m_payment_code,
+--             m.join_ip m_join_ip,
+            m.join_time m_join_time,
+            m.create_time m_create_time,
+            m.update_time m_update_time,
+            m.status m_status,
+            m.balance m_balance,
+            m.superior_name m_superior_name,
+            m.superior_code m_superior_code,
+            m.superior_id m_superior_id,
+            m.institution_number m_institution_number,
+            m.daili_id m_daili_id,
+            m.jingzhijiaoyi m_jingzhijiaoyi,
+            m.is_pz m_is_pz,
+            m.is_dz m_is_dz,
+            m.is_ps m_is_ps,
+            m.is_sg m_is_sg,
+            m.is_zs m_is_zs,
+            m.is_qc m_is_qc,
+            m.is_qh m_is_qh,
+            m.is_inform m_is_inform,
+            m.freeze_profit m_freeze_profit,
+            m.weiyima m_weiyima,
+            m.name m_name,
+            m.id_card m_id_card,
+            m.submit_auth_time m_submit_auth_time,
+            m.auth_time m_auth_time,
+            m.is_auth m_is_auth,
+            m.auth_reject_reason m_auth_reject_reason,
+            m.auth_reject_time m_auth_reject_time,
+            m.deposit_bank m_deposit_bank,
+            m.khzhihang m_khzhihang,
+            m.account_name m_account_name,
+            m.account m_account,
+--             m.card_image m_card_image,
+            m.binding_time m_binding_time,
+            m.unbind_time m_unbind_time,
+            m.delete_flag m_delete_flag,
+            m.bank_card_auth m_bank_card_auth,
+            m.withdraw_switch m_withdraw_switch
+        from fa_stock_sg sg
+        left join fa_member m
+        on sg.user_id = m.id
+    </sql>
+
+    <select id="selectFaSgListList" parameterType="FaSgList" resultMap="FaSgListResult">
+        <include refid="selectFaSgListVo"/>
+        <where>  
+            <if test="id != null "> and sg.id = #{id}</if>
+            <if test="userId != null "> and sg.user_id = #{userId}</if>
+            <if test="shengouId != null "> and sg.shengou_id = #{shengouId}</if>
+            <if test="code != null  and code != ''"> and sg.code = #{code}</if>
+            <if test="allCode != null  and allCode != ''"> and sg.all_code = #{allCode}</if>
+            <if test="name != null  and name != ''"> and sg.name like concat('%', #{name}, '%')</if>
+            <if test="sgFxPrice != null "> and sg.sg_fx_price = #{sgFxPrice}</if>
+            <if test="sgHyRate != null "> and sg.sg_hy_rate = #{sgHyRate}</if>
+            <if test="sgNum != null "> and sg.sg_num = #{sgNum}</if>
+            <if test="sgNums != null "> and sg.sg_nums = #{sgNums}</if>
+            <if test="maxSg != null "> and sg.max_sg = #{maxSg}</if>
+            <if test="status != null "> and sg.status = #{status}</if>
+            <if test="money != null "> and sg.money = #{money}</if>
+            <if test="createTime != null "> and sg.create_time = #{createTime}</if>
+            <if test="updateTime != null "> and sg.update_time = #{updateTime}</if>
+            <if test="zqNum != null "> and sg.zq_num = #{zqNum}</if>
+            <if test="djMoney != null "> and sg.dj_money = #{djMoney}</if>
+            <if test="sgSgDate != null "> and sg.sg_sg_date = #{sgSgDate}</if>
+            <if test="sgZqJkDate != null "> and sg.sg_zq_jk_date = #{sgZqJkDate}</if>
+            <if test="sgSsDate != null "> and sg.sg_ss_date = #{sgSsDate}</if>
+            <if test="renjiao != null "> and sg.renjiao = #{renjiao}</if>
+            <if test="renjiaoTime != null "> and sg.renjiao_time = #{renjiaoTime}</if>
+            <if test="isCc != null "> and sg.is_cc = #{isCc}</if>
+            <if test="isCcTime != null "> and sg.is_cc_time = #{isCcTime}</if>
+            <if test="zqMoney != null "> and sg.zq_money = #{zqMoney}</if>
+            <if test="zqNums != null "> and sg.zq_nums = #{zqNums}</if>
+            <if test="freezeProfit != null "> and sg.freeze_profit = #{freezeProfit}</if>
+            <if test="balance != null "> and sg.balance = #{balance}</if>
+            <if test="oldSgNum != null "> and sg.old_sg_num = #{oldSgNum}</if>
+            <if test="oldSgNums != null "> and sg.old_sg_nums = #{oldSgNums}</if>
+            <if test="sgType != null "> and sg.sg_type = #{sgType}</if>
+            <if test="deleteFlag != null "> and sg.delete_flag = #{deleteFlag}</if>
+<!--            <if test="dailiId != null "> and m.daili_id = #{dailiId}</if>-->
+            <if test="memberName != null "> and m.name like concat('%', #{memberName}, '%')</if>
+            <if test="mobile != null "> and m.mobile like concat('%', #{mobile}, '%')</if>
+            <if test="weiyima != null "> and m.weiyima like concat('%', #{weiyima}, '%')</if>
+            <if test="salt != null "> and m.salt like concat('%', #{salt}, '%')</if>
+        </where>
+        and sg.user_id in (
+            SELECT
+                m.id
+            FROM
+                fa_member m
+            WHERE
+                m.daili_id IN ( SELECT #{parentId} UNION ALL SELECT u.user_id FROM sys_user u WHERE u.path LIKE concat('%,', #{parentId}, ',%') )
+        )
+        order by sg.id desc
+    </select>
+    
+    <select id="selectFaSgListById" parameterType="Long" resultMap="FaSgListResult">
+        <include refid="selectFaSgListVo"/>
+        where sg.id = #{id}
+    </select>
+        
+    <insert id="insertFaSgList" parameterType="FaSgList" useGeneratedKeys="true" keyProperty="id">
+        insert into fa_stock_sg
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="userId != null">user_id,</if>
+            <if test="shengouId != null">shengou_id,</if>
+            <if test="code != null">code,</if>
+            <if test="allCode != null">all_code,</if>
+            <if test="name != null">name,</if>
+            <if test="sgFxPrice != null">sg_fx_price,</if>
+            <if test="sgHyRate != null">sg_hy_rate,</if>
+            <if test="sgNum != null">sg_num,</if>
+            <if test="sgNums != null">sg_nums,</if>
+            <if test="maxSg != null">max_sg,</if>
+            <if test="status != null">status,</if>
+            <if test="money != null">money,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="zqNum != null">zq_num,</if>
+            <if test="djMoney != null">dj_money,</if>
+            <if test="sgSgDate != null">sg_sg_date,</if>
+            <if test="sgZqJkDate != null">sg_zq_jk_date,</if>
+            <if test="sgSsDate != null">sg_ss_date,</if>
+            <if test="renjiao != null">renjiao,</if>
+            <if test="renjiaoTime != null">renjiao_time,</if>
+            <if test="isCc != null">is_cc,</if>
+            <if test="isCcTime != null">is_cc_time,</if>
+            <if test="zqMoney != null">zq_money,</if>
+            <if test="zqNums != null">zq_nums,</if>
+            <if test="freezeProfit != null">freeze_profit,</if>
+            <if test="balance != null">balance,</if>
+            <if test="oldSgNum != null">old_sg_num,</if>
+            <if test="oldSgNums != null">old_sg_nums,</if>
+            <if test="sgType != null">sg_type,</if>
+            <if test="deleteFlag != null">delete_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="userId != null">#{userId},</if>
+            <if test="shengouId != null">#{shengouId},</if>
+            <if test="code != null">#{code},</if>
+            <if test="allCode != null">#{allCode},</if>
+            <if test="name != null">#{name},</if>
+            <if test="sgFxPrice != null">#{sgFxPrice},</if>
+            <if test="sgHyRate != null">#{sgHyRate},</if>
+            <if test="sgNum != null">#{sgNum},</if>
+            <if test="sgNums != null">#{sgNums},</if>
+            <if test="maxSg != null">#{maxSg},</if>
+            <if test="status != null">#{status},</if>
+            <if test="money != null">#{money},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="zqNum != null">#{zqNum},</if>
+            <if test="djMoney != null">#{djMoney},</if>
+            <if test="sgSgDate != null">#{sgSgDate},</if>
+            <if test="sgZqJkDate != null">#{sgZqJkDate},</if>
+            <if test="sgSsDate != null">#{sgSsDate},</if>
+            <if test="renjiao != null">#{renjiao},</if>
+            <if test="renjiaoTime != null">#{renjiaoTime},</if>
+            <if test="isCc != null">#{isCc},</if>
+            <if test="isCcTime != null">#{isCcTime},</if>
+            <if test="zqMoney != null">#{zqMoney},</if>
+            <if test="zqNums != null">#{zqNums},</if>
+            <if test="freezeProfit != null">#{freezeProfit},</if>
+            <if test="balance != null">#{balance},</if>
+            <if test="oldSgNum != null">#{oldSgNum},</if>
+            <if test="oldSgNums != null">#{oldSgNums},</if>
+            <if test="sgType != null">#{sgType},</if>
+            <if test="deleteFlag != null">#{deleteFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFaSgList" parameterType="FaSgList">
+        update fa_stock_sg
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="userId != null">user_id = #{userId},</if>
+            <if test="shengouId != null">shengou_id = #{shengouId},</if>
+            <if test="code != null">code = #{code},</if>
+            <if test="allCode != null">all_code = #{allCode},</if>
+            <if test="name != null">name = #{name},</if>
+            <if test="sgFxPrice != null">sg_fx_price = #{sgFxPrice},</if>
+            <if test="sgHyRate != null">sg_hy_rate = #{sgHyRate},</if>
+            <if test="sgNum != null">sg_num = #{sgNum},</if>
+            <if test="sgNums != null">sg_nums = #{sgNums},</if>
+            <if test="maxSg != null">max_sg = #{maxSg},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="money != null">money = #{money},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="zqNum != null">zq_num = #{zqNum},</if>
+            <if test="djMoney != null">dj_money = #{djMoney},</if>
+            <if test="sgSgDate != null">sg_sg_date = #{sgSgDate},</if>
+            <if test="sgZqJkDate != null">sg_zq_jk_date = #{sgZqJkDate},</if>
+            <if test="sgSsDate != null">sg_ss_date = #{sgSsDate},</if>
+            <if test="renjiao != null">renjiao = #{renjiao},</if>
+            <if test="renjiaoTime != null">renjiao_time = #{renjiaoTime},</if>
+            <if test="isCc != null">is_cc = #{isCc},</if>
+            <if test="isCcTime != null">is_cc_time = #{isCcTime},</if>
+            <if test="zqMoney != null">zq_money = #{zqMoney},</if>
+            <if test="zqNums != null">zq_nums = #{zqNums},</if>
+            <if test="freezeProfit != null">freeze_profit = #{freezeProfit},</if>
+            <if test="balance != null">balance = #{balance},</if>
+            <if test="oldSgNum != null">old_sg_num = #{oldSgNum},</if>
+            <if test="oldSgNums != null">old_sg_nums = #{oldSgNums},</if>
+            <if test="sgType != null">sg_type = #{sgType},</if>
+            <if test="deleteFlag != null">delete_flag = #{deleteFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteFaSgListById" parameterType="Long">
+        update fa_stock_sg set delete_flag = 1 where id = #{id}
+    </delete>
+
+    <delete id="deleteFaSgListByIds" parameterType="String">
+        update fa_stock_sg set delete_flag = 1 where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

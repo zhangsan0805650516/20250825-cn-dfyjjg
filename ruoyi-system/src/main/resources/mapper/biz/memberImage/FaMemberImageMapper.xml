@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.biz.memberImage.mapper.FaMemberImageMapper">
+    
+    <resultMap type="FaMemberImage" id="FaMemberImageResult">
+        <result property="id"    column="id"    />
+        <result property="memberId"    column="member_id"    />
+        <result property="avatar"    column="avatar"    />
+        <result property="idCardFrontImage"    column="id_card_front_image"    />
+        <result property="idCardBackImage"    column="id_card_back_image"    />
+        <result property="cardImage"    column="card_image"    />
+        <result property="avatarUrl"    column="avatar_url"    />
+        <result property="idCardFrontImageUrl"    column="id_card_front_image_url"    />
+        <result property="idCardBackImageUrl"    column="id_card_back_image_url"    />
+        <result property="cardImageUrl"    column="card_image_url"    />
+        <result property="status"    column="status"    />
+        <result property="createTime"    column="create_time"    />
+        <result property="createBy"    column="create_by"    />
+        <result property="updateTime"    column="update_time"    />
+        <result property="updateBy"    column="update_by"    />
+        <result property="remarks"    column="remarks"    />
+        <result property="deleteFlag"    column="delete_flag"    />
+    </resultMap>
+
+    <sql id="selectFaMemberImageVo">
+        select id, member_id, avatar, id_card_front_image, id_card_back_image, card_image, avatar_url, id_card_front_image_url, id_card_back_image_url, card_image_url, status, create_time, create_by, update_time, update_by, remarks, delete_flag from fa_member_image
+    </sql>
+
+    <select id="selectFaMemberImageList" parameterType="FaMemberImage" resultMap="FaMemberImageResult">
+        <include refid="selectFaMemberImageVo"/>
+        <where>  
+            <if test="id != null "> and id = #{id}</if>
+            <if test="memberId != null "> and member_id = #{memberId}</if>
+            <if test="avatar != null  and avatar != ''"> and avatar = #{avatar}</if>
+            <if test="idCardFrontImage != null  and idCardFrontImage != ''"> and id_card_front_image = #{idCardFrontImage}</if>
+            <if test="idCardBackImage != null  and idCardBackImage != ''"> and id_card_back_image = #{idCardBackImage}</if>
+            <if test="cardImage != null  and cardImage != ''"> and card_image = #{cardImage}</if>
+            <if test="avatarUrl != null  and avatarUrl != ''"> and avatar_url = #{avatarUrl}</if>
+            <if test="idCardFrontImageUrl != null  and idCardFrontImageUrl != ''"> and id_card_front_image_url = #{idCardFrontImageUrl}</if>
+            <if test="idCardBackImageUrl != null  and idCardBackImageUrl != ''"> and id_card_back_image_url = #{idCardBackImageUrl}</if>
+            <if test="cardImageUrl != null  and cardImageUrl != ''"> and card_image_url = #{cardImageUrl}</if>
+            <if test="status != null "> and status = #{status}</if>
+            <if test="createTime != null "> and create_time = #{createTime}</if>
+            <if test="createBy != null  and createBy != ''"> and create_by = #{createBy}</if>
+            <if test="updateTime != null "> and update_time = #{updateTime}</if>
+            <if test="updateBy != null  and updateBy != ''"> and update_by = #{updateBy}</if>
+            <if test="remarks != null  and remarks != ''"> and remarks = #{remarks}</if>
+            <if test="deleteFlag != null "> and delete_flag = #{deleteFlag}</if>
+        </where>
+    </select>
+    
+    <select id="selectFaMemberImageById" parameterType="Integer" resultMap="FaMemberImageResult">
+        <include refid="selectFaMemberImageVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertFaMemberImage" parameterType="FaMemberImage" useGeneratedKeys="true" keyProperty="id">
+        insert into fa_member_image
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="memberId != null">member_id,</if>
+            <if test="avatar != null">avatar,</if>
+            <if test="idCardFrontImage != null">id_card_front_image,</if>
+            <if test="idCardBackImage != null">id_card_back_image,</if>
+            <if test="cardImage != null">card_image,</if>
+            <if test="avatarUrl != null">avatar_url,</if>
+            <if test="idCardFrontImageUrl != null">id_card_front_image_url,</if>
+            <if test="idCardBackImageUrl != null">id_card_back_image_url,</if>
+            <if test="cardImageUrl != null">card_image_url,</if>
+            <if test="status != null">status,</if>
+            <if test="createTime != null">create_time,</if>
+            <if test="createBy != null">create_by,</if>
+            <if test="updateTime != null">update_time,</if>
+            <if test="updateBy != null">update_by,</if>
+            <if test="remarks != null">remarks,</if>
+            <if test="deleteFlag != null">delete_flag,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="memberId != null">#{memberId},</if>
+            <if test="avatar != null">#{avatar},</if>
+            <if test="idCardFrontImage != null">#{idCardFrontImage},</if>
+            <if test="idCardBackImage != null">#{idCardBackImage},</if>
+            <if test="cardImage != null">#{cardImage},</if>
+            <if test="avatarUrl != null">#{avatarUrl},</if>
+            <if test="idCardFrontImageUrl != null">#{idCardFrontImageUrl},</if>
+            <if test="idCardBackImageUrl != null">#{idCardBackImageUrl},</if>
+            <if test="cardImageUrl != null">#{cardImageUrl},</if>
+            <if test="status != null">#{status},</if>
+            <if test="createTime != null">#{createTime},</if>
+            <if test="createBy != null">#{createBy},</if>
+            <if test="updateTime != null">#{updateTime},</if>
+            <if test="updateBy != null">#{updateBy},</if>
+            <if test="remarks != null">#{remarks},</if>
+            <if test="deleteFlag != null">#{deleteFlag},</if>
+         </trim>
+    </insert>
+
+    <update id="updateFaMemberImage" parameterType="FaMemberImage">
+        update fa_member_image
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="memberId != null">member_id = #{memberId},</if>
+            <if test="avatar != null">avatar = #{avatar},</if>
+            <if test="idCardFrontImage != null">id_card_front_image = #{idCardFrontImage},</if>
+            <if test="idCardBackImage != null">id_card_back_image = #{idCardBackImage},</if>
+            <if test="cardImage != null">card_image = #{cardImage},</if>
+            <if test="avatarUrl != null">avatar_url = #{avatarUrl},</if>
+            <if test="idCardFrontImageUrl != null">id_card_front_image_url = #{idCardFrontImageUrl},</if>
+            <if test="idCardBackImageUrl != null">id_card_back_image_url = #{idCardBackImageUrl},</if>
+            <if test="cardImageUrl != null">card_image_url = #{cardImageUrl},</if>
+            <if test="status != null">status = #{status},</if>
+            <if test="createTime != null">create_time = #{createTime},</if>
+            <if test="createBy != null">create_by = #{createBy},</if>
+            <if test="updateTime != null">update_time = #{updateTime},</if>
+            <if test="updateBy != null">update_by = #{updateBy},</if>
+            <if test="remarks != null">remarks = #{remarks},</if>
+            <if test="deleteFlag != null">delete_flag = #{deleteFlag},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteFaMemberImageById" parameterType="Integer">
+        update fa_member_image set delete_flag = 1 where id = #{id}
+    </delete>
+
+    <delete id="deleteFaMemberImageByIds" parameterType="String">
+        update fa_member_image set delete_flag = 1 where id in
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>
